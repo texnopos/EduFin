@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_myFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.auth.signin.SignInFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_signInFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.MainFragment"
+        android:label="MyFragment"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_mainFragment_to_addTeacherFragment"
+            app:destination="@id/addTeacherFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_addCoursesFragment"
+            app:destination="@id/addCoursesFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addGroupFragment"
+            app:destination="@id/addGroupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.splash.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTeacherFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.add.AddTeacherFragment"
+        android:label="AddTeacherFragment"
+        tools:layout="@layout/fragment_add_employee" />
+    <fragment
+        android:id="@+id/addCoursesFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.course.add.AddCoursesFragment"
+        android:label="AddCoursesFragment"
+        tools:layout="@layout/fragment_add_courses"/>
+    <fragment
+        android:id="@+id/addGroupFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupFragment"
+        android:label="AddGroupFragment"
+        tools:layout="@layout/fragment_add_group"/>
+</navigation>

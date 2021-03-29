@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group>
+        <item android:id="@+id/nav_report"
+            android:title="@string/reports"
+            android:icon="@drawable/ic_home" />
+        <item android:id="@+id/nav_history"
+            android:title="@string/history"
+            android:icon="@drawable/ic_history"/>
+        <item android:id="@+id/nav_placeholder"
+            android:title=""/>
+        <item android:id="@+id/nav_course"
+            android:title="@string/courses"
+            android:icon="@drawable/ic_folder"
+            />
+        <item android:id="@+id/nav_employee"
+            android:title="@string/employees"
+            android:icon="@drawable/ic_employee" />
+    </group>
+</menu>

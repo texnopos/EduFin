@@ -1,0 +1,38 @@
+package uz.texnopos.texnoposedufinance.ui.main.teacher
+
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import uz.texnopos.texnoposedufinance.R
+import uz.texnopos.texnoposedufinance.core.BaseAdapter
+import uz.texnopos.texnoposedufinance.core.extentions.inflate
+import uz.texnopos.texnoposedufinance.data.model.Teacher
+import uz.texnopos.texnoposedufinance.databinding.ItemEmployeeBinding
+
+class TeacherAdapter :
+    BaseAdapter<Teacher?, TeacherAdapter.TeacherViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeacherViewHolder {
+        val itemView = parent.inflate(R.layout.item_employee)
+        val binding = ItemEmployeeBinding.bind(itemView)
+        return TeacherViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: TeacherViewHolder, position: Int) {
+        holder.populateModel(models[position], position)
+    }
+
+    inner class TeacherViewHolder(private val binding: ItemEmployeeBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun populateModel(model: Teacher?, position: Int) {
+            binding.tvTeacherName.text = model?.name
+            binding.tvUsername.text = model?.username
+            setDrawable(position)
+        }
+
+        private fun setDrawable(i: Int) {
+            when (i % 3) {
+                0 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_1)
+                1 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_2)
+                2 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_3)
+            }
+        }
+    }
+}

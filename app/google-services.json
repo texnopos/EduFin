@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "344737395059",
+    "project_id": "texnopos-finance",
+    "storage_bucket": "texnopos-finance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344737395059:android:c2d1444d06428f3c5f9506",
+        "android_client_info": {
+          "package_name": "uz.texnopos.texnoposedufinance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344737395059-mkq1ipe66mk3qrre99a9iqjdb8cg9bun.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXoBeEH8bT8QsIJwsxQIvTkBzZMk3Ol_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344737395059-mkq1ipe66mk3qrre99a9iqjdb8cg9bun.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

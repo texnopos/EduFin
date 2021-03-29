@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/nav_report">
+
+    <fragment
+        android:id="@+id/nav_course"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.course.CoursesFragment"
+        android:label="CoursesFragment"
+        tools:layout="@layout/fragment_courses" />
+    <fragment
+        android:id="@+id/nav_employee"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"
+        android:label="EmployeesFragment"
+        tools:layout="@layout/fragment_employee" />
+    <fragment
+        android:id="@+id/nav_report"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.report.ReportsFragment"
+        android:label="Reports"
+        tools:layout="@layout/fragment_view_pager" />
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.operation.OperationsFragment"
+        android:label="OperationsFragment"
+        tools:layout="@layout/fragment_operation" />
+</navigation>
