@@ -12,7 +12,7 @@ import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.databinding.ActionBarPlusBinding
+import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
@@ -24,7 +24,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
     private val adapter = CoursesAdapter()
     private val gAdapter = GroupAdapter()
     private lateinit var binding: FragmentCoursesBinding
-    lateinit var actBinding: ActionBarPlusBinding
+    lateinit var actBinding: ActionBarAddBinding
     lateinit var navController: NavController
     lateinit var parentNavController: NavController
 
@@ -32,7 +32,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentCoursesBinding.bind(view)
-        actBinding = ActionBarPlusBinding.bind(view)
+        actBinding = ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
 
         setUpObservers()
@@ -41,8 +41,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         viewModel.getAllCourses()
 
         if (requireParentFragment().requireActivity() is MainActivity) {
-            parentNavController = Navigation
-                .findNavController(
+            parentNavController = Navigation.findNavController(
                     requireParentFragment().requireActivity() as
                             MainActivity, R.id.nav_host
                 )
@@ -80,46 +79,27 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
     }
 
     private fun setUpObservers() {
-        viewModel.courseList.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.LOADING -> binding.swlCourses.isRefreshing = false
-                ResourceState.SUCCESS -> {
-                    if (it.data!!.isNotEmpty()) {
-                        binding.tvEmptyList.visibility(false)
-                        binding.rcvCourses.visibility(true)
-                        adapter.models = it.data
-                    } else {
-                        binding.tvEmptyList.visibility(true)
-                        binding.rcvCourses.visibility(false)
+        binding.apply {
+            viewModel.courseList.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.LOADING -> swlCourses.isRefreshing = false
+                    ResourceState.SUCCESS -> {
+                        if (it.data!!.isNotEmpty()) {
+                            tvEmptyList.visibility(false)
+                            rcvCourses.visibility(true)
+                            adapter.models = it.data
+                        } else {
+                            tvEmptyList.visibility(true)
+                            rcvCourses.visibility(false)
+                        }
+                        swlCourses.isRefreshing = false
                     }
-                    binding.swlCourses.isRefreshing = false
+                    ResourceState.ERROR -> {
+                        toastLN(it.message)
+                        swlCourses.isRefreshing = false
+                    }
                 }
-                ResourceState.ERROR -> {
-                    toastLN(it.message)
-                    binding.swlCourses.isRefreshing = false
-                }
-            }
-        })
+            })
+        }
     }
-
-    /*private fun groupSetUpObservers() {
-        groupViewModel.groupResult.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.LOADING -> {
-                    //
-                }
-                ResourceState.SUCCESS -> {
-                    if (it.data!!.isNotEmpty()) {
-                        gAdapter.models = it.data
-                    } else {
-                        toastLN("Gruppa joq")
-                    }
-                }
-                ResourceState.ERROR -> {
-                    toastLN(it.message)
-                }
-            }
-        })
-    }*/
-
 }

@@ -6,8 +6,8 @@ import com.google.firebase.functions.FirebaseFunctions
 import uz.texnopos.texnoposedufinance.data.model.Course
 import java.util.*
 
-class CourseHelper(private val auth: FirebaseAuth, private val db: FirebaseFirestore,
-                   private val functions: FirebaseFunctions) {
+class CourseHelper(auth: FirebaseAuth, private val db: FirebaseFirestore,
+    private val func: FirebaseFunctions) {
     private val orgId = auth.currentUser!!.uid
 
     fun getAllCourses(
@@ -34,7 +34,7 @@ class CourseHelper(private val auth: FirebaseAuth, private val db: FirebaseFires
     ) {
         val id = UUID.randomUUID().toString()
         val newCourse = Course(
-            name = name, id = id, duration = duration, price = price
+            name = name, id = id, duration = duration, price = price, orgId = orgId
         )
         db.collection("users/$orgId/courses").document(id).set(newCourse)
             .addOnSuccessListener {

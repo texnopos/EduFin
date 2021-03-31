@@ -14,7 +14,7 @@
         android:id="@+id/nav_employee"
         android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"
         android:label="EmployeesFragment"
-        tools:layout="@layout/fragment_employee" />
+        tools:layout="@layout/fragment_teachers" />
     <fragment
         android:id="@+id/nav_report"
         android:name="uz.texnopos.texnoposedufinance.ui.main.report.ReportsFragment"

@@ -13,7 +13,7 @@ import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.databinding.ItemCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 
-class CoursesAdapter: BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
+class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
 
     var onItemClick: (id: String) -> Unit = {}
     fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
@@ -37,28 +37,32 @@ class CoursesAdapter: BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
             binding.apply {
                 tvCourseName.text = model.name
                 tvGroupCount.text = root.context.getString(R.string.group_count)
-                tvPupilsCount.text = root.context.getString(R.string.participants_count, model.participantCount)
+                tvPupilsCount.text =
+                    root.context.getString(R.string.participants_count, model.duration)
                 rvGroups.adapter = adapter
                 rvGroups.addVertDivider(root.context)
                 setDrawable(position)
 
                 rlLayout.onClick {
-                    if(binding.rvGroups.visibility == View.GONE){
-                        binding.rvGroups.visibility(true)
+                    if (rvGroups.visibility == View.GONE) {
+                        rvGroups.visibility(true)
                         onItemClick.invoke(model.id)
-                    }
-                    else {
-                        binding.rvGroups.visibility(false)
+                    } else {
+                        rvGroups.visibility(false)
                     }
                 }
             }
         }
+
         private fun setDrawable(i: Int) {
-            when (i % 3) {
-                0 -> binding.rlLayout.setBackgroundResource(R.drawable.shape_teachers_1)
-                1 -> binding.rlLayout.setBackgroundResource(R.drawable.shape_teachers_2)
-                2 -> binding.rlLayout.setBackgroundResource(R.drawable.shape_teachers_3)
+            binding.apply {
+                when (i % 3) {
+                    0 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_1)
+                    1 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_2)
+                    2 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_3)
+                }
             }
+
         }
     }
 }

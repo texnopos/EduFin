@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/text_title_size"/>
 
-    <ImageView
+    <TextView
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,6 +27,7 @@
         android:layout_marginVertical="@dimen/margin_standard"
         android:textSize="@dimen/text_title_size"
         android:layout_marginEnd="@dimen/margin_standard"
-        android:src="@drawable/ic_add_black"
-        android:padding="@dimen/margin_middle"/>
+        android:text="@string/add_plus"
+        android:padding="@dimen/margin_middle"
+        android:textColor="@color/black"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

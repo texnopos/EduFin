@@ -42,6 +42,16 @@
                     android:padding="@dimen/margin_large"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <Spinner
+                    android:id="@+id/teachers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:padding="@dimen/margin_large"
+                    app:layout_constraintTop_toBottomOf="@id/courses" />
+
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/courseId"
                     android:layout_width="match_parent"
@@ -57,7 +67,7 @@
                     app:layout_constraintTop_toBottomOf="@id/courses" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/courseNum"
+                    android:id="@+id/groupNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
@@ -68,7 +78,37 @@
                     android:padding="@dimen/margin_standard_lg"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/courses" />
+                    app:layout_constraintTop_toBottomOf="@id/teachers" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_standard"
+                    android:layout_marginTop="@dimen/margin_small_standard"
+                    android:background="@drawable/shape_square"
+                    android:hint="@string/courseNum"
+                    android:inputType="number"
+                    android:padding="@dimen/margin_standard_lg"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    app:layout_constraintTop_toBottomOf="@id/groupNum" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/startDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_standard"
+                    android:layout_marginTop="@dimen/margin_small_standard"
+                    android:background="@drawable/shape_square"
+                    android:hint="@string/courseNum"
+                    android:inputType="number"
+                    android:padding="@dimen/margin_standard_lg"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    app:layout_constraintTop_toBottomOf="@id/time" />
+
+
 
                 <ProgressBar
                     android:id="@+id/loading"

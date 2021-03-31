@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:mask="http://schemas.android.com/tools"
     android:background="@color/purple_700">
 
     <include
-         android:id="@+id/actionBar"
+        android:id="@+id/actionBar"
         layout="@layout/add_action_bar" />
 
     <androidx.cardview.widget.CardView
@@ -46,14 +47,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small_standard"
                     android:background="@drawable/shape_square"
                     android:hint="@string/fio"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:paddingHorizontal="@dimen/margin_standard"
+                    android:padding="@dimen/margin_standard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/civProfile" />
@@ -61,60 +62,100 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPhone"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small_standard"
                     android:background="@drawable/shape_square"
                     android:hint="@string/phone_number"
                     android:inputType="phone"
                     android:maxLines="1"
-                    android:paddingHorizontal="@dimen/margin_standard"
+                    android:padding="@dimen/margin_standard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/etName" />
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSalary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_small_standard"
+                    android:background="@drawable/shape_square"
+                    android:hint="@string/salary"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:padding="@dimen/margin_standard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etPhone" />
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etUsername"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small_standard"
                     android:background="@drawable/shape_square"
                     android:hint="@string/username"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:paddingHorizontal="@dimen/margin_standard"
+                    android:padding="@dimen/margin_standard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etPhone" />
+                    app:layout_constraintTop_toBottomOf="@id/etSalary"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_small_standard"
+                    android:background="@drawable/shape_square"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:padding="@dimen/margin_standard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etUsername"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/showPass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/etConfirmPass"
+                        app:layout_constraintTop_toBottomOf="@id/etUsername"
+                        android:src="@drawable/ic_unvisible"
+                        android:layout_marginEnd="@dimen/margin_standard"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etConfirmPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small_standard"
                     android:layout_marginBottom="@dimen/margin_large"
                     android:background="@drawable/shape_square"
-                    android:hint="@string/password"
-                    android:inputType="text"
+                    android:hint="@string/confirmYourPass"
+                    android:inputType="textPassword"
                     android:maxLines="1"
-                    android:paddingHorizontal="@dimen/margin_standard"
+                    android:padding="@dimen/margin_standard"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etUsername" />
+                    app:layout_constraintTop_toBottomOf="@id/etPassword"
+                    app:layout_goneMarginBottom="@dimen/margin_large"/>
                 
                 <ProgressBar
                     android:id="@+id/loading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -123,16 +164,14 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_large"
         android:layout_marginBottom="@dimen/margin_standard"
         android:background="@drawable/shape_button"
+        android:padding="@dimen/margin_standard"
         android:text="@string/save"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

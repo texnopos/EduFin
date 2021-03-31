@@ -22,16 +22,20 @@ class TeacherAdapter :
 
     inner class TeacherViewHolder(private val binding: ItemEmployeeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun populateModel(model: Teacher?, position: Int) {
-            binding.tvTeacherName.text = model?.name
-            binding.tvUsername.text = model?.username
-            setDrawable(position)
+            binding.apply {
+                tvTeacherName.text = model?.name
+                tvUsername.text = model?.username
+                setDrawable(position)
+            }
         }
 
         private fun setDrawable(i: Int) {
-            when (i % 3) {
-                0 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_1)
-                1 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_2)
-                2 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_3)
+            binding.apply {
+                when (i % 3) {
+                    0 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_1)
+                    1 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_2)
+                    2 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_3)
+                }
             }
         }
     }

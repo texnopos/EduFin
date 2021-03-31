@@ -2,24 +2,23 @@ package uz.texnopos.texnoposedufinance.data.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.Teacher
 import java.util.*
 
-class TeacherHelper(private val db: FirebaseFirestore, private val auth: FirebaseAuth) {
+class TeacherHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val orgId = auth.currentUser!!.uid
-    fun getAllEmployees(
+    fun getAllTeachers(
         onSuccess: (list: List<Teacher>) -> Unit,
-        onFailure: (msg: String?) -> Unit
-    ) {
+        onFailure: (msg: String?) -> Unit) {
         db.collection("users/$orgId/teachers").get()
-            .addOnSuccessListener { collection ->
-                if (collection.documents.isNotEmpty()) {
-                    onSuccess.invoke(collection.documents.map {
+            .addOnSuccessListener {doc ->
+                if(doc.documents.isNotEmpty()){
+                    onSuccess.invoke(doc.documents.map {
                         it.toObject(Teacher::class.java) ?: Teacher()
                     })
-                } else {
-                    onSuccess.invoke(listOf())
                 }
+                else onSuccess.invoke(listOf())
             }
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
@@ -27,13 +26,19 @@ class TeacherHelper(private val db: FirebaseFirestore, private val auth: Firebas
     }
 
     fun createTeacher(
-        name: String, phone: String, username: String, password: String,
+        name: String, phone: String, username: String, password: String, salary: Double,
         onSuccess: () -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val id = UUID.randomUUID().toString()
         val newTeacher = Teacher(
-            name = name, phone = phone, id = id, username = username, password = password, orgId = orgId
+            name = name,
+            phone = phone,
+            id = id,
+            username = username,
+            password = password,
+            orgId = orgId,
+            salary = salary
         )
         db.collection("users/$orgId/teachers").document(id).set(newTeacher)
             .addOnSuccessListener {

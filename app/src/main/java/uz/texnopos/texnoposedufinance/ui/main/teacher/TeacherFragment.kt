@@ -10,56 +10,61 @@ import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
-import uz.texnopos.texnoposedufinance.databinding.FragmentEmployeeBinding
+import uz.texnopos.texnoposedufinance.databinding.FragmentTeachersBinding
 
 
-class TeacherFragment : BaseFragment(R.layout.fragment_employee) {
+class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
 
     private val adapter = TeacherAdapter()
     private val viewModel: TeacherViewModel by viewModel()
 
     private lateinit var navController: NavController
-    private lateinit var binding: FragmentEmployeeBinding
+    private lateinit var binding: FragmentTeachersBinding
     private lateinit var bindingActionBar: ActionBarBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentEmployeeBinding.bind(view)
+        binding = FragmentTeachersBinding.bind(view)
         bindingActionBar = ActionBarBinding.bind(view)
-        bindingActionBar.tvTitle.text = "Сотрудники"
+        bindingActionBar.tvTitle.text = view.context.getString(R.string.teachers)
 
         navController = Navigation.findNavController(view)
         binding.rcvTeachers.adapter = adapter
-        setUpObservers()
 
-        binding.srlTeachers.setOnRefreshListener {
-            viewModel.getAllEmployees()
+        setUpObservers()
+        binding.apply {
+            srlTeachers.setOnRefreshListener {
+                viewModel.getAllEmployees()
+            }
         }
+
         viewModel.getAllEmployees()
     }
 
     private fun setUpObservers() {
-        viewModel.teacherList.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.SUCCESS -> {
-                    if (it.data!!.isNotEmpty()) {
-                        binding.tvEmptyList.visibility = View.GONE
-                        binding.rcvTeachers.visibility = View.VISIBLE
-                        adapter.models = it.data
-                    } else {
-                        binding.tvEmptyList.visibility = View.VISIBLE
-                        binding.rcvTeachers.visibility = View.GONE
+        binding.apply {
+            viewModel.teacherList.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.SUCCESS -> {
+                        if (it.data!!.isNotEmpty()) {
+                            tvEmptyList.visibility = View.GONE
+                            rcvTeachers.visibility = View.VISIBLE
+                            adapter.models = it.data
+                        } else {
+                            tvEmptyList.visibility = View.VISIBLE
+                            rcvTeachers.visibility = View.GONE
+                        }
+                        srlTeachers.isRefreshing = false
                     }
-                    binding.srlTeachers.isRefreshing = false
+                    ResourceState.ERROR -> {
+                        toastLN(it.message)
+                        srlTeachers.isRefreshing = false
+                    }
+                    else -> {
+                    }
                 }
-                ResourceState.ERROR -> {
-                    toastLN(it.message)
-                    binding.srlTeachers.isRefreshing = false
-                }
-                else -> {
-                }
-            }
-        })
+            })
+        }
     }
 }

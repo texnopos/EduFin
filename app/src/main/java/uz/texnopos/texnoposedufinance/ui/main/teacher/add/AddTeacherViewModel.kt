@@ -13,10 +13,10 @@ class AddTeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
     val createTeacher: LiveData<Resource<Teacher>>
         get() = _createTeacher
 
-    fun createTeacher(name: String, phone: String, username: String, password: String) {
+    fun createTeacher(name: String, phone: String, username: String, password: String, salary: Double) {
         _createTeacher.value = Resource.loading()
         helper.createTeacher(
-            name, phone, username, password,
+            name, phone, username, password, salary,
             {
                 _createTeacher.value = Resource.success(null)
             },

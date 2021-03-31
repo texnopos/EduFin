@@ -18,10 +18,10 @@
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/margin_large"
-        app:layout_constraintBottom_toTopOf="@id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/actionBar">
+        app:layout_constraintTop_toBottomOf="@id/actionBar"
+        app:layout_constraintBottom_toTopOf="@id/btnSave">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_margin="@dimen/margin_middle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/courseName"
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
@@ -41,19 +41,11 @@
                     android:background="@drawable/shape_square"
                     android:hint="@string/courseName"
                     android:padding="@dimen/margin_standard"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Spinner
-                    android:id="@+id/teachers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:padding="@dimen/margin_large"
-                    app:layout_constraintTop_toBottomOf="@id/courseName" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="16sp"/>
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cost"
+                    android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
@@ -61,26 +53,26 @@
                     android:background="@drawable/shape_square"
                     android:hint="@string/coursePayment"
                     android:inputType="number"
-                    android:padding="@dimen/margin_standard_lg"
+                    android:padding="@dimen/margin_standard"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/teachers" />
+                    app:layout_constraintTop_toBottomOf="@id/name" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/coursePeriod"
+                    android:id="@+id/duration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_small_standard"
-                    android:layout_marginBottom="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_standard"
                     android:background="@drawable/shape_square"
                     android:hint="@string/coursePeriod"
                     android:inputType="number"
-                    android:padding="@dimen/margin_standard_lg"
+                    android:padding="@dimen/margin_standard"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cost" />
+                    app:layout_constraintTop_toBottomOf="@id/price" />
 
                 <ProgressBar
                     android:id="@+id/loading"
@@ -99,7 +91,7 @@
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_large"
         android:layout_marginBottom="@dimen/margin_standard"
         android:background="@drawable/shape_button"

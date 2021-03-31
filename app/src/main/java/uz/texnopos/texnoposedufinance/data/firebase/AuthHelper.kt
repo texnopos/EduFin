@@ -3,6 +3,7 @@ package uz.texnopos.texnoposedufinance.data.firebase
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AuthHelper(private val auth: FirebaseAuth) {
 
@@ -14,6 +15,7 @@ class AuthHelper(private val auth: FirebaseAuth) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 onSuccess.invoke()
+
             }
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
@@ -28,6 +30,7 @@ class AuthHelper(private val auth: FirebaseAuth) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 onSuccess.invoke()
+
             }
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
