@@ -23,7 +23,6 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses),
     lateinit var binding: FragmentAddCoursesBinding
     lateinit var bindingActBar: AddActionBarBinding
     lateinit var navController: NavController
-    private var teacher: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +34,6 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses),
 
         navController = Navigation.findNavController(view)
         setUpObserversCourse()
-
 
         bindingActBar.btnHome.onClick {
             navController.popBackStack()

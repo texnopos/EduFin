@@ -32,6 +32,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_middle">
 
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
@@ -41,7 +50,7 @@
                     android:background="@drawable/shape_square"
                     android:hint="@string/courseName"
                     android:padding="@dimen/margin_standard"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/logo"
                     android:textSize="16sp"/>
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -64,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_small_standard"
-                    android:layout_marginBottom="@dimen/margin_standard"
+                    android:layout_marginBottom="@dimen/margin_large"
                     android:background="@drawable/shape_square"
                     android:hint="@string/coursePeriod"
                     android:inputType="number"
