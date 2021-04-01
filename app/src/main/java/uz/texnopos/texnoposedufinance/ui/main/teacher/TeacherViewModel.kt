@@ -13,7 +13,7 @@ class TeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
         get() = _teacherList
 
     fun getAllEmployees() {
-        helper.getAllEmployees(
+        helper.getAllTeachers(
             {
                 _teacherList.value = Resource.success(it)
             },

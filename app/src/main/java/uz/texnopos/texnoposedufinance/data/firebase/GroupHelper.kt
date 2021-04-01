@@ -2,19 +2,33 @@ package uz.texnopos.texnoposedufinance.data.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.functions.FirebaseFunctions
 import uz.texnopos.texnoposedufinance.data.model.Group
+import uz.texnopos.texnoposedufinance.data.model.Teacher
 import java.util.*
 
-class GroupHelper(private val auth: FirebaseAuth, private val db: FirebaseFirestore) {
-    fun createGroup(courseName: String, groupNum: String, courseId: String,
+class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private val func: FirebaseFunctions) {
+    private val orgId = auth.currentUser!!.uid
+
+    fun createGroup(name: String,
+                    teacher: String,
+                    courseId: String,
+                    time: String,
+                    startDate: String,
                     onSuccess: () -> Unit,
                     onFailure: (msg: String?) -> Unit
     ){
         val id = UUID.randomUUID().toString()
         val newGroup = Group(
-            courseName = courseName, id = id, groupNum = groupNum, courseId = courseId, name = courseName + groupNum
+            id = id,
+            orgId = orgId,
+            courseId = courseId,
+            name = name,
+            time = time,
+            startDate = startDate,
+            teacher = teacher
         )
-        db.collection("users/${auth.currentUser!!.uid}/courses/$courseId/groups").document(id).set(newGroup)
+        db.collection("users/$orgId/groups").document(id).set(newGroup)
             .addOnSuccessListener {
                 onSuccess.invoke()
             }
@@ -22,30 +36,10 @@ class GroupHelper(private val auth: FirebaseAuth, private val db: FirebaseFirest
                 onFailure.invoke(it.localizedMessage)
             }
     }
+
     fun getAllGroups(
-        courseId: String,
         onSuccess: (list: List<Group>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ){
-        db.collection("users/${auth.currentUser!!.uid}/courses/$courseId/groups").get()
-            .addOnSuccessListener {doc ->
-                if (doc.documents.isNotEmpty()){
-                    val gList: MutableList<Group> = mutableListOf()
-                    doc.documents.forEach{gr->
-                        val group = gr.toObject(Group::class.java)
-                        group!!.id = gr["id"].toString()
-                        group.courseName = gr["courseName"].toString()
-                        group.groupNum = gr["groupNum"].toString()
-                        group.courseId = gr["courseId"].toString()
-                        group.name = gr["name"].toString()
-                        group.let { gList.add(it) }
-                    }
-                    onSuccess.invoke(gList)
-                }
-                else onSuccess.invoke(listOf())
-            }
-            .addOnFailureListener {
-                onFailure.invoke(it.localizedMessage)
-            }
     }
 }

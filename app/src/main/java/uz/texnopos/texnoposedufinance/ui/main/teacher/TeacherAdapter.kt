@@ -6,13 +6,13 @@ import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
 import uz.texnopos.texnoposedufinance.data.model.Teacher
-import uz.texnopos.texnoposedufinance.databinding.ItemEmployeeBinding
+import uz.texnopos.texnoposedufinance.databinding.ItemTeachersBinding
 
 class TeacherAdapter :
     BaseAdapter<Teacher?, TeacherAdapter.TeacherViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeacherViewHolder {
-        val itemView = parent.inflate(R.layout.item_employee)
-        val binding = ItemEmployeeBinding.bind(itemView)
+        val itemView = parent.inflate(R.layout.item_teachers)
+        val binding = ItemTeachersBinding.bind(itemView)
         return TeacherViewHolder(binding)
     }
 
@@ -20,18 +20,22 @@ class TeacherAdapter :
         holder.populateModel(models[position], position)
     }
 
-    inner class TeacherViewHolder(private val binding: ItemEmployeeBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TeacherViewHolder(private val binding: ItemTeachersBinding) : RecyclerView.ViewHolder(binding.root) {
         fun populateModel(model: Teacher?, position: Int) {
-            binding.tvTeacherName.text = model?.name
-            binding.tvUsername.text = model?.username
-            setDrawable(position)
+            binding.apply {
+                tvTeacherName.text = model?.name
+                tvUsername.text = model?.username
+                setDrawable(position)
+            }
         }
 
         private fun setDrawable(i: Int) {
-            when (i % 3) {
-                0 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_1)
-                1 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_2)
-                2 -> binding.clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_3)
+            binding.apply {
+                when (i % 3) {
+                    0 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_1)
+                    1 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_2)
+                    2 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_3)
+                }
             }
         }
     }

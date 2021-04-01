@@ -39,7 +39,7 @@ val helperModule = module {
     single { AuthHelper(get()) }
     single { TeacherHelper(get(), get()) }
     single { CourseHelper(get(), get(), get()) }
-    single { GroupHelper(get(), get()) }
+    single { GroupHelper(get(), get(), get()) }
 }
 
 val viewModelModule = module {
@@ -49,7 +49,7 @@ val viewModelModule = module {
     viewModel { AddTeacherViewModel(get()) }
     viewModel { CoursesViewModel(get()) }
     viewModel { AddCoursesViewModel(get(), get()) }
-    viewModel { AddGroupViewModel(get(), get()) }
+    viewModel { AddGroupViewModel(get(), get(), get()) }
     viewModel { GroupViewModel(get()) }
 }
 val adapterModule = module {

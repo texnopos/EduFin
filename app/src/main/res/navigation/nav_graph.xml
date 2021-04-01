@@ -83,7 +83,7 @@
         android:id="@+id/addTeacherFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.add.AddTeacherFragment"
         android:label="AddTeacherFragment"
-        tools:layout="@layout/fragment_add_employee" />
+        tools:layout="@layout/fragment_add_teacher" />
     <fragment
         android:id="@+id/addCoursesFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.course.add.AddCoursesFragment"

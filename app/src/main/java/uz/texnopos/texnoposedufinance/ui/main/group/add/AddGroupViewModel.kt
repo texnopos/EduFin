@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel
 import uz.texnopos.texnoposedufinance.core.Resource
 import uz.texnopos.texnoposedufinance.data.firebase.CourseHelper
 import uz.texnopos.texnoposedufinance.data.firebase.GroupHelper
+import uz.texnopos.texnoposedufinance.data.firebase.TeacherHelper
 import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.Group
+import uz.texnopos.texnoposedufinance.data.model.Teacher
 
-class AddGroupViewModel(private val helper: GroupHelper, private val courseHelper: CourseHelper): ViewModel() {
+class AddGroupViewModel(private val helper: GroupHelper,
+                        private val courseHelper: CourseHelper,
+                        private val teacherHelper: TeacherHelper): ViewModel() {
 
     private val _createGroup: MutableLiveData<Resource<Group?>> = MutableLiveData()
     val createGroup: LiveData<Resource<Group?>>
@@ -19,10 +23,18 @@ class AddGroupViewModel(private val helper: GroupHelper, private val courseHelpe
     val courseList: LiveData<Resource<List<Course?>>>
         get() = _courseList
 
-    fun createGroup(name: String, groupNum: String, courseId: String){
+    private val _teacherList: MutableLiveData<Resource<List<Teacher>>> = MutableLiveData()
+    val teacherList: LiveData<Resource<List<Teacher>>>
+        get() = _teacherList
+
+    fun createGroup(name: String,
+                    teacher: String,
+                    courseId: String,
+                    time: String,
+                    startDate: String){
         _createGroup.value = Resource.loading()
         helper.createGroup(
-            name, groupNum, courseId,
+            name, teacher, courseId, time, startDate,
             {
                 _createGroup.value = Resource.success(null)
             },
@@ -39,6 +51,18 @@ class AddGroupViewModel(private val helper: GroupHelper, private val courseHelpe
             },
             {
                 _courseList.value = Resource.error(it)
+            }
+        )
+    }
+
+    fun getAllTeachers() {
+        _teacherList.value = Resource.loading()
+        teacherHelper.getAllTeachers(
+            {
+                _teacherList.value = Resource.success(it)
+            },
+            {
+                _teacherList.value = Resource.error(it)
             }
         )
     }

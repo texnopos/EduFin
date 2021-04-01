@@ -15,7 +15,6 @@ class GroupViewModel(private val helper: GroupHelper): ViewModel() {
     fun getAllGroups(courseId: String){
         _groupResult.value = Resource.loading()
         helper.getAllGroups(
-            courseId,
             {
                 _groupResult.value = Resource.success(it)
             }, {

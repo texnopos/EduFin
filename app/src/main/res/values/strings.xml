@@ -51,5 +51,23 @@
     <string name="coursePayment">Стоймост курса</string>
     <string name="coursePeriod">Период курса</string>
     <string name="_0">0 сум</string>
+    <string name="salary">Зарплата</string>
+    <string name="addTeacher">Добавить учителя</string>
+    <string name="add_plus">+</string>
+    <string name="fillField">"Заполните поле "</string>
+    <string name="addCourse">Добавить кусру</string>
+    <string name="teachers">Сотрудники</string>
+    <string name="confirmYourPass">Подтвердите пароль</string>
+    <string name="doNotMatch">пароль и подтверждение не совпадают</string>
+    <string name="minLength">Пароль должен содержать не менее 8 символов</string>
+    <string name="startDate">Дата начала(обязательно)</string>
+    <string name="time">Время(обязательно):</string>
+    <string name="mon">П</string>
+    <string name="tue">В</string>
+    <string name="wed">С</string>
+    <string name="thu">Ч</string>
+    <string name="fri">П</string>
+    <string name="sat">С</string>
+    <string name="sun">В</string>
 
 </resources>

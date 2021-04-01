@@ -15,36 +15,19 @@ class AddCoursesViewModel(
 ) : ViewModel() {
 
     private val _createCourse: MutableLiveData<Resource<Course>> = MutableLiveData()
-    private val _teacherList: MutableLiveData<Resource<List<Teacher>>> = MutableLiveData()
-
 
     val createCourse: LiveData<Resource<Course>>
         get() = _createCourse
 
-    val teacherList: LiveData<Resource<List<Teacher>>>
-        get() = _teacherList
-
-    fun createCourse(name: String, teacher: String, cost: Double, period: Int) {
+    fun createCourse(name: String, duration: Int, price: Double ) {
         _createCourse.value = Resource.loading()
         helper.addNewCourse(
-            name, teacher, cost, period,
+            name, duration, price,
             {
                 _createCourse.value = Resource.success(null)
             },
             {
                 _createCourse.value = Resource.error(it)
-            }
-        )
-    }
-
-    fun getAllTeachers() {
-        _teacherList.value = Resource.loading()
-        teacherHelper.getAllEmployees(
-            {
-                _teacherList.value = Resource.success(it)
-            },
-            {
-                _teacherList.value = Resource.error(it)
             }
         )
     }

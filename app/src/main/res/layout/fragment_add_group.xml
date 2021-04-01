@@ -42,6 +42,16 @@
                     android:padding="@dimen/margin_large"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <Spinner
+                    android:id="@+id/teachers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:padding="@dimen/margin_large"
+                    app:layout_constraintTop_toBottomOf="@id/courses" />
+
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/courseId"
                     android:layout_width="match_parent"
@@ -57,18 +67,152 @@
                     app:layout_constraintTop_toBottomOf="@id/courses" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/courseNum"
+                    android:id="@+id/groupNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_small_standard"
-                    android:background="@drawable/shape_square"
                     android:hint="@string/courseNum"
                     android:inputType="number"
                     android:padding="@dimen/margin_standard_lg"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/courses" />
+                    app:layout_constraintTop_toBottomOf="@id/teachers" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:gravity="center"
+                    android:text="@string/time"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    app:layout_constraintTop_toBottomOf="@id/groupNum" />
+
+                <TimePicker
+                    android:id="@+id/timePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:timePickerMode="spinner"
+                    app:layout_constraintTop_toBottomOf="@id/time" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:orientation="vertical"
+                    android:weightSum="2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/timePicker">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_middle"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_standard"
+                            android:layout_marginTop="@dimen/margin_standard"
+                            android:text="test"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_standard"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/calendar"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginTop="@dimen/margin_standard"
+                            android:layout_marginEnd="@dimen/margin_standard"
+                            android:padding="@dimen/margin_middle"
+                            android:src="@drawable/ic_calendar"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/monday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_standard"
+                            android:layout_weight="1"
+                            android:text="@string/mon"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_standard"
+                            tools:ignore="NestedWeights" />
+
+                        <TextView
+                            android:id="@+id/tuesday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/tue"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_standard" />
+
+                        <TextView
+                            android:id="@+id/wednesday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/wed"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_standard" />
+
+                        <TextView
+                            android:id="@+id/thursday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/thu"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_standard" />
+
+                        <TextView
+                            android:id="@+id/friday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/fri"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_standard" />
+
+                        <TextView
+                            android:id="@+id/saturday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sat"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_standard" />
+
+                        <TextView
+                            android:id="@+id/sunday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_standard"
+                            android:layout_weight="1"
+                            android:text="@string/sun"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_standard" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <ProgressBar
                     android:id="@+id/loading"
