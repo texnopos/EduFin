@@ -6,6 +6,6 @@ data class Group(
     var courseId: String = "",
     var name: String = "",
     var time: String = "",
-    var startDate: String,
-    val teacher: String
+    var startDate: String = "",
+    var teacher: String = ""
 )

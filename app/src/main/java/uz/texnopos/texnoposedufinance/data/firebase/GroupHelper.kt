@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
 import uz.texnopos.texnoposedufinance.data.model.Group
+import uz.texnopos.texnoposedufinance.data.model.Teacher
 import java.util.*
 
 class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private val func: FirebaseFunctions) {
@@ -23,9 +24,10 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private
             orgId = orgId,
             courseId = courseId,
             name = name,
-            teacher = teacher,
             time = time,
-            startDate = startDate)
+            startDate = startDate,
+            teacher = teacher
+        )
         db.collection("users/$orgId/groups").document(id).set(newGroup)
             .addOnSuccessListener {
                 onSuccess.invoke()
@@ -36,15 +38,8 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private
     }
 
     fun getAllGroups(
-        courseId: String,
         onSuccess: (list: List<Group>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ){
-        db.collection("users/$orgId/groups").get()
-            .addOnSuccessListener {
-            }
-            .addOnFailureListener {
-                onFailure.invoke(it.localizedMessage)
-            }
     }
 }

@@ -9,8 +9,7 @@
     <include
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/actionBar"
-        layout="@layout/action_bar_add"
-        />
+        layout="@layout/action_bar_add" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swlCourses"

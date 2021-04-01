@@ -39,6 +39,7 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses),
             navController.popBackStack()
         }
         binding.apply {
+
             btnSave.onClick {
                 if (!name.text.isNullOrEmpty() &&
                     !price.text.isNullOrEmpty() && !duration.text.isNullOrEmpty()

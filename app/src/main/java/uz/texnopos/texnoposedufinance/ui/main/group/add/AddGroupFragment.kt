@@ -1,9 +1,11 @@
 package uz.texnopos.texnoposedufinance.ui.main.group.add
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -15,6 +17,7 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.AddActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
+import java.util.ArrayList
 
 class AddGroupFragment : BaseFragment(R.layout.fragment_add_group), AdapterView.OnItemClickListener {
     private val viewModel: AddGroupViewModel by inject()
@@ -24,6 +27,9 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group), AdapterView.
     var course = ""
     var id = ""
     var teacher = ""
+    var courseTime = ""
+    var days = ""
+    var startDate = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +49,8 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group), AdapterView.
         viewModel.getAllTeachers()
 
         binding.apply {
+            timePicker.setIs24HourView(true)
+
             courses.adapter = adapter
             viewModel.courseList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -109,9 +117,12 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group), AdapterView.
                 }
 
             btnAdd.onClick {
+                courseTime = if(timePicker.minute == 0){
+                    "${timePicker.hour}:${timePicker.minute}0"
+                } else "${timePicker.hour}:${timePicker.minute}"
                 if(courseId.text.isNotEmpty()){
                     viewModel.createGroup(course, teacher, courseId.text.toString(),
-                        time.text.toString(), startDate.text.toString())
+                        courseTime, startDate)
                 }
             }
         }
@@ -138,6 +149,16 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group), AdapterView.
             })
         }
 
+    }
+    @SuppressLint("ResourceAsColor")
+    fun isSelected(view: TextView){
+        view.setBackgroundResource(R.drawable.shape_circle)
+        view.setTextColor(R.color.purple_500)
+    }
+    @SuppressLint("ResourceAsColor")
+    fun isNotSelected(view: TextView){
+        view.setBackgroundResource(R.drawable.shape_circle)
+        view.setTextColor(R.color.black)
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
