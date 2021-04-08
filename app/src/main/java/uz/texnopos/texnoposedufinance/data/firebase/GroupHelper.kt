@@ -38,8 +38,22 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private
     }
 
     fun getAllGroups(
+        courseId: String,
         onSuccess: (list: List<Group>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ){
+        db.collection("users/$orgId/groups")
+            .whereEqualTo("courseId", courseId).get()
+            .addOnSuccessListener {doc ->
+                if(doc.documents.isNotEmpty()){
+                    onSuccess.invoke(doc.documents.map {
+                        it.toObject(Group::class.java) ?: Group()
+                    })
+                }
+                else onSuccess.invoke(listOf())
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
     }
 }

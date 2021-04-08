@@ -19,13 +19,12 @@ class GroupFragment : BaseFragment(R.layout.item_courses) {
         super.onViewCreated(view, savedInstanceState)
         binding = ItemCoursesBinding.bind(view)
         binding.rvGroups.adapter = adapter
-        //viewModel.getAllGroups()
         setUpObservers()
     }
 
 
     private fun setUpObservers() {
-        viewModel.groupResult.observe(viewLifecycleOwner, Observer {
+        viewModel.groupList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.LOADING -> {
                     //

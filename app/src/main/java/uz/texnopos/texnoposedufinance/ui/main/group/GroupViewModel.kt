@@ -8,17 +8,16 @@ import uz.texnopos.texnoposedufinance.data.firebase.GroupHelper
 import uz.texnopos.texnoposedufinance.data.model.Group
 
 class GroupViewModel(private val helper: GroupHelper): ViewModel() {
-    private val _groupResult: MutableLiveData<Resource<List<Group>>> = MutableLiveData()
-    val groupResult: LiveData<Resource<List<Group>>>
-        get() = _groupResult
+    private val _groupList: MutableLiveData<Resource<List<Group>>> = MutableLiveData()
+    val groupList: LiveData<Resource<List<Group>>>
+        get() = _groupList
 
     fun getAllGroups(courseId: String){
-        _groupResult.value = Resource.loading()
-        helper.getAllGroups(
-            {
-                _groupResult.value = Resource.success(it)
+        _groupList.value = Resource.loading()
+        helper.getAllGroups(courseId,
+            { _groupList.value = Resource.success(it)
             }, {
-                _groupResult.value = Resource.error(it)
+                _groupList.value = Resource.error(it)
             })
     }
 }

@@ -53,5 +53,18 @@
         android:layout_marginBottom="@dimen/margin_standard"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:background="@color/purple_700"/>
+
+    <TextView
+        android:id="@+id/addGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_group"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_standard"
+        android:visibility="gone"
+        android:padding="@dimen/margin_small_standard"/>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

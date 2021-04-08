@@ -12,6 +12,7 @@ import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
+import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
@@ -35,9 +36,35 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         navController = Navigation.findNavController(view)
 
         setUpObservers()
+
         binding.rcvCourses.adapter = adapter
         actBinding.title.text = view.context.getString(R.string.courses)
+
         viewModel.getAllCourses()
+
+        adapter.setOnItemClicked {
+            viewModel.getAllGroups(it)
+            binding.apply {
+                viewModel.groupList.observe(viewLifecycleOwner, Observer {u->
+                    when (u.status) {
+                        ResourceState.LOADING -> {
+
+                        }
+                        ResourceState.SUCCESS -> {
+                            if (u.data!!.isNotEmpty()) {
+                                adapter.groupAdapter.models = u.data
+                                toastLN("Magliwmat aldi")
+                            } else {
+                                toastLN("Gruppalar joq")
+                            }
+                        }
+                        ResourceState.ERROR -> {
+                            toastLN(u.message)
+                        }
+                    }
+                })
+            }
+        }
 
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(
