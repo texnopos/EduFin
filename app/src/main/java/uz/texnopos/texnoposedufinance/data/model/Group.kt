@@ -7,5 +7,6 @@ data class Group(
     var name: String = "",
     var time: String = "",
     var startDate: String = "",
-    var teacher: String = ""
+    var teacher: String = "",
+    var days: String = ""
 )

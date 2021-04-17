@@ -19,10 +19,6 @@ class AddGroupViewModel(private val helper: GroupHelper,
     val createGroup: LiveData<Resource<Group?>>
         get() = _createGroup
 
-    private val _courseList: MutableLiveData<Resource<List<Course?>>> = MutableLiveData()
-    val courseList: LiveData<Resource<List<Course?>>>
-        get() = _courseList
-
     private val _teacherList: MutableLiveData<Resource<List<Teacher>>> = MutableLiveData()
     val teacherList: LiveData<Resource<List<Teacher>>>
         get() = _teacherList
@@ -31,26 +27,16 @@ class AddGroupViewModel(private val helper: GroupHelper,
                     teacher: String,
                     courseId: String,
                     time: String,
-                    startDate: String){
+                    startDate: String,
+                    days: String){
         _createGroup.value = Resource.loading()
         helper.createGroup(
-            name, teacher, courseId, time, startDate,
+            name, teacher, courseId, time, startDate, days,
             {
                 _createGroup.value = Resource.success(null)
             },
             {
                 _createGroup.value = Resource.error(it)
-            }
-        )
-    }
-    fun getAllCourses(){
-        _courseList.value = Resource.loading()
-        courseHelper.getAllCourses(
-            {
-                _courseList.value = Resource.success(it)
-            },
-            {
-                _courseList.value = Resource.error(it)
             }
         )
     }

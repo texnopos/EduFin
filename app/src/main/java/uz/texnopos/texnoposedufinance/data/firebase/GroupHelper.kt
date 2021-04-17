@@ -15,6 +15,7 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private
                     courseId: String,
                     time: String,
                     startDate: String,
+                    days: String,
                     onSuccess: () -> Unit,
                     onFailure: (msg: String?) -> Unit
     ){
@@ -26,7 +27,8 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private
             name = name,
             time = time,
             startDate = startDate,
-            teacher = teacher
+            teacher = teacher,
+            days = days
         )
         db.collection("users/$orgId/groups").document(id).set(newGroup)
             .addOnSuccessListener {

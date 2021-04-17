@@ -15,59 +15,41 @@ import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
+import uz.texnopos.texnoposedufinance.data.model.Day
 import uz.texnopos.texnoposedufinance.databinding.AddActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
-import java.util.ArrayList
 
-class AddGroupFragment : BaseFragment(R.layout.fragment_add_group), AdapterView.OnItemClickListener {
+class AddGroupFragment : BaseFragment(R.layout.fragment_add_group),
+    AdapterView.OnItemClickListener {
     private val viewModel: AddGroupViewModel by inject()
     private lateinit var binding: FragmentAddGroupBinding
     private lateinit var bindingActBar: AddActionBarBinding
     lateinit var navController: NavController
-    var course = ""
     var id = ""
     var teacher = ""
     var courseTime = ""
-    var days = ""
     var startDate = ""
+    var courseId = ""
+    var name = ""
+    //name ham id qosiw kk
+    private val daysAdapter = DaysAdapter()
+    private val days = arrayListOf("П", "В", "С", "Ч", "П", "С", "В")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentAddGroupBinding.bind(view)
         bindingActBar = AddActionBarBinding.bind(view)
-
-        val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, arrayListOf<String>())
         val adapter2 = ArrayAdapter(requireContext(), R.layout.spinner_item, arrayListOf<String>())
 
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.create_group)
         navController = Navigation.findNavController(view)
 
         setUpObserversGroup()
-
-        viewModel.getAllCourses()
         viewModel.getAllTeachers()
 
         binding.apply {
             timePicker.setIs24HourView(true)
-
-            courses.adapter = adapter
-            viewModel.courseList.observe(viewLifecycleOwner, Observer {
-                when (it.status) {
-                    ResourceState.LOADING -> loading.visibility(true)
-                    ResourceState.SUCCESS -> {
-                        loading.visibility(false)
-                        adapter.clear()
-                        adapter.addAll(it.data!!.map { e -> e!!.name })
-                        courseId.text = ""
-                    }
-                    ResourceState.ERROR -> {
-                        loading.visibility(false)
-                        toastLN(it.message)
-                    }
-                }
-            })
-
             teachers.adapter = adapter2
             viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -99,37 +81,28 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group), AdapterView.
                     }
                 }
 
-            courses.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        course = ""
-                    }
-
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        course = viewModel.courseList.value?.data!![position]!!.name
-                        courseId.text = viewModel.courseList.value?.data!![position]!!.id
-                    }
-                }
+            rcvDays.adapter = daysAdapter
+            val models = mutableListOf<Day>()
+            for (i in 0..6) {
+                models.add(Day(days[i], false))
+            }
+            daysAdapter.models = models
 
             btnAdd.onClick {
-                courseTime = if(timePicker.minute == 0){
+                val lessonDays = date.text.toString()
+                courseTime = if (timePicker.minute == 0) {
                     "${timePicker.hour}:${timePicker.minute}0"
                 } else "${timePicker.hour}:${timePicker.minute}"
-                if(courseId.text.isNotEmpty()){
-                    viewModel.createGroup(course, teacher, courseId.text.toString(),
-                        courseTime, startDate)
-                }
+
+                viewModel.createGroup(
+                    name, teacher, courseId, courseTime, startDate, lessonDays)
             }
         }
-        bindingActBar.btnHome.onClick{
+        bindingActBar.btnHome.onClick {
             navController.popBackStack()
         }
     }
+
     private fun setUpObserversGroup() {
         binding.apply {
             viewModel.createGroup.observe(viewLifecycleOwner, Observer {
@@ -150,13 +123,15 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group), AdapterView.
         }
 
     }
+
     @SuppressLint("ResourceAsColor")
-    fun isSelected(view: TextView){
+    fun isSelected(view: TextView) {
         view.setBackgroundResource(R.drawable.shape_circle)
         view.setTextColor(R.color.purple_500)
     }
+
     @SuppressLint("ResourceAsColor")
-    fun isNotSelected(view: TextView){
+    fun isNotSelected(view: TextView) {
         view.setBackgroundResource(R.drawable.shape_circle)
         view.setTextColor(R.color.black)
     }

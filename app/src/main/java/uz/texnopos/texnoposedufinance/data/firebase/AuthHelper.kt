@@ -1,11 +1,15 @@
+
 package uz.texnopos.texnoposedufinance.data.firebase
 
+import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.play.core.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.functions.FirebaseFunctions
 
-class AuthHelper(private val auth: FirebaseAuth) {
+class AuthHelper(private val auth: FirebaseAuth, private val functions: FirebaseFunctions) {
 
     fun signUp(
         email: String, password: String,
@@ -15,7 +19,10 @@ class AuthHelper(private val auth: FirebaseAuth) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 onSuccess.invoke()
+                functions.getHttpsCallable("addUser").call("data" to email)
+                    .addOnSuccessListener {
 
+                    }
             }
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
