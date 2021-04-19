@@ -19,10 +19,5 @@ class MainActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.nav_host)
     }
-
-    override fun onStop() {
-        super.onStop()
-        FirebaseAuth.getInstance().signOut()
-    }
 }
 

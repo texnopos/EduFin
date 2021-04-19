@@ -16,8 +16,7 @@ import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.AddActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddCoursesBinding
 
-class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses),
-    AdapterView.OnItemClickListener {
+class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterView.OnItemClickListener {
 
     private val viewModel: AddCoursesViewModel by viewModel()
     lateinit var binding: FragmentAddCoursesBinding
@@ -70,6 +69,7 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses),
 
                     ResourceState.SUCCESS -> {
                         loading.visibility(false)
+                        clear()
                         toastLNCenter("Added successfully")
                     }
                     ResourceState.ERROR -> {
@@ -78,6 +78,13 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses),
                     }
                 }
             })
+        }
+    }
+    fun clear(){
+        binding.apply {
+            name.text!!.isEmpty()
+            price.text!!.isEmpty()
+            duration.text!!.isEmpty()
         }
     }
 

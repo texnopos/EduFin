@@ -12,7 +12,6 @@ import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.data.model.Teacher
 
 class AddGroupViewModel(private val helper: GroupHelper,
-                        private val courseHelper: CourseHelper,
                         private val teacherHelper: TeacherHelper): ViewModel() {
 
     private val _createGroup: MutableLiveData<Resource<Group?>> = MutableLiveData()

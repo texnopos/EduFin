@@ -5,14 +5,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
+import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.data.firebase.AuthHelper
 import uz.texnopos.texnoposedufinance.data.firebase.CourseHelper
 import uz.texnopos.texnoposedufinance.data.firebase.TeacherHelper
 import uz.texnopos.texnoposedufinance.data.firebase.GroupHelper
+import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpViewModel
 import uz.texnopos.texnoposedufinance.ui.main.course.CoursesViewModel
@@ -21,6 +27,7 @@ import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 import uz.texnopos.texnoposedufinance.ui.main.teacher.add.AddTeacherViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupViewModel
+import java.util.concurrent.TimeUnit
 
 val firebaseModule = module {
     single { FirebaseAuth.getInstance() }
@@ -35,8 +42,35 @@ val firebaseModule = module {
     single { GoogleSignIn.getClient(androidApplication().applicationContext, get()) }
 }
 
+val networkModule = module {
+    single {
+        GsonBuilder().setLenient().create()
+    }
+    single {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(false)
+            .build()
+
+    }
+    single {
+        Retrofit
+            .Builder()
+            .baseUrl("https://texnopos-finance.firebaseapp.com/")
+            .addConverterFactory(GsonConverterFactory.create(get()))
+            .client(get())
+            .build()
+    }
+    single { get<Retrofit>().create(ApiInterface::class.java) }
+}
+
 val helperModule = module {
-    single { AuthHelper(get(), get()) }
+    single { AuthHelper(get()) }
     single { TeacherHelper(get(), get()) }
     single { CourseHelper(get(), get(), get()) }
     single { GroupHelper(get(), get(), get()) }
@@ -49,7 +83,7 @@ val viewModelModule = module {
     viewModel { AddTeacherViewModel(get()) }
     viewModel { CoursesViewModel(get()) }
     viewModel { AddCoursesViewModel(get(), get()) }
-    viewModel { AddGroupViewModel(get(), get(), get()) }
+    viewModel { AddGroupViewModel(get(), get()) }
     viewModel { GroupViewModel(get()) }
 }
 val adapterModule = module {

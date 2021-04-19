@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseAdapter
-import uz.texnopos.texnoposedufinance.core.extentions.addVertDivider
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
@@ -19,7 +18,24 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
     fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
         this.onItemClick = onItemClick
     }
+
+    var setAddGroup: (id: String) -> Unit = {}
+    fun setAddGroupClicked(addGroupId: (id: String) -> Unit) {
+        this.setAddGroup = addGroupId
+    }
+
+    var onResponse: (List<Course>) -> Unit = {}
+    fun onResponse(onResponse: (List<Course>) -> Unit) {
+        this.onResponse = onResponse
+    }
+
+    var onFailure: (String?) -> Unit = {}
+    fun onFailure(onFailure: (String?) -> Unit) {
+        this.onFailure = onFailure
+    }
+
     val groupAdapter = GroupAdapter()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         val itemView = parent.inflate(R.layout.item_courses)
@@ -36,13 +52,15 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
         fun populateModel(model: Course, position: Int) {
             binding.apply {
                 tvCourseName.text = model.name
-                tvGroupCount.text = root.context.getString(R.string.group_count)
-                tvPupilsCount.text = root.context.getString(R.string.participants_count, model.duration)
+                /*tvGroupCount.text = root.context.getString(R.string.group_count)
+                tvPupilsCount.text = root.context.getString(R.string.participants_count, model.duration)*/
                 setDrawable(position)
                 rvGroups.visibility(false)
                 addGroup.visibility(false)
+
                 rlLayout.onClick {
                     rvGroups.adapter = groupAdapter
+                    groupAdapter.models = model.groups
                     if (rvGroups.visibility == View.GONE && addGroup.visibility == View.GONE) {
                         rvGroups.visibility(true)
                         addGroup.visibility(true)
@@ -52,6 +70,10 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                         addGroup.visibility = View.GONE
                     }
                 }
+                addGroup.onClick {
+                    setAddGroup.invoke(model.id)
+                }
+
                 //rvGroups.addVertDivider(root.context)
             }
         }
@@ -62,15 +84,15 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                     /*0 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_1)
                     1 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_2)
                     2 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_3)*/
-                    0 ->{
+                    0 -> {
                         rlLayout.setBackgroundResource(R.drawable.shape_courses_1_open)
                         addGroup.setBackgroundResource(R.drawable.shape_courses_1_close)
                     }
-                    1 ->{
+                    1 -> {
                         rlLayout.setBackgroundResource(R.drawable.shape_courses_2_open)
                         addGroup.setBackgroundResource(R.drawable.shape_courses_2_close)
                     }
-                    2 ->{
+                    2 -> {
                         rlLayout.setBackgroundResource(R.drawable.shape_courses_3_open)
                         addGroup.setBackgroundResource(R.drawable.shape_courses_3_close)
                     }

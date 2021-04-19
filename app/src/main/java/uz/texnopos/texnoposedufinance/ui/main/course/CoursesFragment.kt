@@ -13,6 +13,8 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.Course
+import uz.texnopos.texnoposedufinance.data.model.request.ApiClient
+import uz.texnopos.texnoposedufinance.data.model.request.NetworkHelper
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
@@ -27,6 +29,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
     lateinit var actBinding: ActionBarAddBinding
     lateinit var navController: NavController
     lateinit var parentNavController: NavController
+    lateinit var networkHelper: NetworkHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,6 +37,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         binding = FragmentCoursesBinding.bind(view)
         actBinding = ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
+        networkHelper = NetworkHelper(ApiClient.getClient())
 
         setUpObservers()
 
@@ -42,7 +46,19 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
 
         viewModel.getAllCourses()
 
+        setData()
+        adapter.onResponse {
+            adapter.models = it
+        }
+        adapter.onFailure{
+            toastLN(it)
+        }
         adapter.setOnItemClicked {
+            val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment()
+            parentNavController.navigate(action)
+        }
+
+        /*adapter.setOnItemClicked {
             viewModel.getAllGroups(it)
             binding.apply {
                 viewModel.groupList.observe(viewLifecycleOwner, Observer {u->
@@ -64,18 +80,13 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
                     }
                 })
             }
-        }
+        }*/
 
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(
                     requireParentFragment().requireActivity() as
                             MainActivity, R.id.nav_host
                 )
-        }
-
-        actBinding.add.onClick {
-            val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment()
-            parentNavController.navigate(action)
         }
 
         binding.swlCourses.setOnRefreshListener {
@@ -105,5 +116,8 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
                 }
             })
         }
+    }
+    fun setData(){
+        networkHelper.getAllCourses(adapter)
     }
 }
