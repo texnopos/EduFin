@@ -11,7 +11,7 @@ import uz.texnopos.texnoposedufinance.databinding.ItemGroupBinding
 class GroupAdapter: BaseAdapter<Group, GroupAdapter.GroupViewHolder>(){
     inner class GroupViewHolder(val binding: ItemGroupBinding): RecyclerView.ViewHolder(binding.root){
         fun populateModel(model: Group){
-            binding.name.text = model.id
+            binding.name.text = model.name
         }
     }
 

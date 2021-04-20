@@ -51,39 +51,55 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun populateModel(model: Course, position: Int) {
             binding.apply {
-                tvCourseName.text = model.name
-                /*tvGroupCount.text = root.context.getString(R.string.group_count)
-                tvPupilsCount.text = root.context.getString(R.string.participants_count, model.duration)*/
-                setDrawable(position)
                 rvGroups.visibility(false)
                 addGroup.visibility(false)
+                cvGroups.visibility(false)
+                tvCourseName.text = model.name
+                tvGroupCount.text = root.context.getString(R.string.group_count)
+                tvPupilsCount.text = root.context.getString(R.string.participants_count, model.duration)
+                setDrawable(position)
+                rvGroups.adapter = groupAdapter
+                groupAdapter.models = model.groups
 
                 rlLayout.onClick {
-                    rvGroups.adapter = groupAdapter
-                    groupAdapter.models = model.groups
-                    if (rvGroups.visibility == View.GONE && addGroup.visibility == View.GONE) {
-                        rvGroups.visibility(true)
+                    if (cvGroups.visibility == View.GONE && addGroup.visibility == View.GONE) {
                         addGroup.visibility(true)
-                        onItemClick.invoke(model.id)
+                        if(model.groups.isNotEmpty()) {
+                            cvGroups.visibility(true)
+                            rvGroups.visibility(true)
+                        }
+                        else {
+                            rvGroups.visibility(false)
+                            cvGroups.visibility(false)
+                        }
+                        setDrawableOpenClose(position)
                     } else {
+                        cvGroups.visibility(false)
+                        addGroup.visibility(false)
                         rvGroups.visibility(false)
-                        addGroup.visibility = View.GONE
+                        setDrawable(position)
                     }
                 }
                 addGroup.onClick {
                     setAddGroup.invoke(model.id)
                 }
-
-                //rvGroups.addVertDivider(root.context)
             }
         }
 
-        private fun setDrawable(i: Int) {
+        private fun setDrawable(i: Int){
+            binding.apply{
+                when(i){
+                    0 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_1)
+                    1 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_2)
+                    2 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_3)
+                }
+            }
+
+        }
+
+        private fun setDrawableOpenClose(i: Int) {
             binding.apply {
                 when (i % 3) {
-                    /*0 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_1)
-                    1 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_2)
-                    2 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_3)*/
                     0 -> {
                         rlLayout.setBackgroundResource(R.drawable.shape_courses_1_open)
                         addGroup.setBackgroundResource(R.drawable.shape_courses_1_close)

@@ -9,7 +9,7 @@
     <include
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/actionBar"
-        layout="@layout/action_bar_add" />
+        layout="@layout/action_bar" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swlCourses"
@@ -26,7 +26,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView

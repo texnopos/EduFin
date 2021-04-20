@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import org.koin.android.ext.android.inject
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
@@ -19,8 +20,7 @@ import uz.texnopos.texnoposedufinance.data.model.Day
 import uz.texnopos.texnoposedufinance.databinding.AddActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
 
-class AddGroupFragment : BaseFragment(R.layout.fragment_add_group),
-    AdapterView.OnItemClickListener {
+class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.OnItemClickListener {
     private val viewModel: AddGroupViewModel by inject()
     private lateinit var binding: FragmentAddGroupBinding
     private lateinit var bindingActBar: AddActionBarBinding
@@ -30,8 +30,10 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group),
     var courseTime = ""
     var startDate = ""
     var courseId = ""
-    var name = ""
-    //name ham id qosiw kk
+
+    private val safeArgs: AddGroupFragmentArgs by navArgs()
+
+
     private val daysAdapter = DaysAdapter()
     private val days = arrayListOf("П", "В", "С", "Ч", "П", "С", "В")
 
@@ -93,7 +95,9 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group),
                 courseTime = if (timePicker.minute == 0) {
                     "${timePicker.hour}:${timePicker.minute}0"
                 } else "${timePicker.hour}:${timePicker.minute}"
-
+                courseId = safeArgs.id
+                val name = groupName.text.toString()
+                if(name.isEmpty()) groupName.error = requireContext().getString(R.string.fillField)
                 viewModel.createGroup(
                     name, teacher, courseId, courseTime, startDate, lessonDays)
             }
@@ -140,3 +144,4 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group),
         TODO("Not yet implemented")
     }
 }
+

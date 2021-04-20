@@ -39,8 +39,6 @@ class DaysAdapter: BaseAdapter<Day, DaysAdapter.DaysViewHolder>(){
                         adapter.selectedItem = -1
                         selected.visibility = View.GONE
                         day.selected = false
-                        //adapter.models[adapter.selectedItem].selected = false
-
                     }
                     else{
                         adapter.selectedItem = position
@@ -49,13 +47,13 @@ class DaysAdapter: BaseAdapter<Day, DaysAdapter.DaysViewHolder>(){
                     }
                     var s = ""
                     when(position){
-                        0 -> s+= "1"
-                        1 -> s+= "2"
-                        2 -> s+= "3"
-                        3 -> s+= "4"
-                        4 -> s+= "5"
-                        5 -> s+= "6"
-                        6 -> s+= "7"
+                        0 -> s+= "1 "
+                        1 -> s+= "2 "
+                        2 -> s+= "3 "
+                        3 -> s+= "4 "
+                        4 -> s+= "5 "
+                        5 -> s+= "6 "
+                        6 -> s+= "7 "
                     }
                 }
             }

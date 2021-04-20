@@ -59,7 +59,8 @@
             app:destination="@id/addCoursesFragment" />
         <action
             android:id="@+id/action_mainFragment_to_addGroupFragment"
-            app:destination="@id/addGroupFragment" />
+            app:destination="@id/addGroupFragment">
+        </action>
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -93,5 +94,9 @@
         android:id="@+id/addGroupFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupFragment"
         android:label="AddGroupFragment"
-        tools:layout="@layout/fragment_add_group"/>
+        tools:layout="@layout/fragment_add_group">
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

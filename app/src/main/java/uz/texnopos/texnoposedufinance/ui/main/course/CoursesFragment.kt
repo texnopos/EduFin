@@ -10,23 +10,19 @@ import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
-import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.request.ApiClient
 import uz.texnopos.texnoposedufinance.data.model.request.NetworkHelper
-import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
+import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
-import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
-import uz.texnopos.texnoposedufinance.ui.main.group.GroupViewModel
 
 class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
 
     private val viewModel: CoursesViewModel by viewModel()
     private val adapter = CoursesAdapter()
     private lateinit var binding: FragmentCoursesBinding
-    lateinit var actBinding: ActionBarAddBinding
+    lateinit var actBinding: ActionBarBinding
     lateinit var navController: NavController
     lateinit var parentNavController: NavController
     lateinit var networkHelper: NetworkHelper
@@ -35,14 +31,14 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentCoursesBinding.bind(view)
-        actBinding = ActionBarAddBinding.bind(view)
+        actBinding = ActionBarBinding.bind(view)
         navController = Navigation.findNavController(view)
         networkHelper = NetworkHelper(ApiClient.getClient())
 
         setUpObservers()
 
         binding.rcvCourses.adapter = adapter
-        actBinding.title.text = view.context.getString(R.string.courses)
+        actBinding.tvTitle.text = view.context.getString(R.string.courses)
 
         viewModel.getAllCourses()
 
@@ -53,8 +49,8 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         adapter.onFailure{
             toastLN(it)
         }
-        adapter.setOnItemClicked {
-            val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment()
+        adapter.setAddGroupClicked {
+            val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment(it)
             parentNavController.navigate(action)
         }
 
