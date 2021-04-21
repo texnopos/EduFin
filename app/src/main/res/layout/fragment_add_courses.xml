@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/actionBar"
-        app:layout_constraintBottom_toTopOf="@id/btnSave">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -96,17 +96,5 @@
 
         </ScrollView>
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:layout_marginBottom="@dimen/margin_standard"
-        android:background="@drawable/shape_button"
-        android:text="@string/save"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

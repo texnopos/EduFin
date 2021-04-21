@@ -19,7 +19,7 @@
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/margin_large"
-        app:layout_constraintBottom_toTopOf="@id/btnAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/actionBar">
@@ -136,18 +136,5 @@
         </ScrollView>
 
     </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:layout_marginBottom="@dimen/margin_standard"
-        android:background="@drawable/shape_button"
-        android:text="@string/add"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:padding="@dimen/margin_middle"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

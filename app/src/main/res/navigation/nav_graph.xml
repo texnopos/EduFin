@@ -61,6 +61,9 @@
             android:id="@+id/action_mainFragment_to_addGroupFragment"
             app:destination="@id/addGroupFragment">
         </action>
+        <action
+            android:id="@+id/action_mainFragment_to_teachersInfoFragment"
+            app:destination="@id/teachersInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -98,5 +101,14 @@
         <argument
             android:name="id"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/teachersInfoFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeachersInfoFragment"
+        android:label="TeachersInfoFragment"
+        tools:layout="@layout/fragment_teachers_info">
+        <argument
+            android:name="teacherId"
+            app:argType="string"/>
     </fragment>
 </navigation>

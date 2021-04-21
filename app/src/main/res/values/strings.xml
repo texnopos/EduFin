@@ -69,5 +69,8 @@
     <string name="fri">П</string>
     <string name="sat">С</string>
     <string name="sun">В</string>
+    <string name="teachers_info">Teachers Info</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Изменить</string>
 
 </resources>

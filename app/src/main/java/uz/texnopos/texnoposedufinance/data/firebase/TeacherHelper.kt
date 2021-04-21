@@ -48,5 +48,14 @@ class TeacherHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
                 onFailure.invoke(it.localizedMessage)
             }
     }
+    fun deleteTeacher(teacherId: String, onSuccess: () -> Unit, onFailure: (msg: String?) -> Unit){
+        db.collection("users/$orgId/teachers").document(teacherId).delete()
+            .addOnSuccessListener {
+                onSuccess.invoke()
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
+    }
 
 }

@@ -1,5 +1,6 @@
 package uz.texnopos.texnoposedufinance.ui.main.course
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -49,13 +50,15 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
 
     inner class CoursesViewHolder(private val binding: ItemCoursesBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("StringFormatMatches")
         fun populateModel(model: Course, position: Int) {
             binding.apply {
                 rvGroups.visibility(false)
                 addGroup.visibility(false)
                 cvGroups.visibility(false)
                 tvCourseName.text = model.name
-                tvGroupCount.text = root.context.getString(R.string.group_count)
+                //val g = model.groups.size.toString()
+                //tvGroupCount.text = root.context.getString(R.string.group_count, g)
                 tvPupilsCount.text = root.context.getString(R.string.participants_count, model.duration)
                 setDrawable(position)
                 rvGroups.adapter = groupAdapter

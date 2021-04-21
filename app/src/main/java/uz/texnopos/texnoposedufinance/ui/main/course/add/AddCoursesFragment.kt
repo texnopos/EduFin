@@ -37,26 +37,28 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterV
         bindingActBar.btnHome.onClick {
             navController.popBackStack()
         }
-        binding.apply {
-
-            btnSave.onClick {
-                if (!name.text.isNullOrEmpty() &&
-                    !price.text.isNullOrEmpty() && !duration.text.isNullOrEmpty()
-                ) {
-                    val name = name.text.toString()
-                    val price: Double = price.text.toString().toDouble()
-                    val period = duration.text.toString().toInt()
-                    viewModel.createCourse(name, period, price).toString()
-                } else {
-                    if (name.text.isNullOrEmpty()) name.error =
-                        view.context.getString(R.string.fillField)
-                    if (price.text.isNullOrEmpty()) price.error =
-                        view.context.getString(R.string.fillField)
-                    if (duration.text.isNullOrEmpty()) duration.error =
-                        view.context.getString(R.string.fillField)
+        bindingActBar.apply {
+            binding.apply {
+                tvSave.onClick {
+                    if (!name.text.isNullOrEmpty() &&
+                        !price.text.isNullOrEmpty() && !duration.text.isNullOrEmpty()
+                    ) {
+                        val name = name.text.toString()
+                        val price: Double = price.text.toString().toDouble()
+                        val period = duration.text.toString().toInt()
+                        viewModel.createCourse(name, period, price).toString()
+                    } else {
+                        if (name.text.isNullOrEmpty()) name.error =
+                            view.context.getString(R.string.fillField)
+                        if (price.text.isNullOrEmpty()) price.error =
+                            view.context.getString(R.string.fillField)
+                        if (duration.text.isNullOrEmpty()) duration.error =
+                            view.context.getString(R.string.fillField)
+                    }
                 }
             }
         }
+
     }
 
     private fun setUpObserversCourse() {

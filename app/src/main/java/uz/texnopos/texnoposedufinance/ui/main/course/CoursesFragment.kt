@@ -35,11 +35,10 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         navController = Navigation.findNavController(view)
         networkHelper = NetworkHelper(ApiClient.getClient())
 
-        setUpObservers()
-
         binding.rcvCourses.adapter = adapter
         actBinding.tvTitle.text = view.context.getString(R.string.courses)
 
+        setUpObservers()
         viewModel.getAllCourses()
 
         setData()
@@ -53,31 +52,6 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
             val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment(it)
             parentNavController.navigate(action)
         }
-
-        /*adapter.setOnItemClicked {
-            viewModel.getAllGroups(it)
-            binding.apply {
-                viewModel.groupList.observe(viewLifecycleOwner, Observer {u->
-                    when (u.status) {
-                        ResourceState.LOADING -> {
-
-                        }
-                        ResourceState.SUCCESS -> {
-                            if (u.data!!.isNotEmpty()) {
-                                adapter.groupAdapter.models = u.data
-                                toastLN("Magliwmat aldi")
-                            } else {
-                                toastLN("Gruppalar joq")
-                            }
-                        }
-                        ResourceState.ERROR -> {
-                            toastLN(u.message)
-                        }
-                    }
-                })
-            }
-        }*/
-
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(
                     requireParentFragment().requireActivity() as

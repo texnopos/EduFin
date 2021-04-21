@@ -41,7 +41,7 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                showPassword()
            }
 
-            btnSave.onClick {
+            bindingActionBar.tvSave.onClick {
                 val name = etName.text.toString()
                 val phone = etPhone.text.toString()
                 val username = etUsername.text.toString()
@@ -109,8 +109,8 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
             etPassword.isEnabled = !b
             etSalary.isEnabled = !b
             etConfirmPass.isEnabled = !b
-            btnSave.isEnabled = !b
         }
+        bindingActionBar.tvSave.isEnabled = !b
     }
     private fun empty() {
         binding.apply {

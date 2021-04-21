@@ -49,62 +49,64 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
 
         setUpObserversGroup()
         viewModel.getAllTeachers()
+        bindingActBar.apply {
+            binding.apply {
+                timePicker.setIs24HourView(true)
+                teachers.adapter = adapter2
+                viewModel.teacherList.observe(viewLifecycleOwner, Observer {
+                    when (it.status) {
+                        ResourceState.LOADING -> loading.visibility(true)
+                        ResourceState.SUCCESS -> {
+                            loading.visibility(false)
+                            adapter2.clear()
+                            adapter2.addAll(it.data!!.map { e -> e.name })
+                        }
+                        ResourceState.ERROR -> {
+                            loading.visibility(false)
+                            toastLN(it.message)
+                        }
+                    }
+                })
+                teachers.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            teacher = ""
+                        }
 
-        binding.apply {
-            timePicker.setIs24HourView(true)
-            teachers.adapter = adapter2
-            viewModel.teacherList.observe(viewLifecycleOwner, Observer {
-                when (it.status) {
-                    ResourceState.LOADING -> loading.visibility(true)
-                    ResourceState.SUCCESS -> {
-                        loading.visibility(false)
-                        adapter2.clear()
-                        adapter2.addAll(it.data!!.map { e -> e.name })
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            teacher = viewModel.teacherList.value?.data!![position].name
+                        }
                     }
-                    ResourceState.ERROR -> {
-                        loading.visibility(false)
-                        toastLN(it.message)
-                    }
+
+                rcvDays.adapter = daysAdapter
+                val models = mutableListOf<Day>()
+                for (i in 0..6) {
+                    models.add(Day(days[i], false))
                 }
-            })
-            teachers.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        teacher = ""
-                    }
+                daysAdapter.models = models
 
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        teacher = viewModel.teacherList.value?.data!![position].name
-                    }
+                tvSave.onClick {
+                    val lessonDays = date.text.toString()
+                    courseTime = if (timePicker.minute == 0) {
+                        "${timePicker.hour}:${timePicker.minute}0"
+                    } else "${timePicker.hour}:${timePicker.minute}"
+                    courseId = safeArgs.id
+                    val name = groupName.text.toString()
+                    if(name.isEmpty()) groupName.error = requireContext().getString(R.string.fillField)
+                    viewModel.createGroup(
+                        name, teacher, courseId, courseTime, startDate, lessonDays)
                 }
-
-            rcvDays.adapter = daysAdapter
-            val models = mutableListOf<Day>()
-            for (i in 0..6) {
-                models.add(Day(days[i], false))
             }
-            daysAdapter.models = models
-
-            btnAdd.onClick {
-                val lessonDays = date.text.toString()
-                courseTime = if (timePicker.minute == 0) {
-                    "${timePicker.hour}:${timePicker.minute}0"
-                } else "${timePicker.hour}:${timePicker.minute}"
-                courseId = safeArgs.id
-                val name = groupName.text.toString()
-                if(name.isEmpty()) groupName.error = requireContext().getString(R.string.fillField)
-                viewModel.createGroup(
-                    name, teacher, courseId, courseTime, startDate, lessonDays)
+            btnHome.onClick {
+                navController.popBackStack()
             }
         }
-        bindingActBar.btnHome.onClick {
-            navController.popBackStack()
-        }
+
     }
 
     private fun setUpObserversGroup() {
