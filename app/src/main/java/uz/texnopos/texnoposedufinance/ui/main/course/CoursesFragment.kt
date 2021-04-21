@@ -11,8 +11,9 @@ import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.data.model.request.ApiClient
+import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.request.NetworkHelper
+import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
@@ -25,7 +26,6 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
     lateinit var actBinding: ActionBarBinding
     lateinit var navController: NavController
     lateinit var parentNavController: NavController
-    lateinit var networkHelper: NetworkHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +33,6 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         binding = FragmentCoursesBinding.bind(view)
         actBinding = ActionBarBinding.bind(view)
         navController = Navigation.findNavController(view)
-        networkHelper = NetworkHelper(ApiClient.getClient())
 
         binding.rcvCourses.adapter = adapter
         actBinding.tvTitle.text = view.context.getString(R.string.courses)
@@ -41,11 +40,10 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         setUpObservers()
         viewModel.getAllCourses()
 
-        setData()
         adapter.onResponse {
             adapter.models = it
         }
-        adapter.onFailure{
+        adapter.onFailure {
             toastLN(it)
         }
         adapter.setAddGroupClicked {
@@ -54,15 +52,16 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         }
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(
-                    requireParentFragment().requireActivity() as
-                            MainActivity, R.id.nav_host
-                )
+                requireParentFragment().requireActivity() as
+                        MainActivity, R.id.nav_host
+            )
         }
 
         binding.swlCourses.setOnRefreshListener {
             viewModel.getAllCourses()
         }
     }
+
     private fun setUpObservers() {
         binding.apply {
             viewModel.courseList.observe(viewLifecycleOwner, Observer {
@@ -72,7 +71,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
                         if (it.data!!.isNotEmpty()) {
                             tvEmptyList.visibility(false)
                             rcvCourses.visibility(true)
-                            adapter.models = it.data
+                            adapter.models = it.data as List<Course>
                         } else {
                             tvEmptyList.visibility(true)
                             rcvCourses.visibility(false)
@@ -87,7 +86,5 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
             })
         }
     }
-    fun setData(){
-        networkHelper.getAllCourses(adapter)
-    }
+
 }

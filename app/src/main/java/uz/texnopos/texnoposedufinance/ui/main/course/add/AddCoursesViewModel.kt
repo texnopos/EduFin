@@ -19,12 +19,12 @@ class AddCoursesViewModel(
     val createCourse: LiveData<Resource<Course>>
         get() = _createCourse
 
-    fun createCourse(name: String, duration: Int, price: Double ) {
+    fun createCourse(name: String, duration: Int, price: Double) {
         _createCourse.value = Resource.loading()
         helper.addNewCourse(
             name, duration, price,
             {
-                _createCourse.value = Resource.success(null)
+                _createCourse.value = Resource.success(Course())
             },
             {
                 _createCourse.value = Resource.error(it)

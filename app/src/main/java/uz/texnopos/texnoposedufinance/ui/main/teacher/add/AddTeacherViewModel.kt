@@ -18,7 +18,7 @@ class AddTeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
         helper.createTeacher(
             name, phone, username, password, salary,
             {
-                _createTeacher.value = Resource.success(null)
+                _createTeacher.value = Resource.success(Teacher())
             },
             {
                 _createTeacher.value = Resource.error(it)

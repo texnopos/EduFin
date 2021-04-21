@@ -18,6 +18,7 @@ import uz.texnopos.texnoposedufinance.data.firebase.AuthHelper
 import uz.texnopos.texnoposedufinance.data.firebase.CourseHelper
 import uz.texnopos.texnoposedufinance.data.firebase.TeacherHelper
 import uz.texnopos.texnoposedufinance.data.firebase.GroupHelper
+import uz.texnopos.texnoposedufinance.data.model.request.NetworkHelper
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpViewModel
@@ -29,10 +30,11 @@ import uz.texnopos.texnoposedufinance.ui.main.group.GroupViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupViewModel
 import java.util.concurrent.TimeUnit
 
+private const val baseUrl: String = "https://us-central1-texnopos-finance.cloudfunctions.net/"
 val firebaseModule = module {
     single { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }
-    single {FirebaseFunctions.getInstance()}
+    single { FirebaseFunctions.getInstance() }
     single {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(androidApplication().applicationContext.getString(R.string.default_web_client_id))
@@ -61,7 +63,7 @@ val networkModule = module {
     single {
         Retrofit
             .Builder()
-            .baseUrl("https://texnopos-finance.firebaseapp.com/")
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create(get()))
             .client(get())
             .build()
@@ -74,6 +76,7 @@ val helperModule = module {
     single { TeacherHelper(get(), get()) }
     single { CourseHelper(get(), get(), get()) }
     single { GroupHelper(get(), get(), get()) }
+    single { NetworkHelper(get()) }
 }
 
 val viewModelModule = module {

@@ -41,6 +41,7 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
             srlTeachers.setOnRefreshListener {
                 viewModel.getAllEmployees()
             }
+
         }
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(
@@ -52,9 +53,7 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
             val action = MainFragmentDirections.actionMainFragmentToTeachersInfoFragment(it)
             parentNavController.navigate(action)
         }
-        adapter.setOnOptionsClicked {
-            optionsClicked(it)
-        }
+
         viewModel.getAllEmployees()
     }
 
@@ -83,18 +82,21 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
             })
         }
     }
-    private fun optionsClicked(view: View){
+
+    /*private fun optionsClicked(view: View){
         val menu = PopupMenu(requireContext(), view)
         val menuInflater = menu.menuInflater
         menuInflater.inflate(R.menu.teacher_menu, menu.menu)
         menu.show()
         menu.setOnMenuItemClickListener {id ->
-            when(id.itemId){
-                R.id.delete_teacher ->{
-                    //
+            binding.apply {
+                when(id.itemId){
+                    R.id.delete_teacher ->{
+
+                    }
                 }
             }
             return@setOnMenuItemClickListener true
         }
-    }
+    }*/
 }

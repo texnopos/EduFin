@@ -12,17 +12,14 @@ import retrofit2.Response
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 
 
-class CourseHelper(auth: FirebaseAuth, private val db: FirebaseFirestore,
-    private val functions: FirebaseFunctions) {
+class CourseHelper(
+    auth: FirebaseAuth, private val db: FirebaseFirestore,
+    private val functions: FirebaseFunctions
+) {
     private val orgId = auth.currentUser!!.uid
 
-    fun getAllCourses(
-        onSuccess: (list: List<Course>) -> Unit,
-        onFailure: (msg: String?) -> Unit
-    ) {
-    }
-
-    fun addNewCourse(name: String, duration: Int, price: Double,
+    fun addNewCourse(
+        name: String, duration: Int, price: Double,
         onSuccess: () -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
@@ -38,26 +35,6 @@ class CourseHelper(auth: FirebaseAuth, private val db: FirebaseFirestore,
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
             }
-    }
 
-    fun getAllGroups(
-        courseId: String,
-        onSuccess: (list: List<Group>) -> Unit,
-        onFailure: (msg: String?) -> Unit
-    ){
-        functions.getHttpsCallable("getAllGroups").call()
-        /*db.collection("users/$orgId/groups")
-            .whereEqualTo("courseId", courseId).get()
-            .addOnSuccessListener {doc ->
-                if(doc.documents.isNotEmpty()){
-                    onSuccess.invoke(doc.documents.map {
-                        it.toObject(Group::class.java) ?: Group()
-                    })
-                }
-                else onSuccess.invoke(listOf())
-            }
-            .addOnFailureListener {
-                onFailure.invoke(it.localizedMessage)
-            }*/
     }
 }
