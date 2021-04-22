@@ -27,6 +27,10 @@ class TeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
     val deleted: LiveData<Resource<Teacher>>
         get() = _deleted
 
+    private val _current: MutableLiveData<Resource<Teacher>> = MutableLiveData()
+    val current: LiveData<Resource<Teacher>>
+        get() = _current
+
     fun deleteTeacher(teacherId: String){
         helper.deleteTeacher(teacherId,
             {
@@ -34,6 +38,15 @@ class TeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
             },
             {
                 _deleted.value = Resource.error(it)
+            })
+    }
+    fun getDataCurrentTeacher(teacherId: String){
+        helper.getDataCurrentTeacher(teacherId,
+            {
+                _current.value = Resource.success(Teacher())
+            },
+            {
+                _current.value = Resource.error(it)
             })
     }
 }

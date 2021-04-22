@@ -1,6 +1,7 @@
 package uz.texnopos.texnoposedufinance.data.firebase
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.Teacher
@@ -57,5 +58,15 @@ class TeacherHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
                 onFailure.invoke(it.localizedMessage)
             }
     }
+    fun getDataCurrentTeacher(teacherId: String, onSuccess: () -> Unit, onFailure: (msg: String?) -> Unit){
+        db.collection("users/$orgId/teachers").document(teacherId).get()
+            .addOnSuccessListener {
+                onSuccess.invoke()
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
+    }
 
 }
+

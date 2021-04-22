@@ -31,7 +31,7 @@
     <string name="with_google">With Google</string>
     <string name="fio">ФИО</string>
     <string name="add_teacher">Добавить учителя</string>
-    <string name="employees">Сотрудники</string>
+    <string name="employees">Учители</string>
     <string name="search">Кого искать?</string>
     <string name="course_name_ru">Названия курса</string>
     <string name="courseName">Название курса (обязательно)</string>
@@ -43,7 +43,7 @@
     <string name="add">Добавить</string>
     <string name="s_expenses">Расходы</string>
     <string name="s_incomes">Доходы</string>
-    <string name="Аккаунт">Account</string>
+    <string name="account">Аккаунт</string>
     <string name="minus">-</string>
     <string name="swm">сум</string>
     <string name="plus">+</string>
@@ -59,7 +59,7 @@
     <string name="teachers">Сотрудники</string>
     <string name="confirmYourPass">Подтвердите пароль</string>
     <string name="doNotMatch">пароль и подтверждение не совпадают</string>
-    <string name="minLength">Пароль должен содержать не менее 8 символов</string>
+    <string name="minLength">Пароль должен содержать не менее 6 символов</string>
     <string name="startDate">Дата начала(обязательно)</string>
     <string name="time">Время(обязательно):</string>
     <string name="mon">П</string>
@@ -69,8 +69,9 @@
     <string name="fri">П</string>
     <string name="sat">С</string>
     <string name="sun">В</string>
-    <string name="teachers_info">Teachers Info</string>
+    <string name="teachers_info">Данные</string>
     <string name="delete">Удалить</string>
     <string name="edit">Изменить</string>
+    <string name="added_new_teacher">Добавлен новый учитель/учителница</string>
 
 </resources>

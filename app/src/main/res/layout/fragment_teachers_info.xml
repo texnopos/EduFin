@@ -10,6 +10,7 @@
         layout="@layout/add_action_bar" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/margin_middle"
@@ -17,7 +18,7 @@
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/margin_large"
-        app:layout_constraintBottom_toTopOf="@id/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/actionBar">
 
         <ScrollView
@@ -48,14 +49,14 @@
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small_standard"
                     android:background="@drawable/shape_square"
+                    android:drawableEnd="@drawable/ic_edit"
                     android:hint="@string/fio"
                     android:inputType="text"
                     android:maxLines="1"
                     android:padding="@dimen/margin_standard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imgLogo"
-                    android:drawableEnd="@drawable/ic_edit"/>
+                    app:layout_constraintTop_toBottomOf="@id/imgLogo" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPhone"
@@ -64,14 +65,14 @@
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small_standard"
                     android:background="@drawable/shape_square"
+                    android:drawableEnd="@drawable/ic_edit"
                     android:hint="@string/phone_number"
                     android:inputType="phone"
                     android:maxLines="1"
                     android:padding="@dimen/margin_standard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etName"
-                    android:drawableEnd="@drawable/ic_edit"/>
+                    app:layout_constraintTop_toBottomOf="@id/etName" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSalary"
@@ -80,14 +81,14 @@
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small_standard"
                     android:background="@drawable/shape_square"
+                    android:drawableEnd="@drawable/ic_edit"
                     android:hint="@string/salary"
                     android:inputType="number"
                     android:maxLines="1"
                     android:padding="@dimen/margin_standard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etPhone"
-                    android:drawableEnd="@drawable/ic_edit"/>
+                    app:layout_constraintTop_toBottomOf="@id/etPhone" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etUsername"
@@ -96,14 +97,38 @@
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small_standard"
                     android:background="@drawable/shape_square"
+                    android:drawableEnd="@drawable/ic_edit"
                     android:hint="@string/username"
                     android:inputType="text"
                     android:maxLines="1"
                     android:padding="@dimen/margin_standard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etSalary"
-                    android:drawableEnd="@drawable/ic_edit"/>
+                    app:layout_constraintTop_toBottomOf="@id/etSalary" />
+
+                <View
+                    android:id="@+id/border"
+                    android:layout_width="200dp"
+                    android:layout_height="1dp"
+                    android:background="#DE000000"
+                    app:layout_constraintTop_toBottomOf="@id/etUsername"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layerType="software"/>
+
+                <TextView
+                    android:id="@+id/delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    app:layout_constraintTop_toBottomOf="@id/border"
+                    android:text="@string/delete"
+                    android:padding="@dimen/margin_standard"
+                    />
+
                 <ProgressBar
                     android:id="@+id/loading"
                     android:layout_width="wrap_content"
@@ -112,14 +137,27 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
     </androidx.cardview.widget.CardView>
-    <androidx.appcompat.widget.AppCompatButton
+
+    <!--<ImageView
         android:id="@+id/delete"
-        android:layout_width="match_parent"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginHorizontal="@dimen/margin_standard"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:padding="@dimen/margin_standard"
+        android:src="@drawable/user_remove"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" /> -->
+
+    <!--<androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="@dimen/margin_standard"
@@ -129,6 +167,8 @@
         android:text="@string/delete"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_standard"
-        android:layout_marginBottom="@dimen/margin_large"/>
+        android:layout_marginBottom="@dimen/margin_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,6 +5,8 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
@@ -18,7 +20,7 @@ import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 
-class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
+class CoursesFragment: BaseFragment(R.layout.fragment_courses) {
 
     private val viewModel: CoursesViewModel by viewModel()
     private val adapter = CoursesAdapter()
@@ -26,6 +28,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
     lateinit var actBinding: ActionBarBinding
     lateinit var navController: NavController
     lateinit var parentNavController: NavController
+    private val auth: FirebaseAuth by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,8 +40,9 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         binding.rcvCourses.adapter = adapter
         actBinding.tvTitle.text = view.context.getString(R.string.courses)
 
+        val orgId = auth.currentUser!!.uid
         setUpObservers()
-        viewModel.getAllCourses()
+        viewModel.getAllCourses(orgId)
 
         adapter.onResponse {
             adapter.models = it
@@ -58,7 +62,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
         }
 
         binding.swlCourses.setOnRefreshListener {
-            viewModel.getAllCourses()
+            viewModel.getAllCourses(orgId)
         }
     }
 
@@ -71,7 +75,7 @@ class CoursesFragment : BaseFragment(R.layout.fragment_courses) {
                         if (it.data!!.isNotEmpty()) {
                             tvEmptyList.visibility(false)
                             rcvCourses.visibility(true)
-                            adapter.models = it.data as List<Course>
+                            adapter.models = it.data
                         } else {
                             tvEmptyList.visibility(true)
                             rcvCourses.visibility(false)

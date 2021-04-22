@@ -35,6 +35,14 @@ class CourseHelper(
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
             }
-
+    }
+    fun deleteCourse(courseId: String, onSuccess: () -> Unit, onFailure: (msg: String?) -> Unit){
+        db.collection("users/$orgId/courses").document(courseId).delete()
+            .addOnSuccessListener {
+                onSuccess.invoke()
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
     }
 }

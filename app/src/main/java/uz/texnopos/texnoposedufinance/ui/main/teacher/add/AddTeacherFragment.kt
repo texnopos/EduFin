@@ -52,7 +52,7 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                 if (name.isNotEmpty() && phone.isNotEmpty() &&
                     username.isNotEmpty() && password.isNotEmpty() &&
                     salary.isNotEmpty() && confirmPass.isNotEmpty()) {
-                    if(password.length > 7){
+                    if(password.length > 5){
                         if(password == confirmPass)
                             viewModel.createTeacher(name, phone, username, password, salary.toDouble())
                         else {
@@ -90,7 +90,7 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                         loading.visibility = View.GONE
                         isLoading(false)
                         empty()
-                        toastLN("Добавлен новый сотрудник")
+                        toastLN(getString(R.string.added_new_teacher))
                     }
                     ResourceState.ERROR -> {
                         isLoading(false)

@@ -14,7 +14,6 @@ import uz.texnopos.texnoposedufinance.databinding.ItemCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 
 class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
-
     var onItemClick: (id: String) -> Unit = {}
     fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
         this.onItemClick = onItemClick
@@ -34,9 +33,6 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
     fun onFailure(onFailure: (String?) -> Unit) {
         this.onFailure = onFailure
     }
-
-    val groupAdapter = GroupAdapter()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         val itemView = parent.inflate(R.layout.item_courses)
@@ -61,10 +57,10 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                 //tvGroupCount.text = root.context.getString(R.string.group_count, g)
                 tvPupilsCount.text = root.context.getString(R.string.participants_count, model.duration)
                 setDrawable(position)
-                rvGroups.adapter = groupAdapter
-                groupAdapter.models = model.groups
-
                 rlLayout.onClick {
+                    val groupAdapter = GroupAdapter()
+                    rvGroups.adapter = groupAdapter
+                    groupAdapter.models = model.groups
                     if (cvGroups.visibility == View.GONE && addGroup.visibility == View.GONE) {
                         addGroup.visibility(true)
                         if(model.groups.isNotEmpty()) {

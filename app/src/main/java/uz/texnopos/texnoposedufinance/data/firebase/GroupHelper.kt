@@ -58,4 +58,13 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private
                 onFailure.invoke(it.localizedMessage)
             }
     }
+    fun deleteGroup(groupId: String, onSuccess: () -> Unit, onFailure: (msg: String?) -> Unit){
+        db.collection("users/$orgId/groups").document(groupId).delete()
+            .addOnSuccessListener {
+                onSuccess.invoke()
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
+    }
 }
