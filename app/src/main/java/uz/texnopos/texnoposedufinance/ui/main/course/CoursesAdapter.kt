@@ -16,7 +16,7 @@ import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.databinding.ItemCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 
-class CoursesAdapter(activity: MainActivity) : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
+class CoursesAdapter() : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
     var onItemClick: (id: String) -> Unit = {}
     fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
         this.onItemClick = onItemClick
