@@ -13,8 +13,7 @@ import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 
 
 class CourseHelper(
-    auth: FirebaseAuth, private val db: FirebaseFirestore,
-    private val functions: FirebaseFunctions
+    auth: FirebaseAuth, private val db: FirebaseFirestore
 ) {
     private val orgId = auth.currentUser!!.uid
 

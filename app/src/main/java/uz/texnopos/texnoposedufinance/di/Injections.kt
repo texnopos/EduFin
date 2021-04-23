@@ -74,7 +74,7 @@ val networkModule = module {
 val helperModule = module {
     single { AuthHelper(get(), get()) }
     single { TeacherHelper(get(), get()) }
-    single { CourseHelper(get(), get(), get()) }
+    single { CourseHelper(get(), get()) }
     single { GroupHelper(get(), get(), get()) }
     single { NetworkHelper(get()) }
 }

@@ -18,8 +18,13 @@ class GroupFragment : BaseFragment(R.layout.item_courses) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = ItemCoursesBinding.bind(view)
-        binding.rvGroups.adapter = adapter
-        setUpObservers()
+        adapter.setOnItemClicked {
+
+        }
+        binding.apply{
+            rvGroups.adapter = adapter
+        }
+
     }
 
 

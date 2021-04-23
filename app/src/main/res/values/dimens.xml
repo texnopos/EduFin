@@ -13,4 +13,5 @@
     <dimen name="margin_small_standard">12dp</dimen>
     <dimen name="small_text_size">14sp</dimen>
     <dimen name="margin_standard_lg">24dp</dimen>
+    <dimen name="text_size">14sp</dimen>
 </resources>

@@ -3,7 +3,10 @@ package uz.texnopos.texnoposedufinance.ui.main.course
 import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
@@ -13,7 +16,7 @@ import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.databinding.ItemCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 
-class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
+class CoursesAdapter(activity: MainActivity) : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
     var onItemClick: (id: String) -> Unit = {}
     fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
         this.onItemClick = onItemClick
@@ -38,6 +41,7 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
         val itemView = parent.inflate(R.layout.item_courses)
         val binding = ItemCoursesBinding.bind(itemView)
         return CoursesViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: CoursesViewHolder, position: Int) {
@@ -52,17 +56,20 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                 rvGroups.visibility(false)
                 addGroup.visibility(false)
                 cvGroups.visibility(false)
+                line.visibility(false)
                 tvCourseName.text = model.name
                 //val g = model.groups.size.toString()
                 //tvGroupCount.text = root.context.getString(R.string.group_count, g)
                 tvPupilsCount.text = root.context.getString(R.string.participants_count, model.duration)
                 setDrawable(position)
+
                 rlLayout.onClick {
                     val groupAdapter = GroupAdapter()
                     rvGroups.adapter = groupAdapter
                     groupAdapter.models = model.groups
                     if (cvGroups.visibility == View.GONE && addGroup.visibility == View.GONE) {
                         addGroup.visibility(true)
+                        line.visibility(true)
                         if(model.groups.isNotEmpty()) {
                             cvGroups.visibility(true)
                             rvGroups.visibility(true)
@@ -76,6 +83,7 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                         cvGroups.visibility(false)
                         addGroup.visibility(false)
                         rvGroups.visibility(false)
+                        line.visibility(false)
                         setDrawable(position)
                     }
                 }
