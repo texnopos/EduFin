@@ -1,9 +1,8 @@
-package uz.texnopos.texnoposedufinance.ui.main.teacher
+package uz.texnopos.texnoposedufinance.ui.main.teacher.info
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -14,9 +13,10 @@ import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.AddActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentTeachersInfoBinding
+import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
+import uz.texnopos.texnoposedufinance.ui.main.teacher.info.TeachersInfoFragmentArgs
 
 class TeachersInfoFragment : BaseFragment(R.layout.fragment_teachers_info) {
     lateinit var binding: FragmentTeachersInfoBinding

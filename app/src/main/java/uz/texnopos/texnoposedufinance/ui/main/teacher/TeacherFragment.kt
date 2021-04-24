@@ -11,6 +11,7 @@ import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentTeachersBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
@@ -40,6 +41,7 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
         binding.apply {
             srlTeachers.setOnRefreshListener {
                 viewModel.getAllEmployees()
+                loading.visibility(false)
             }
 
         }
@@ -61,7 +63,11 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
         binding.apply {
             viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
+                    ResourceState.LOADING -> {
+                        loading.visibility(true)
+                    }
                     ResourceState.SUCCESS -> {
+                        srlTeachers.isRefreshing = false
                         if (it.data!!.isNotEmpty()) {
                             tvEmptyList.visibility = View.GONE
                             rcvTeachers.visibility = View.VISIBLE
@@ -70,33 +76,31 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
                             tvEmptyList.visibility = View.VISIBLE
                             rcvTeachers.visibility = View.GONE
                         }
-                        srlTeachers.isRefreshing = false
+                        loading.visibility(false)
                     }
                     ResourceState.ERROR -> {
-                        toastLN(it.message)
                         srlTeachers.isRefreshing = false
-                    }
-                    else -> {
+                        toastLN(it.message)
+                        loading.visibility(false)
                     }
                 }
             })
         }
     }
+}
+/*private fun optionsClicked(view: View){
+    val menu = PopupMenu(requireContext(), view)
+    val menuInflater = menu.menuInflater
+    menuInflater.inflate(R.menu.teacher_menu, menu.menu)
+    menu.show()
+    menu.setOnMenuItemClickListener {id ->
+        binding.apply {
+            when(id.itemId){
+                R.id.delete_teacher ->{
 
-    /*private fun optionsClicked(view: View){
-        val menu = PopupMenu(requireContext(), view)
-        val menuInflater = menu.menuInflater
-        menuInflater.inflate(R.menu.teacher_menu, menu.menu)
-        menu.show()
-        menu.setOnMenuItemClickListener {id ->
-            binding.apply {
-                when(id.itemId){
-                    R.id.delete_teacher ->{
-
-                    }
                 }
             }
-            return@setOnMenuItemClickListener true
         }
-    }*/
-}
+        return@setOnMenuItemClickListener true
+    }
+}*/

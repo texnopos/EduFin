@@ -16,10 +16,6 @@ class TeacherAdapter :
     fun setOnItemClicked(onItemClick: (id: String) -> Unit){
         this.onItemClick = onItemClick
     }
-    var onOptions: (view: View) -> Unit = {}
-    fun setOnOptionsClicked(onOptions: (view: View) -> Unit){
-        this.onOptions = onOptions
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeacherViewHolder {
         val itemView = parent.inflate(R.layout.item_teachers)
         val binding = ItemTeachersBinding.bind(itemView)
@@ -35,25 +31,23 @@ class TeacherAdapter :
             binding.apply {
                 tvTeacherName.text = model.name
                 tvUsername.text = model.username
-                setDrawable(position)
+                clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_1)
 
                 clItemTeacher.onClick {
                     onItemClick.invoke(model.id)
                 }
-                options.onClick {
-                    onOptions.invoke(options)
-                }
+
             }
         }
 
-        private fun setDrawable(i: Int) {
-            binding.apply {
-                when (i % 3) {
-                    0 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_1)
-                    1 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_2)
-                    2 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_3)
-                }
-            }
-        }
+//        private fun setDrawable(i: Int) {
+//            binding.apply {
+//                when (i % 3) {
+//                    0 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_1)
+//                    1 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_2)
+//                    2 -> clItemTeacher.setBackgroundResource(R.drawable.shape_teachers_3)
+//                }
+//            }
+//        }
     }
 }

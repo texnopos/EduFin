@@ -11,7 +11,6 @@ class GroupViewModel(private val helper: GroupHelper): ViewModel() {
     private val _groupList: MutableLiveData<Resource<List<Group>>> = MutableLiveData()
     val groupList: LiveData<Resource<List<Group>>>
         get() = _groupList
-
     fun getAllGroups(courseId: String){
         _groupList.value = Resource.loading()
         helper.getAllGroups(courseId,

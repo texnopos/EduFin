@@ -31,6 +31,8 @@ class GroupAdapter: BaseAdapter<Group, GroupAdapter.GroupViewHolder>(){
         fun populateModel(model: Group, position: Int){
             binding.apply {
                 name.text = model.name
+                days.text = model.days.toString()
+                time.text = model.time
 
                 clGroup.onClick {
                     onItemClick.invoke(model.id)

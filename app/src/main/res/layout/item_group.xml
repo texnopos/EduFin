@@ -4,21 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/clGroup"
-    android:background="#eeeeee">
+    android:background="@color/purple_700">
 
     <TextView
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_standard"
-        android:layout_marginStart="@dimen/margin_standard"
+        android:layout_marginHorizontal="@dimen/margin_middle"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center_vertical"
-        android:padding="@dimen/margin_standard"
-        android:textSize="@dimen/text_size"/>
+        android:padding="@dimen/margin_middle"
+        android:textSize="@dimen/text_size" />
 
     <TextView
         android:id="@+id/time"
@@ -29,10 +28,10 @@
         android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         android:layout_marginEnd="@dimen/margin_standard"
-        android:layout_marginTop="@dimen/margin_standard"/>
+        android:layout_marginTop="@dimen/margin_middle" />
 
     <TextView
-        android:id="@+id/Days"
+        android:id="@+id/days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,8 +39,8 @@
         android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         android:layout_marginEnd="@dimen/margin_standard"
-        android:layout_marginBottom="@dimen/margin_standard"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_marginBottom="@dimen/margin_middle"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

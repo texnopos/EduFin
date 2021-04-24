@@ -13,9 +13,6 @@ import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.data.model.Course
-import uz.texnopos.texnoposedufinance.data.model.request.NetworkHelper
-import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
@@ -29,6 +26,7 @@ class CoursesFragment: BaseFragment(R.layout.fragment_courses) {
     lateinit var navController: NavController
     lateinit var parentNavController: NavController
     private val auth: FirebaseAuth by inject()
+    lateinit var orgId: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,12 +35,8 @@ class CoursesFragment: BaseFragment(R.layout.fragment_courses) {
         actBinding = ActionBarBinding.bind(view)
         navController = Navigation.findNavController(view)
 
-        binding.rcvCourses.adapter = adapter
-        actBinding.tvTitle.text = view.context.getString(R.string.courses)
-
-        val orgId = auth.currentUser!!.uid
+        orgId = auth.currentUser!!.uid
         setUpObservers()
-        viewModel.getAllCourses(orgId)
 
         adapter.onResponse {
             adapter.models = it
@@ -50,6 +44,7 @@ class CoursesFragment: BaseFragment(R.layout.fragment_courses) {
         adapter.onFailure {
             toastLN(it)
         }
+        actBinding.tvTitle.text = view.context.getString(R.string.courses)
         adapter.setAddGroupClicked {
             val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment(it)
             parentNavController.navigate(action)
@@ -60,17 +55,25 @@ class CoursesFragment: BaseFragment(R.layout.fragment_courses) {
                         MainActivity, R.id.nav_host
             )
         }
-
-        binding.swlCourses.setOnRefreshListener {
-            viewModel.getAllCourses(orgId)
+        binding.apply {
+            swlCourses.setOnRefreshListener {
+                viewModel.getAllCourses(orgId)
+                loading.visibility(false)
+            }
+            rcvCourses.adapter = adapter
         }
+
+        viewModel.getAllCourses(orgId)
     }
 
     private fun setUpObservers() {
         binding.apply {
             viewModel.courseList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-                    ResourceState.LOADING -> swlCourses.isRefreshing = false
+                    ResourceState.LOADING -> {
+                        loading.visibility(true)
+                        rcvCourses.visibility(false)
+                    }
                     ResourceState.SUCCESS -> {
                         if (it.data!!.isNotEmpty()) {
                             tvEmptyList.visibility(false)
@@ -80,15 +83,16 @@ class CoursesFragment: BaseFragment(R.layout.fragment_courses) {
                             tvEmptyList.visibility(true)
                             rcvCourses.visibility(false)
                         }
+                        loading.visibility(false)
                         swlCourses.isRefreshing = false
                     }
                     ResourceState.ERROR -> {
                         toastLN(it.message)
+                        loading.visibility(false)
                         swlCourses.isRefreshing = false
                     }
                 }
             })
         }
     }
-
 }

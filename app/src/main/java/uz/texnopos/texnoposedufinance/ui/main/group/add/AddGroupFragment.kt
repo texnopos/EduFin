@@ -1,11 +1,9 @@
 package uz.texnopos.texnoposedufinance.ui.main.group.add
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -16,32 +14,31 @@ import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.data.model.Day
-import uz.texnopos.texnoposedufinance.databinding.AddActionBarBinding
+import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
+import uz.texnopos.texnoposedufinance.databinding.DialogCalendarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
+
 
 class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.OnItemClickListener {
     private val viewModel: AddGroupViewModel by inject()
     private lateinit var binding: FragmentAddGroupBinding
-    private lateinit var bindingActBar: AddActionBarBinding
+    private lateinit var bindingActBar: ActionBar2Binding
     lateinit var navController: NavController
     var id = ""
     var teacher = ""
     var courseTime = ""
     var startDate = ""
     var courseId = ""
+    private val lessonDays = mutableMapOf<Int, String>()
+
 
     private val safeArgs: AddGroupFragmentArgs by navArgs()
-
-
-    private val daysAdapter = DaysAdapter()
-    private val days = arrayListOf("П", "В", "С", "Ч", "П", "С", "В")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentAddGroupBinding.bind(view)
-        bindingActBar = AddActionBarBinding.bind(view)
+        bindingActBar = ActionBar2Binding.bind(view)
         val adapter2 = ArrayAdapter(requireContext(), R.layout.spinner_item, arrayListOf<String>())
 
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.create_group)
@@ -83,30 +80,134 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
                         }
                     }
 
-                rcvDays.adapter = daysAdapter
-                val models = mutableListOf<Day>()
-                for (i in 0..6) {
-                    models.add(Day(days[i], false))
+                mon.onClick {
+                    val d = mon.text.toString()
+                    if(monSelected.visibility == View.GONE){
+                        monSelected.visibility(true)
+                        lessonDays[1] = d
+                    }
+                    else{
+                        monSelected.visibility(false)
+                        lessonDays.remove(1)
+                    }
+                    date.text = lessonDays.toString()
+                    check()
                 }
-                daysAdapter.models = models
+                tue.onClick {
+                    val d = tue.text.toString()
+                    if(tueSelected.visibility == View.GONE){
+                        tueSelected.visibility(true)
+                        lessonDays[2] = d
+                    }
+                    else{
+                        tueSelected.visibility(false)
+                        lessonDays.remove(2)
+                    }
+                    date.text = lessonDays.toString()
+                    check()
+                }
+                wed.onClick {
+                    val d = wed.text.toString()
+                    if(wedSelected.visibility == View.GONE){
+                        wedSelected.visibility(true)
+                        lessonDays[3] = d
+                    }
+                    else{
+                        wedSelected.visibility(false)
+                        lessonDays.remove(3)
+                    }
+                    date.text = lessonDays.toString()
+                    check()
+                }
+                thu.onClick {
+                    val d = tue.text.toString()
+                    if(thuSelected.visibility == View.GONE){
+                        thuSelected.visibility(true)
+                        lessonDays[4] = d
+                    }
+                    else{
+                        thuSelected.visibility(false)
+                        lessonDays.remove(4)
+                    }
+                    date.text = lessonDays.toString()
+                    check()
+                }
+                fri.onClick {
+                    val d = fri.text.toString()
+                    if(friSelected.visibility == View.GONE){
+                        friSelected.visibility(true)
+                        lessonDays[5] = d
+                    }
+                    else{
+                        friSelected.visibility(false)
+                        lessonDays.remove(5)
+                    }
+                    date.text = lessonDays.toString()
+                    check()
+                }
 
-                tvSave.onClick {
-                    val lessonDays = date.text.toString()
-                    courseTime = if (timePicker.minute == 0) {
-                        "${timePicker.hour}:${timePicker.minute}0"
-                    } else "${timePicker.hour}:${timePicker.minute}"
+                sat.onClick {
+                    val d = sat.text.toString()
+                    if(satSelected.visibility == View.GONE){
+                        satSelected.visibility(true)
+                        lessonDays[6] = d
+                    }
+                    else{
+                        satSelected.visibility(false)
+                        lessonDays.remove(6)
+                    }
+                    date.text = lessonDays.toString()
+                    check()
+                }
+                sun.onClick {
+                    val d = sun.text.toString()
+                    if(sunSelected.visibility == View.GONE){
+                        sunSelected.visibility(true)
+                        lessonDays[7] = d
+                    }
+                    else{
+                        sunSelected.visibility(false)
+                        lessonDays.remove(7)
+                    }
+                    date.text = lessonDays.toString()
+                    check()
+                }
+                calendar.onClick{
+                    val dialog = CalendarDialog(requireContext())
+                    dialog.show()
+                    dialog.getData {data ->
+                        startDate = data
+                    }
+                }
+
+                btnSave.onClick {
+                    var minut = timePicker.minute.toString()
+                    var hour = timePicker.hour.toString()
+                    if (timePicker.minute == 0)
+                        minut = "${timePicker.minute}0"
+                    if(timePicker.hour == 0)
+                        hour = "${timePicker.hour}0"
+                    if(timePicker.minute < 10)
+                        minut = "0${timePicker.minute}"
+                    if(timePicker.hour < 10)
+                        hour = "0${timePicker.hour}"
+
+                    courseTime = "$hour:$minut"
+
                     courseId = safeArgs.id
                     val name = groupName.text.toString()
                     if(name.isEmpty()) groupName.error = requireContext().getString(R.string.fillField)
-                    viewModel.createGroup(
-                        name, teacher, courseId, courseTime, startDate, lessonDays)
+                    if(date.text.isNullOrEmpty()) date.error = requireContext().getString(R.string.fillField)
+                    if(name.isNotEmpty() && date.text.isNotEmpty() && teacher.isNotEmpty()){
+                        viewModel.createGroup(
+                            name, teacher, courseId, courseTime, startDate, date.text.toString())
+                    }
                 }
             }
             btnHome.onClick {
                 navController.popBackStack()
             }
         }
-
     }
 
     private fun setUpObserversGroup() {
@@ -118,7 +219,8 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
                     }
                     ResourceState.SUCCESS -> {
                         loading.visibility(false)
-                        toastLNCenter("Added successfully")
+                        toastLNCenter(getString(R.string.added_succesfuly))
+                        navController.popBackStack()
                     }
                     ResourceState.ERROR -> {
                         loading.visibility(false)
@@ -127,19 +229,16 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
                 }
             })
         }
-
     }
 
-    @SuppressLint("ResourceAsColor")
-    fun isSelected(view: TextView) {
-        view.setBackgroundResource(R.drawable.shape_circle)
-        view.setTextColor(R.color.purple_500)
-    }
+    private fun check(){
+        binding.apply {
+            if(lessonDays.size == 7) {
+                date.text = getString(R.string.everyDay)
+            }
+            if(lessonDays.isEmpty()) date.text = ""
+        }
 
-    @SuppressLint("ResourceAsColor")
-    fun isNotSelected(view: TextView) {
-        view.setBackgroundResource(R.drawable.shape_circle)
-        view.setTextColor(R.color.black)
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

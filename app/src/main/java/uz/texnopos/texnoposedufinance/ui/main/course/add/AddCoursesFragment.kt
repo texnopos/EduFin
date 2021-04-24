@@ -27,7 +27,6 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterV
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentAddCoursesBinding.bind(view)
-
         bindingActBar = AddActionBarBinding.bind(view)
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.addCourse)
 
@@ -47,6 +46,7 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterV
                         val price: Double = price.text.toString().toDouble()
                         val period = duration.text.toString().toInt()
                         viewModel.createCourse(name, period, price).toString()
+                        clear()
                     } else {
                         if (name.text.isNullOrEmpty()) name.error =
                             view.context.getString(R.string.fillField)
@@ -71,8 +71,8 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterV
 
                     ResourceState.SUCCESS -> {
                         loading.visibility(false)
-                        clear()
-                        toastLNCenter("Added successfully")
+                        toastLNCenter("Доваблен новый курс")
+                        navController.popBackStack()
                     }
                     ResourceState.ERROR -> {
                         loading.visibility(false)
@@ -82,7 +82,7 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterV
             })
         }
     }
-    fun clear(){
+    private fun clear(){
         binding.apply {
             name.text!!.isEmpty()
             price.text!!.isEmpty()

@@ -104,7 +104,7 @@
     </fragment>
     <fragment
         android:id="@+id/teachersInfoFragment"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeachersInfoFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.info.TeachersInfoFragment"
         android:label="TeachersInfoFragment"
         tools:layout="@layout/fragment_teachers_info">
         <argument
