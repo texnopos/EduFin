@@ -82,27 +82,27 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
 
                 mon.onClick {
                     val d = mon.text.toString()
-                    if(monSelected.visibility == View.GONE){
-                        monSelected.visibility(true)
-                        lessonDays[1] = d
-                    }
-                    else{
-                        monSelected.visibility(false)
-                        lessonDays.remove(1)
-                    }
+//                    if(monSelected.visibility == View.GONE){
+//                        monSelected.visibility(true)
+//                        lessonDays[mon.tag] = d
+//                    }
+//                    else{
+//                        monSelected.visibility(false)
+//                        lessonDays.remove(1)
+//                    }
                     date.text = lessonDays.toString()
                     check()
                 }
                 tue.onClick {
                     val d = tue.text.toString()
-                    if(tueSelected.visibility == View.GONE){
-                        tueSelected.visibility(true)
-                        lessonDays[2] = d
-                    }
-                    else{
-                        tueSelected.visibility(false)
-                        lessonDays.remove(2)
-                    }
+//                    if(tueSelected.visibility == View.GONE){
+//                        tueSelected.visibility(true)
+//                        lessonDays[2] = d
+//                    }
+//                    else{
+//                        tueSelected.visibility(false)
+//                        lessonDays.remove(2)
+//                    }
                     date.text = lessonDays.toString()
                     check()
                 }

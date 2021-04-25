@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -105,52 +104,27 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/date">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/mon"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_standard"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:id="@+id/mon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/mon"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            />
-
-                        <ImageView
-                            android:id="@+id/mon_selected"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/selected"
-                            android:visibility="gone" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_standard"
-                        android:layout_weight="1">
+                        android:gravity="center"
+                        android:text="@string/mon"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:tag="1"/>
 
                         <TextView
                             android:id="@+id/tue"
-                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:text="@string/tue"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:id="@+id/tue_selected"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/selected"
-                            android:visibility="gone" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:textSize="16sp"
+                            android:tag="2"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
