@@ -2,7 +2,6 @@ package uz.texnopos.texnoposedufinance.ui.main.teacher
 
 import android.os.Bundle
 import android.view.View
-import android.widget.PopupMenu
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -40,7 +39,7 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
         setUpObservers()
         binding.apply {
             srlTeachers.setOnRefreshListener {
-                viewModel.getAllEmployees()
+                viewModel.getAllTeachers()
                 loading.visibility(false)
             }
 
@@ -56,7 +55,7 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
             parentNavController.navigate(action)
         }
 
-        viewModel.getAllEmployees()
+        viewModel.getAllTeachers()
     }
 
     private fun setUpObservers() {

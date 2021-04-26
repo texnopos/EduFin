@@ -75,5 +75,7 @@
     <string name="done">Готово</string>
     <string name="everyDay">Ежедневно</string>
     <string name="added_succesfuly">Удачно добавлен</string>
+    <string name="lessonStartsIn">Урок начинается в</string>
+    <string name="selectTeacher">Выберите учителя</string>
 
 </resources>

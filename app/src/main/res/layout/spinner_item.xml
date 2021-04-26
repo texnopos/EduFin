@@ -8,5 +8,5 @@
     android:layout_margin="@dimen/margin_middle"
     android:padding="@dimen/margin_small"
     android:textColor="@color/black"
-    android:textSize="@dimen/text_size_standard"
+    android:textSize="16sp"
     android:layout_gravity="start"/>

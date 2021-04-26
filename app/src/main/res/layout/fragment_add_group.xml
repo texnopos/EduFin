@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/purple_700">
 
     <include
         android:id="@+id/actionBar"
@@ -22,6 +22,7 @@
         app:layout_constraintTop_toBottomOf="@id/actionBar">
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_middle">
@@ -48,10 +49,12 @@
                     android:id="@+id/teachers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_small"
                     android:padding="@dimen/margin_large"
-                    app:layout_constraintTop_toBottomOf="@id/groupName" />
+                    android:prompt="@string/selectTeacher"
+                    app:layout_constraintTop_toBottomOf="@id/groupName"
+                    />
 
                 <TextView
                     android:id="@+id/time"
@@ -73,250 +76,147 @@
                     app:layout_constraintTop_toBottomOf="@id/time" />
 
                 <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:text="@string/lessonStartsIn"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/timePicker" />
+
+                <TextView
+                    android:id="@+id/startDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    app:layout_constraintStart_toEndOf="@id/calendar"
+                    app:layout_constraintTop_toBottomOf="@id/timePicker" />
+
+
+                <TextView
+                    android:id="@+id/dates"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_standard"
+                    android:maxLines="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/llDays"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/timePicker"
-                    android:maxLines="1"/>
+                    app:layout_constraintTop_toBottomOf="@id/startDate" />
 
-                <ImageView
-                    android:id="@+id/calendar"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="@dimen/margin_standard"
-                    android:layout_marginEnd="@dimen/margin_standard"
-                    android:padding="@dimen/margin_middle"
-                    android:src="@drawable/ic_calendar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/timePicker" />
 
                 <LinearLayout
+                    android:id="@+id/llDays"
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:layout_marginBottom="@dimen/margin_large"
                     android:orientation="horizontal"
                     android:weightSum="7"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/date">
+                    app:layout_constraintTop_toBottomOf="@id/dates">
 
                     <TextView
                         android:id="@+id/mon"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/mon"
+                        android:layout_marginEnd="@dimen/margin_small"
                         android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="1"
+                        android:text="@string/mon"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:tag="1"/>
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/tue"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/tue"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:tag="2"/>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/tue"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_standard"
-                        android:layout_weight="1">
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="2"
+                        android:text="@string/tue"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/wed"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/wed"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:id="@+id/wed_selected"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/selected"
-                            android:visibility="gone" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/wed"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_standard"
-                        android:layout_weight="1">
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="3"
+                        android:text="@string/wed"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/thu"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/thu"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:id="@+id/thu_selected"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/selected"
-                            android:visibility="gone" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/thu"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_standard"
-                        android:layout_weight="1">
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="4"
+                        android:text="@string/thu"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/fri"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/fri"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:id="@+id/fri_selected"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/selected"
-                            android:visibility="gone" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/fri"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_standard"
-                        android:layout_weight="1">
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="5"
+                        android:text="@string/fri"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/sat"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/sat"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:id="@+id/sat_selected"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/selected"
-                            android:visibility="gone" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/sat"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginHorizontal="@dimen/margin_standard"
-                        android:layout_weight="1">
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="6"
+                        android:text="@string/sat"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/sun"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/sun"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            />
-
-                        <ImageView
-                            android:id="@+id/sun_selected"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/selected"
-                            android:visibility="gone" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/sun"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="7"
+                        android:text="@string/sun"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
                 </LinearLayout>
-
-
-                <!--<include
-                    android:id="@+id/llDays"
-                    layout="@layout/days_layout"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="@dimen/margin_standard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                   android:padding="@dimen/margin_middle"/>
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_standard"
-                    android:text="test"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llDays" />
-
-                <ImageView
-                    android:id="@+id/calendar"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="@dimen/margin_standard"
-                    android:padding="@dimen/margin_middle"
-                    android:src="@drawable/ic_calendar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llDays"
-                    android:layout_marginTop="@dimen/margin_standard"/>
-
-                <TextView
-                    android:id="@+id/time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large"
-                    android:gravity="center"
-                    android:text="@string/time"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/date" />
-
-                <TimePicker
-                    android:id="@+id/timePicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:timePickerMode="spinner"
-                    app:layout_constraintTop_toBottomOf="@id/time"
-                    android:layout_marginTop="@dimen/margin_standard"/>
-
-
-                <Spinner
-                    android:id="@+id/teachers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:padding="@dimen/margin_large"
-                    app:layout_constraintTop_toBottomOf="@id/timePicker"
-                    />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/groupName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_small_standard"
-                    android:hint="@string/group_name"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard_lg"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/teachers" /> -->
 
                 <ProgressBar
                     android:id="@+id/loading"
@@ -332,6 +232,7 @@
         </ScrollView>
 
     </androidx.cardview.widget.CardView>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
         android:layout_width="match_parent"

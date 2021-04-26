@@ -13,7 +13,6 @@ import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
-import uz.texnopos.texnoposedufinance.databinding.AddActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddTeacherBinding
 
 class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {

@@ -1,13 +1,9 @@
 package uz.texnopos.texnoposedufinance.ui.main.course
 
-import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
@@ -47,12 +43,12 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CoursesViewHolder, position: Int) {
-        holder.populateModel(models[position], position)
+        holder.populateModel(models[position])
     }
 
     inner class CoursesViewHolder(private val binding: ItemCoursesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun populateModel(model: Course, position: Int) {
+        fun populateModel(model: Course) {
             binding.apply {
                 rvGroups.addItemDecoration(
                     DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL)
@@ -66,8 +62,7 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                 tvGroupCount.text = root.context.getString(R.string.group_count, g)
                 tvPupilsCount.text =
                     root.context.getString(R.string.period, model.duration)
-                //setDrawable(position)
-                rlLayout.setBackgroundResource(R.drawable.shape_teachers_1)
+                rlLayout.setBackgroundResource(R.drawable.shape_teachers)
 
                 rlLayout.onClick {
                     val groupAdapter = GroupAdapter()
@@ -85,14 +80,12 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                         }
                         rlLayout.setBackgroundResource(R.drawable.shape_courses_1_open)
                         addGroup.setBackgroundResource(R.drawable.shape_courses_1_close)
-                        //setDrawableOpenClose(position)
                     } else {
                         cvGroups.visibility(false)
                         addGroup.visibility(false)
                         rvGroups.visibility(false)
                         line.visibility(false)
-                        //setDrawable(position)
-                        rlLayout.setBackgroundResource(R.drawable.shape_teachers_1)
+                        rlLayout.setBackgroundResource(R.drawable.shape_teachers)
                     }
                 }
                 addGroup.onClick {
@@ -100,36 +93,6 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                 }
             }
         }
-
-//        private fun setDrawable(i: Int){
-//            binding.apply{
-//                when(i){
-//                    0 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_1)
-//                    1 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_2)
-//                    2 -> rlLayout.setBackgroundResource(R.drawable.shape_teachers_3)
-//                }
-//            }
-//
-//        }
-
-//        private fun setDrawableOpenClose(i: Int) {
-//            binding.apply {
-//                when (i % 3) {
-//                    0 -> {
-//                        rlLayout.setBackgroundResource(R.drawable.shape_courses_1_open)
-//                        addGroup.setBackgroundResource(R.drawable.shape_courses_1_close)
-//                    }
-//                    1 -> {
-//                        rlLayout.setBackgroundResource(R.drawable.shape_courses_2_open)
-//                        addGroup.setBackgroundResource(R.drawable.shape_courses_2_close)
-//                    }
-//                    2 -> {
-//                        rlLayout.setBackgroundResource(R.drawable.shape_courses_3_open)
-//                        addGroup.setBackgroundResource(R.drawable.shape_courses_3_close)
-//                    }
-//                }
-//            }
-//
     }
 }
 
