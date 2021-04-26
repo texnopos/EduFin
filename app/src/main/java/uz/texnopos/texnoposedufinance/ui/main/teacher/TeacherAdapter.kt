@@ -7,7 +7,8 @@ import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.Teacher
-import uz.texnopos.texnoposedufinance.databinding.ItemTeachersBinding
+import uz.texnopos.texnoposedufinance.databinding.ItemTeacherBinding
+
 
 class TeacherAdapter :
     BaseAdapter<Teacher, TeacherAdapter.TeacherViewHolder>() {
@@ -17,8 +18,8 @@ class TeacherAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeacherViewHolder {
-        val itemView = parent.inflate(R.layout.item_teachers)
-        val binding = ItemTeachersBinding.bind(itemView)
+        val itemView = parent.inflate(R.layout.item_teacher)
+        val binding =ItemTeacherBinding.bind(itemView)
         return TeacherViewHolder(binding)
     }
 
@@ -26,7 +27,7 @@ class TeacherAdapter :
         holder.populateModel(models[position], position)
     }
 
-    inner class TeacherViewHolder(private val binding: ItemTeachersBinding) :
+    inner class TeacherViewHolder(private val binding: ItemTeacherBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun populateModel(model: Teacher, position: Int) {
             binding.apply {

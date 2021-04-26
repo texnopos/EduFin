@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
@@ -46,7 +47,7 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
 
         binding = FragmentAddGroupBinding.bind(view)
         bindingActBar = ActionBar2Binding.bind(view)
-        val adapter2 = ArrayAdapter(requireContext(), R.layout.spinner_item, arrayListOf<String>())
+        val adapter2 = ArrayAdapter(requireContext(), R.layout.item_spinner, arrayListOf<String>())
 
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.create_group)
         navController = Navigation.findNavController(view)
@@ -151,7 +152,7 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
                     courseId = safeArgs.id
                     val name = groupName.text.toString()
                     if(name.isEmpty()) groupName.error = requireContext().getString(R.string.fillField)
-                    if(dates.text.isNullOrEmpty()) dates.error = requireContext().getString(R.string.fillField)
+                    if(dates.text.isNullOrEmpty()) toastLN(root.context!!.getString(R.string.fillField))
                     if(name.isNotEmpty() && dates.text.isNotEmpty() && teacher.isNotEmpty()){
                         viewModel.createGroup(
                             name, teacher, courseId, courseTime, start, dates.text.toString())
@@ -175,6 +176,7 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
                         loading.visibility(false)
                         toastLNCenter(getString(R.string.added_succesfuly))
                         navController.popBackStack()
+
                     }
                     ResourceState.ERROR -> {
                         loading.visibility(false)
@@ -201,6 +203,7 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
         binding.dates.visibility(true)
         val t = lessonDays.values.toString().substring(1, lessonDays.values.toString().length - 1)
         binding.dates.text = t
+        binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
     }
 
     private fun check(){
@@ -214,6 +217,7 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
             }
         }
     }
+
     private fun sort(){
        lessonDays = lessonDays.toSortedMap()
     }

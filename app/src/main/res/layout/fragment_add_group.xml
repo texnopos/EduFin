@@ -45,16 +45,24 @@
                     android:textSize="@dimen/text_size_standard"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
-                    android:id="@+id/teachers"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTeachers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:padding="@dimen/margin_large"
-                    android:prompt="@string/selectTeacher"
-                    app:layout_constraintTop_toBottomOf="@id/groupName"
-                    />
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:background="@drawable/shape_square"
+                    app:layout_constraintBottom_toTopOf="@id/time"
+                    app:layout_constraintTop_toBottomOf="@id/groupName">
+
+                    <Spinner
+                        android:id="@+id/teachers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_standard"
+                        android:prompt="@string/selectTeacher"
+                        android:gravity="center" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/time"
@@ -65,7 +73,7 @@
                     android:text="@string/time"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/teachers" />
+                    app:layout_constraintTop_toBottomOf="@id/tilTeachers" />
 
                 <TimePicker
                     android:id="@+id/timePicker"
@@ -79,11 +87,11 @@
                     android:id="@+id/calendar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_standard"
                     android:text="@string/lessonStartsIn"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    android:layout_marginStart="@dimen/margin_standard"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/timePicker" />
 
