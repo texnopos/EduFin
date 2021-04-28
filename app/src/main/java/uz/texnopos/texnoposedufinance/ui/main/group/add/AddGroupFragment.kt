@@ -1,14 +1,13 @@
 package uz.texnopos.texnoposedufinance.ui.main.group.add
 
 import android.annotation.SuppressLint
-import android.icu.text.DateFormat
 import android.icu.text.SimpleDateFormat
-import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.*
-import androidx.annotation.RequiresApi
+import android.widget.ArrayAdapter
+import android.widget.ScrollView
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -23,7 +22,6 @@ import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
 import java.util.*
-
 
 class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
     private val viewModel: AddGroupViewModel by inject()
@@ -41,6 +39,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
 
     private val safeArgs: AddGroupFragmentArgs by navArgs()
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,9 +55,13 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
         viewModel.getAllTeachers()
         bindingActBar.apply {
             binding.apply {
-                //val sdf = SimpleDateFormat("dd.MM.yyyy")
-                start = DateFormat.getDateInstance().format(Date()).toString()
-                //start = sdf.format(Date()).toString()
+                val sdf = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    SimpleDateFormat("dd.MM.yyyy")
+                } else {
+                    TODO("VERSION.SDK_INT < N")
+                }
+                start = sdf.format(Calendar.getInstance().time).toString()
+
                 tvStart.text = start
                 tpTime.setIs24HourView(true)
                 viewModel.teacherList.observe(viewLifecycleOwner, Observer {
@@ -219,7 +222,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
             tvDates.text = ""
             tvStart.text = ""
             groupName.setText("")
-            tv
+            actTeachers.setText(view?.context!!.getString(R.string.doNotSelected))
             btnSave.enabled(false)
         }
     }

@@ -51,6 +51,7 @@ class TeachersInfoFragment : BaseFragment(R.layout.fragment_teachers_info) {
                     dialog.setIcon(R.drawable.ic_warning)
                     dialog.setPositiveButton("Да") { _, _ ->
                         viewModel.deleteTeacher(teacherId)
+                        navController.popBackStack()
                     }
                     dialog.setNegativeButton("Отмена") { dialog, _ ->
                         dialog.dismiss()
