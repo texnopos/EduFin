@@ -20,7 +20,7 @@ class CalendarDialog(context: Context) :
         binding = DialogCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.apply {
-            calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            cvCalendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
                 btnYes.onClick {
                     var y = "$year"
                     var m = "${month + 1}"

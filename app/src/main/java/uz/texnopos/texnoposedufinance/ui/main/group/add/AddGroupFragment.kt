@@ -1,15 +1,13 @@
 package uz.texnopos.texnoposedufinance.ui.main.group.add
 
 import android.annotation.SuppressLint
+import android.icu.text.DateFormat
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ScrollView
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -19,13 +17,15 @@ import org.koin.android.ext.android.inject
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
+import java.util.*
 
 
-class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.OnItemClickListener {
+class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
     private val viewModel: AddGroupViewModel by inject()
     private lateinit var binding: FragmentAddGroupBinding
     private lateinit var bindingActBar: ActionBar2Binding
@@ -37,17 +37,17 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
     var courseId = ""
     private var lessonDays = mutableMapOf<Int, String>()
     private val selectedLessonDays = mutableMapOf<Int, Boolean>()
+    private val allTeachers = mutableListOf<String>()
 
     private val safeArgs: AddGroupFragmentArgs by navArgs()
 
-    @SuppressLint("SimpleDateFormat")
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentAddGroupBinding.bind(view)
         bindingActBar = ActionBar2Binding.bind(view)
-        val adapter2 = ArrayAdapter(requireContext(), R.layout.item_spinner, arrayListOf<String>())
+
+        val adapter2 = ArrayAdapter(requireContext(), R.layout.item_spinner, allTeachers)
 
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.create_group)
         navController = Navigation.findNavController(view)
@@ -56,13 +56,11 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
         viewModel.getAllTeachers()
         bindingActBar.apply {
             binding.apply {
-                teachers.prompt = root.context!!.getString(R.string.selectTeacher)
-                val sdf = SimpleDateFormat("dd.MM.yyyy")
-                start = sdf.format(Calendar.getInstance().time).toString()
-                startDate.text = start
-
-                timePicker.setIs24HourView(true)
-                teachers.adapter = adapter2
+                //val sdf = SimpleDateFormat("dd.MM.yyyy")
+                start = DateFormat.getDateInstance().format(Date()).toString()
+                //start = sdf.format(Date()).toString()
+                tvStart.text = start
+                tpTime.setIs24HourView(true)
                 viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                     when (it.status) {
                         ResourceState.LOADING -> loading.visibility(true)
@@ -77,26 +75,17 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
                         }
                     }
                 })
-                teachers.onItemSelectedListener =
-                    object : AdapterView.OnItemSelectedListener {
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-                            teacher = ""
-                        }
+                actTeachers.setAdapter(adapter2)
 
-                        override fun onItemSelected(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long
-                        ) {
-                            teacher = viewModel.teacherList.value?.data!![position].name
-                        }
-                    }
-
-                for(i in 1..7){
-                    selectedLessonDays[i] = false
+                actTeachers.setOnItemClickListener { adapterView, _, i, _ ->
+                    teacher = if (adapterView.getItemAtPosition(i).toString() != view.context.getString(R.string.doNotSelected)) {
+                        viewModel.teacherList.value?.data!![i].name
+                    } else ""
                 }
 
+                for (i in 1..7) {
+                    selectedLessonDays[i] = false
+                }
                 mon.onClick {
                     selected(it)
                     check()
@@ -126,41 +115,44 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
                     selected(it)
                     check()
                 }
-                startDate.onClick{
+
+                imgCalendar.onClick {
                     val dialog = CalendarDialog(requireContext())
                     dialog.show()
-                    dialog.getData {data ->
+                    dialog.getData { data ->
                         start = data
-                        startDate.text = start
+                        tvStart.text = start
                     }
                 }
 
                 btnSave.onClick {
-                    var minut = timePicker.minute.toString()
-                    var hour = timePicker.hour.toString()
-                    if (timePicker.minute == 0)
-                        minut = "${timePicker.minute}0"
-                    if(timePicker.hour == 0)
-                        hour = "${timePicker.hour}0"
-                    if(timePicker.minute < 10)
-                        minut = "0${timePicker.minute}"
-                    if(timePicker.hour < 10)
-                        hour = "0${timePicker.hour}"
+                    var minut = tpTime.minute.toString()
+                    var hour = tpTime.hour.toString()
+                    if (tpTime.minute == 0)
+                        minut = "${tpTime.minute}0"
+                    if (tpTime.hour == 0)
+                        hour = "${tpTime.hour}0"
+                    if (tpTime.minute < 10)
+                        minut = "0${tpTime.minute}"
+                    if (tpTime.hour < 10)
+                        hour = "0${tpTime.hour}"
 
                     courseTime = "$hour:$minut"
-
                     courseId = safeArgs.id
                     val name = groupName.text.toString()
-                    if(name.isEmpty()) groupName.error = requireContext().getString(R.string.fillField)
-                    if(dates.text.isNullOrEmpty()) toastLN(root.context!!.getString(R.string.fillField))
-                    if(name.isNotEmpty() && dates.text.isNotEmpty() && teacher.isNotEmpty()){
-                        viewModel.createGroup(
-                            name, teacher, courseId, courseTime, start, dates.text.toString())
+                    val dates = tvDates.text.toString()
+                    if (name.isEmpty()) groupName.error = view.context.getString(R.string.fillField)
+                    if (dates.isEmpty()) toastLN(view.context.getString(R.string.daysNotSelected))
+                    if(teacher == view.context.getString(R.string.doNotSelected) || teacher.isEmpty()) toastSHTop(view.context.getString(R.string.teachersNotSelected))
+                    if (name.isNotEmpty() && tvDates.text.isNotEmpty() && teacher.isNotEmpty()) {
+                        viewModel.createGroup(name, teacher, courseId, courseTime, start, dates)
+                        clear()
                     }
                 }
-            }
-            btnHome.onClick {
-                navController.popBackStack()
+
+                btnHome.onClick {
+                    navController.popBackStack()
+                }
             }
         }
     }
@@ -174,56 +166,65 @@ class AddGroupFragment: BaseFragment(R.layout.fragment_add_group), AdapterView.O
                     }
                     ResourceState.SUCCESS -> {
                         loading.visibility(false)
-                        toastLNCenter(getString(R.string.added_succesfuly))
+                        toastLNCenter(getString(R.string.added_successfully))
                         navController.popBackStack()
 
                     }
                     ResourceState.ERROR -> {
                         loading.visibility(false)
                         toastLN(it.message)
+                        btnSave.enabled(true)
                     }
                 }
             })
         }
     }
+
     private fun selected(view: View) {
         val v = (view as TextView).text.toString()
         val k = view.tag.toString().toInt()
-        if(selectedLessonDays[k]!!){
+        if (selectedLessonDays[k]!!) {
             view.setBackgroundResource(0)
             lessonDays.remove(k)
             selectedLessonDays[k] = false
-        }
-        else {
+        } else {
             view.setBackgroundResource(R.drawable.selected)
             lessonDays[k] = v
             selectedLessonDays[k] = true
         }
         sort()
-        binding.dates.visibility(true)
+        binding.tvDates.visibility(true)
         val t = lessonDays.values.toString().substring(1, lessonDays.values.toString().length - 1)
-        binding.dates.text = t
+        binding.tvDates.text = t
         binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
     }
 
-    private fun check(){
+    private fun check() {
         binding.apply {
-            if(lessonDays.size == 7) {
-                dates.text = getString(R.string.everyDay)
+            if (lessonDays.size == 7) {
+                tvDates.text = getString(R.string.everyDay)
             }
-            if(lessonDays.isEmpty()) {
-                dates.text = ""
-                dates.visibility(false)
+            if (lessonDays.isEmpty()) {
+                tvDates.text = ""
+                tvDates.visibility(false)
             }
         }
     }
 
-    private fun sort(){
-       lessonDays = lessonDays.toSortedMap()
+    private fun sort() {
+        lessonDays = lessonDays.toSortedMap()
+    }
+    private fun clear(){
+        binding.apply {
+            tvDates.text = ""
+            tvStart.text = ""
+            groupName.setText("")
+            tv
+            btnSave.enabled(false)
+        }
     }
 
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        TODO("Not yet implemented")
-    }
 }
+
+
 

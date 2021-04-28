@@ -11,9 +11,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddTeacherBinding
+
 
 class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
 
@@ -55,14 +57,9 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                 ) {
                     if (password.length > 5) {
                         if (password == confirmPass){
-                            viewModel.createTeacher(
-                                name,
-                                phone,
-                                username,
-                                password,
-                                salary.toDouble()
-                            )
-                        clear()}
+                            viewModel.createTeacher(name, phone, username, password, salary.toDouble())
+                            clear()
+                        }
                         else {
                             etConfirmPass.text!!.clear()
                             etConfirmPass.error = view.context.getString(R.string.doNotMatch)
@@ -106,6 +103,7 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                     ResourceState.ERROR -> {
                         isLoading(false)
                         toastLN(it.message)
+                        btnSave.enabled(true)
                     }
                 }
             }
@@ -133,6 +131,7 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
             etName.text!!.clear()
             etConfirmPass.text!!.clear()
             showPassword = false
+            btnSave.enabled(false)
         }
     }
     private fun showPassword() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_700">
@@ -32,6 +33,26 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_middle">
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/spTeachers"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:hint="@string/selectTeacher"
+                    android:layout_marginHorizontal="@dimen/margin_standard"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                    <AutoCompleteTextView
+                        android:id="@+id/actTeachers"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:textSize="@dimen/text_size_standard"
+                        android:padding="@dimen/margin_standard_lg"
+                        android:text="@string/doNotSelected"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/groupName"
                     android:layout_width="match_parent"
@@ -43,26 +64,8 @@
                     android:padding="@dimen/margin_standard_lg"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilTeachers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_standard"
-                    android:background="@drawable/shape_square"
-                    app:layout_constraintBottom_toTopOf="@id/time"
-                    app:layout_constraintTop_toBottomOf="@id/groupName">
-
-                    <Spinner
-                        android:id="@+id/teachers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/margin_standard"
-                        android:prompt="@string/selectTeacher"
-                        android:gravity="center" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintTop_toBottomOf="@id/spTeachers"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"/>
 
                 <TextView
                     android:id="@+id/time"
@@ -73,10 +76,10 @@
                     android:text="@string/time"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/tilTeachers" />
+                    app:layout_constraintTop_toBottomOf="@id/groupName" />
 
                 <TimePicker
-                    android:id="@+id/timePicker"
+                    android:id="@+id/tpTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_standard"
@@ -84,7 +87,7 @@
                     app:layout_constraintTop_toBottomOf="@id/time" />
 
                 <TextView
-                    android:id="@+id/calendar"
+                    android:id="@+id/tvLessonStarts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -93,10 +96,10 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/timePicker" />
+                    app:layout_constraintTop_toBottomOf="@id/tpTime" />
 
                 <TextView
-                    android:id="@+id/startDate"
+                    android:id="@+id/tvStart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
@@ -104,12 +107,23 @@
                     android:maxLines="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintStart_toEndOf="@id/calendar"
-                    app:layout_constraintTop_toBottomOf="@id/timePicker" />
+                    app:layout_constraintStart_toEndOf="@id/tvLessonStarts"
+                    app:layout_constraintTop_toBottomOf="@id/tpTime" />
 
+                <ImageView
+                    android:id="@+id/imgCalendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_calendar"
+                    app:layout_constraintTop_toBottomOf="@id/tpTime"
+                    android:padding="@dimen/margin_small"
+                    android:layout_marginVertical="@dimen/margin_standard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/margin_standard"
+                    app:layout_constraintBottom_toTopOf="@id/llDays" />
 
                 <TextView
-                    android:id="@+id/dates"
+                    android:id="@+id/tvDates"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -120,7 +134,7 @@
                     android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@id/llDays"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/startDate" />
+                    app:layout_constraintTop_toBottomOf="@id/tvStart" />
 
 
                 <LinearLayout
@@ -132,8 +146,9 @@
                     android:layout_marginBottom="@dimen/margin_large"
                     android:orientation="horizontal"
                     android:weightSum="7"
+                    tools:viewBindingIgnore="true"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dates">
+                    app:layout_constraintTop_toBottomOf="@id/tvDates">
 
                     <TextView
                         android:id="@+id/mon"
@@ -146,7 +161,8 @@
                         android:tag="1"
                         android:text="@string/mon"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/small_text_size" />
+                        android:textSize="@dimen/small_text_size"
+                        android:focusable="true" />
 
                     <TextView
                         android:id="@+id/tue"
@@ -241,7 +257,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -255,5 +271,6 @@
         android:textSize="@dimen/text_size_standard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

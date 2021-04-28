@@ -74,8 +74,10 @@
     <string name="added_new_teacher">Добавлен новый учитель/учителница</string>
     <string name="done">Готово</string>
     <string name="everyDay">Ежедневно</string>
-    <string name="added_succesfuly">Удачно добавлен</string>
+    <string name="added_successfully">Удачно добавлен</string>
     <string name="lessonStartsIn">Урок начинается в</string>
     <string name="selectTeacher">Выберите учителя</string>
-
+    <string name="doNotSelected">Не выбрано</string>
+    <string name="daysNotSelected">У вас еще нет выбранных дней</string>
+    <string name="teachersNotSelected">У вас еще нет выбранных учитель/учителница</string>
 </resources>

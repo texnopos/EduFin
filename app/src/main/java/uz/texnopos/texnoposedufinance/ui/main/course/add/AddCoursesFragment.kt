@@ -11,13 +11,14 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
 
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddCoursesBinding
 
-class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterView.OnItemClickListener {
+class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses){
 
     private val viewModel: AddCoursesViewModel by viewModel()
     lateinit var binding: FragmentAddCoursesBinding
@@ -78,6 +79,8 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterV
                     ResourceState.ERROR -> {
                         loading.visibility(false)
                         toastLN(it.message)
+                        btnSave.enabled(true)
+
                     }
                 }
             })
@@ -88,11 +91,7 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses), AdapterV
             name.text!!.isEmpty()
             price.text!!.isEmpty()
             duration.text!!.isEmpty()
+            btnSave.enabled(false)
         }
-    }
-
-
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        //
     }
 }
