@@ -1,8 +1,6 @@
 package uz.texnopos.texnoposedufinance.ui.main.group.add
 
 import android.annotation.SuppressLint
-import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -21,6 +19,7 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
@@ -55,12 +54,9 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
         viewModel.getAllTeachers()
         bindingActBar.apply {
             binding.apply {
-                val sdf = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    SimpleDateFormat("dd.MM.yyyy")
-                } else {
-                    TODO("VERSION.SDK_INT < N")
-                }
+                val sdf = SimpleDateFormat("dd.MM.yyyy")
                 start = sdf.format(Calendar.getInstance().time).toString()
+                //start = LocalDateTime.now().toString()
 
                 tvStart.text = start
                 tpTime.setIs24HourView(true)
@@ -129,18 +125,18 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                 }
 
                 btnSave.onClick {
-                    var minut = tpTime.minute.toString()
+                    var min = tpTime.minute.toString()
                     var hour = tpTime.hour.toString()
                     if (tpTime.minute == 0)
-                        minut = "${tpTime.minute}0"
+                        min = "${tpTime.minute}0"
                     if (tpTime.hour == 0)
                         hour = "${tpTime.hour}0"
                     if (tpTime.minute < 10)
-                        minut = "0${tpTime.minute}"
+                        min = "0${tpTime.minute}"
                     if (tpTime.hour < 10)
                         hour = "0${tpTime.hour}"
 
-                    courseTime = "$hour:$minut"
+                    courseTime = "$hour:$min"
                     courseId = safeArgs.id
                     val name = groupName.text.toString()
                     val dates = tvDates.text.toString()
@@ -149,7 +145,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                     if(teacher == view.context.getString(R.string.doNotSelected) || teacher.isEmpty()) toastSHTop(view.context.getString(R.string.teachersNotSelected))
                     if (name.isNotEmpty() && tvDates.text.isNotEmpty() && teacher.isNotEmpty()) {
                         viewModel.createGroup(name, teacher, courseId, courseTime, start, dates)
-                        clear()
+                        isLoading(true)
                     }
                 }
 
@@ -165,18 +161,17 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
             viewModel.createGroup.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {
-                        loading.visibility(true)
+                        isLoading(true)
                     }
                     ResourceState.SUCCESS -> {
-                        loading.visibility(false)
+                        isLoading(false)
                         toastLNCenter(getString(R.string.added_successfully))
                         navController.popBackStack()
 
                     }
                     ResourceState.ERROR -> {
-                        loading.visibility(false)
+                        isLoading(false)
                         toastLN(it.message)
-                        btnSave.enabled(true)
                     }
                 }
             })
@@ -217,13 +212,14 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
     private fun sort() {
         lessonDays = lessonDays.toSortedMap()
     }
-    private fun clear(){
+    private fun isLoading(b: Boolean){
         binding.apply {
-            tvDates.text = ""
-            tvStart.text = ""
-            groupName.setText("")
-            actTeachers.setText(view?.context!!.getString(R.string.doNotSelected))
-            btnSave.enabled(false)
+            tvDates.enabled(!b)
+            tvStart.enabled(!b)
+            groupName.enabled(!b)
+            actTeachers.enabled(!b)
+            btnSave.enabled(!b)
+            loading.visibility(b)
         }
     }
 

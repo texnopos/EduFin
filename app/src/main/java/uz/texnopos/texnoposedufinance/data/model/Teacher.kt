@@ -7,5 +7,5 @@ data class Teacher(
     var phone: String = "",
     var username: String = "",
     var password: String = "",
-    var salary: Double = 0.0
+    var salary: String = ""
 )

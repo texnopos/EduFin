@@ -13,6 +13,7 @@ import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
+import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddTeacherBinding
 
@@ -57,8 +58,8 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                 ) {
                     if (password.length > 5) {
                         if (password == confirmPass){
-                            viewModel.createTeacher(name, phone, username, password, salary.toDouble())
-                            clear()
+                            viewModel.createTeacher(name, phone, username, password, salary)
+                            isLoading(true)
                         }
                         else {
                             etConfirmPass.text!!.clear()
@@ -103,7 +104,6 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                     ResourceState.ERROR -> {
                         isLoading(false)
                         toastLN(it.message)
-                        btnSave.enabled(true)
                     }
                 }
             }
@@ -119,21 +119,10 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
             etSalary.isEnabled = !b
             etConfirmPass.isEnabled = !b
             btnSave.isEnabled = !b
+            loading.visibility(b)
         }
     }
 
-    private fun clear() {
-        binding.apply {
-            etUsername.text!!.clear()
-            etPhone.text!!.clear()
-            etSalary.text!!.clear()
-            etPassword.text!!.clear()
-            etName.text!!.clear()
-            etConfirmPass.text!!.clear()
-            showPassword = false
-            btnSave.enabled(false)
-        }
-    }
     private fun showPassword() {
         if (showPassword) {
             binding.etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()

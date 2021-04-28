@@ -11,6 +11,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.FragmentTeachersInfoBinding
@@ -34,8 +35,10 @@ class TeachersInfoFragment : BaseFragment(R.layout.fragment_teachers_info) {
 
         val teacherId = arg.teacherId
         setUpObserversDelete()
-        //setUpObservers()
-        //viewModel.getDataCurrentTeacher(teacherId)
+        setUpObservers()
+        setUpObserversUpdate()
+        viewModel.getDataCurrentTeacher(teacherId)
+        isLoading(true)
 
         actBinding.apply {
             actionBarTitle.text = view.context.getString(R.string.teachers_info)
@@ -51,7 +54,7 @@ class TeachersInfoFragment : BaseFragment(R.layout.fragment_teachers_info) {
                     dialog.setIcon(R.drawable.ic_warning)
                     dialog.setPositiveButton("Да") { _, _ ->
                         viewModel.deleteTeacher(teacherId)
-                        navController.popBackStack()
+                        isLoading(true)
                     }
                     dialog.setNegativeButton("Отмена") { dialog, _ ->
                         dialog.dismiss()
@@ -59,43 +62,83 @@ class TeachersInfoFragment : BaseFragment(R.layout.fragment_teachers_info) {
                     dialog.show()
                 }
 
+                btnSave.onClick {
+                    viewModel.updateDataCurrentTeacher(teacherId, etName.text.toString(),
+                        etPhone.text.toString(), etUsername.text.toString(), etSalary.text.toString())
+                    isLoading(true)
+                }
+
             }
         }
     }
 
+    private fun setUpObserversUpdate() {
+        binding.apply {
+            viewModel.updateTeacher.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.LOADING -> isLoading(true)
+                    ResourceState.SUCCESS -> {
+                        isLoading(false)
+                        navController.popBackStack()
+                        loading.visibility(false)
+                    }
+                    ResourceState.ERROR -> {
+                        isLoading(false)
+                        toastLN(it.message)
+                        loading.visibility(false)
+                    }
+                }
+            })
+        }
+    }
 
     private fun setUpObserversDelete() {
         binding.apply {
             viewModel.deleted.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-                    ResourceState.LOADING -> loading.visibility(true)
+                    ResourceState.LOADING -> isLoading(true)
                     ResourceState.SUCCESS -> {
-                        loading.visibility(false)
+                        isLoading(false)
                         toastLN("Успешно удалено")
+                        navController.popBackStack()
                     }
                     ResourceState.ERROR -> {
-                        loading.visibility(false)
+                        isLoading(false)
                         toastLN(it.message)
                     }
                 }
             })
         }
     }
-
     private fun setUpObservers() {
         binding.apply {
             viewModel.current.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-                    ResourceState.LOADING -> loading.visibility(true)
+                    ResourceState.LOADING -> isLoading(true)
                     ResourceState.SUCCESS -> {
-                        loading.visibility(false)
+                        etName.setText(it.data!!.name)
+                        etUsername.setText(it.data.username)
+                        etSalary.setText(it.data.salary)
+                        etPhone.setText(it.data.phone)
+                        isLoading(false)
                     }
                     ResourceState.ERROR -> {
                         toastLN(it.message)
-                        loading.visibility(false)
+                        isLoading(false)
                     }
                 }
             })
         }
     }
+    fun isLoading(b: Boolean){
+        binding.apply {
+            btnSave.enabled(!b)
+            etName.enabled(!b)
+            etPhone.enabled(!b)
+            etSalary.enabled(!b)
+            etUsername.enabled(!b)
+            loading.visibility(b)
+        }
+    }
 }
+

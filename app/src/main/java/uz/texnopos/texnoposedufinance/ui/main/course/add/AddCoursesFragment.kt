@@ -48,7 +48,7 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses){
                         val price: Double = price.text.toString().toDouble()
                         val period = duration.text.toString().toInt()
                         viewModel.createCourse(name, period, price).toString()
-                        clear()
+                        isLoading(true)
                     } else {
                         if (name.text.isNullOrEmpty()) name.error =
                             view.context.getString(R.string.fillField)
@@ -68,30 +68,30 @@ class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses){
             viewModel.createCourse.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {
-                        loading.visibility(true)
+                        isLoading(true)
                     }
 
                     ResourceState.SUCCESS -> {
-                        loading.visibility(false)
+                        isLoading(false)
                         toastLNCenter("Доваблен новый курс")
                         navController.popBackStack()
                     }
                     ResourceState.ERROR -> {
-                        loading.visibility(false)
+                        isLoading(false)
                         toastLN(it.message)
-                        btnSave.enabled(true)
 
                     }
                 }
             })
         }
     }
-    private fun clear(){
+    private fun isLoading(b: Boolean){
         binding.apply {
-            name.text!!.isEmpty()
-            price.text!!.isEmpty()
-            duration.text!!.isEmpty()
-            btnSave.enabled(false)
+            name.enabled(!b)
+            price.enabled(!b)
+            duration.enabled(!b)
+            btnSave.enabled(!b)
+            loading.visibility(b)
         }
     }
 }
