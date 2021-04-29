@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/actionBar"
-        layout="@layout/add_action_bar" />
+        layout="@layout/action_bar_2" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/margin_large"
-        app:layout_constraintBottom_toTopOf="@id/btnSave"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/actionBar">
 
         <ScrollView
@@ -32,7 +32,7 @@
                 android:layout_margin="@dimen/margin_middle">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civProfile"
+                    android:id="@+id/imgLogo"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_gravity="center"
@@ -57,7 +57,7 @@
                     android:padding="@dimen/margin_standard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/civProfile" />
+                    app:layout_constraintTop_toBottomOf="@id/imgLogo" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPhone"
@@ -158,20 +158,20 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
     </androidx.cardview.widget.CardView>
-
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:layout_marginBottom="@dimen/margin_standard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:layout_marginHorizontal="@dimen/margin_standard"
         android:background="@drawable/shape_button"
         android:padding="@dimen/margin_standard"
         android:text="@string/save"
-        android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:textSize="@dimen/text_size_standard"
+        android:layout_marginBottom="@dimen/margin_large" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

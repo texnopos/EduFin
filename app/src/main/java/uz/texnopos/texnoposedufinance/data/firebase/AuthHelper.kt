@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 
-class AuthHelper(private val auth: FirebaseAuth) {
+class AuthHelper(private val auth: FirebaseAuth, private val db: FirebaseFirestore) {
 
     fun signUp(
         email: String, password: String,
@@ -15,7 +15,6 @@ class AuthHelper(private val auth: FirebaseAuth) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 onSuccess.invoke()
-
             }
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
@@ -30,7 +29,6 @@ class AuthHelper(private val auth: FirebaseAuth) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 onSuccess.invoke()
-
             }
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
@@ -42,6 +40,16 @@ class AuthHelper(private val auth: FirebaseAuth) {
                                 onFailure: (msg: String?) -> Unit) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential)
+            .addOnSuccessListener {
+                onSuccess.invoke()
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
+    }
+
+    fun deleteOrg(orgId: String, onSuccess: () -> Unit, onFailure: (msg: String?) -> Unit){
+        db.collection("users").document(orgId).delete()
             .addOnSuccessListener {
                 onSuccess.invoke()
             }

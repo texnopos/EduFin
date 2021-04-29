@@ -8,76 +8,65 @@
 
     <include
         android:id="@+id/actionBar"
-        layout="@layout/add_action_bar" />
+        layout="@layout/action_bar_2"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/margin_middle"
         android:layout_marginTop="@dimen/margin_middle"
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/margin_large"
-        app:layout_constraintBottom_toTopOf="@id/btnAdd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnSave"
         app:layout_constraintTop_toBottomOf="@id/actionBar">
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_middle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_middle">
 
-                <Spinner
-                    android:id="@+id/courses"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/spTeachers"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/margin_standard"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:padding="@dimen/margin_large"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Spinner
-                    android:id="@+id/teachers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:padding="@dimen/margin_large"
-                    app:layout_constraintTop_toBottomOf="@id/courses" />
-
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/courseId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:hint="@string/selectTeacher"
                     android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_small_standard"
-                    android:background="@drawable/shape_square"
-                    android:hint="@string/courseId"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/courses" />
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                    <AutoCompleteTextView
+                        android:id="@+id/actTeachers"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:textSize="@dimen/text_size_standard"
+                        android:padding="@dimen/margin_standard_lg"
+                        android:text="@string/doNotSelected"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/groupNum"
+                    android:id="@+id/groupName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_small_standard"
-                    android:hint="@string/courseNum"
-                    android:inputType="number"
+                    android:hint="@string/group_name"
+                    android:maxLines="1"
                     android:padding="@dimen/margin_standard_lg"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/teachers" />
+                    app:layout_constraintTop_toBottomOf="@id/spTeachers"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"/>
 
                 <TextView
                     android:id="@+id/time"
@@ -88,130 +77,170 @@
                     android:text="@string/time"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/groupNum" />
+                    app:layout_constraintTop_toBottomOf="@id/groupName" />
 
                 <TimePicker
-                    android:id="@+id/timePicker"
+                    android:id="@+id/tpTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_standard"
                     android:timePickerMode="spinner"
                     app:layout_constraintTop_toBottomOf="@id/time" />
 
+                <TextView
+                    android:id="@+id/tvLessonStarts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:text="@string/lessonStartsIn"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tpTime" />
+
+                <TextView
+                    android:id="@+id/tvStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    app:layout_constraintStart_toEndOf="@id/tvLessonStarts"
+                    app:layout_constraintTop_toBottomOf="@id/tpTime" />
+
+                <ImageView
+                    android:id="@+id/imgCalendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_calendar"
+                    app:layout_constraintTop_toBottomOf="@id/tpTime"
+                    android:padding="@dimen/margin_small"
+                    android:layout_marginVertical="@dimen/margin_standard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/margin_standard"
+                    app:layout_constraintBottom_toTopOf="@id/llDays" />
+
+                <TextView
+                    android:id="@+id/tvDates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_standard"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/llDays"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStart" />
+
+
                 <LinearLayout
+                    android:id="@+id/llDays"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_standard"
+                    android:layout_marginTop="@dimen/margin_standard"
                     android:layout_marginBottom="@dimen/margin_large"
-                    android:orientation="vertical"
-                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:weightSum="7"
+                    tools:viewBindingIgnore="true"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/timePicker">
+                    app:layout_constraintTop_toBottomOf="@id/tvDates">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_middle"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:id="@+id/date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_standard"
-                            android:layout_marginTop="@dimen/margin_standard"
-                            android:text="test"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/calendar"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_marginTop="@dimen/margin_standard"
-                            android:layout_marginEnd="@dimen/margin_standard"
-                            android:padding="@dimen/margin_middle"
-                            android:src="@drawable/ic_calendar"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/mon"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/margin_small"
                         android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="7">
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="1"
+                        android:text="@string/mon"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size"
+                        android:focusable="true" />
 
-                        <TextView
-                            android:id="@+id/monday"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_standard"
-                            android:layout_weight="1"
-                            android:text="@string/mon"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard"
-                            tools:ignore="NestedWeights" />
+                    <TextView
+                        android:id="@+id/tue"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="2"
+                        android:text="@string/tue"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/tuesday"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/tue"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard" />
+                    <TextView
+                        android:id="@+id/wed"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="3"
+                        android:text="@string/wed"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/wednesday"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/wed"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard" />
+                    <TextView
+                        android:id="@+id/thu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="4"
+                        android:text="@string/thu"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/thursday"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/thu"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard" />
+                    <TextView
+                        android:id="@+id/fri"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="5"
+                        android:text="@string/fri"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/friday"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/fri"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard" />
+                    <TextView
+                        android:id="@+id/sat"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="6"
+                        android:text="@string/sat"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
 
-                        <TextView
-                            android:id="@+id/saturday"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/sat"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard" />
-
-                        <TextView
-                            android:id="@+id/sunday"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/margin_standard"
-                            android:layout_weight="1"
-                            android:text="@string/sun"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard" />
-
-                    </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/sun"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/margin_small_standard"
+                        android:tag="7"
+                        android:text="@string/sun"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_text_size" />
                 </LinearLayout>
 
                 <ProgressBar
@@ -223,22 +252,26 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnSave"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:layout_marginBottom="@dimen/margin_standard"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_standard"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:layout_marginBottom="@dimen/margin_large"
         android:background="@drawable/shape_button"
-        android:text="@string/add"
-        android:textAllCaps="false"
+        android:padding="@dimen/margin_standard"
+        android:text="@string/save"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
+        android:textSize="@dimen/text_size_standard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

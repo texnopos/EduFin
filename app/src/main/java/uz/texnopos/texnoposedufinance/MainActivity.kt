@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import uz.texnopos.texnoposedufinance.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

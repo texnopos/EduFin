@@ -12,5 +12,6 @@
     <color name="border_color">#cfd8dc</color>
     <color name="red">#D30606</color>
     <color name="green">#19D321</color>
+    <color name="grey">#EEEEEE</color>
 
 </resources>

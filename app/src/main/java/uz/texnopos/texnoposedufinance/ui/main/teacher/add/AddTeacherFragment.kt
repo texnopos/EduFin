@@ -11,35 +11,38 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
-import uz.texnopos.texnoposedufinance.databinding.AddActionBarBinding
+import uz.texnopos.texnoposedufinance.core.extentions.visibility
+import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddTeacherBinding
+
 
 class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
 
     private val viewModel: AddTeacherViewModel by viewModel()
     private lateinit var binding: FragmentAddTeacherBinding
     private lateinit var navController: NavController
-    private lateinit var bindingActionBar: AddActionBarBinding
+    private lateinit var actBinding: ActionBar2Binding
     var showPassword = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         binding = FragmentAddTeacherBinding.bind(view)
-        bindingActionBar = AddActionBarBinding.bind(view)
-        
-        bindingActionBar.actionBarTitle.text = view.context.getString(R.string.addTeacher)
+        actBinding = ActionBar2Binding.bind(view)
+
+        actBinding.actionBarTitle.text = view.context.getString(R.string.addTeacher)
         setUpObservers()
 
-        bindingActionBar.btnHome.onClick {
+        actBinding.btnHome.onClick {
             navController.popBackStack()
         }
         binding.apply {
 
-           showPass.onClick {
-               showPassword()
-           }
+            showPass.onClick {
+                showPassword()
+            }
 
             btnSave.onClick {
                 val name = etName.text.toString()
@@ -51,26 +54,32 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
 
                 if (name.isNotEmpty() && phone.isNotEmpty() &&
                     username.isNotEmpty() && password.isNotEmpty() &&
-                    salary.isNotEmpty() && confirmPass.isNotEmpty()) {
-                    if(password.length > 7){
-                        if(password == confirmPass)
-                            viewModel.createTeacher(name, phone, username, password, salary.toDouble())
+                    salary.isNotEmpty() && confirmPass.isNotEmpty()
+                ) {
+                    if (password.length > 5) {
+                        if (password == confirmPass){
+                            viewModel.createTeacher(name, phone, username, password, salary)
+                            isLoading(true)
+                        }
                         else {
                             etConfirmPass.text!!.clear()
                             etConfirmPass.error = view.context.getString(R.string.doNotMatch)
                         }
-                    }
-                    else {
+                    } else {
                         etPassword.error = view.context.getString(R.string.minLength)
                     }
 
                 } else {
                     if (name.isEmpty()) etName.error = view.context.getString(R.string.fillField)
                     if (phone.isEmpty()) etPhone.error = view.context.getString(R.string.fillField)
-                    if (salary.isEmpty()) etSalary.error = view.context.getString(R.string.fillField)
-                    if (username.isEmpty()) etUsername.error = view.context.getString(R.string.fillField)
-                    if (password.isEmpty()) etPassword.error = view.context.getString(R.string.fillField)
-                    if (confirmPass.isEmpty()) etConfirmPass.error = view.context.getString(R.string.fillField)
+                    if (salary.isEmpty()) etSalary.error =
+                        view.context.getString(R.string.fillField)
+                    if (username.isEmpty()) etUsername.error =
+                        view.context.getString(R.string.fillField)
+                    if (password.isEmpty()) etPassword.error =
+                        view.context.getString(R.string.fillField)
+                    if (confirmPass.isEmpty()) etConfirmPass.error =
+                        view.context.getString(R.string.fillField)
                 }
             }
         }
@@ -89,8 +98,8 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                     ResourceState.SUCCESS -> {
                         loading.visibility = View.GONE
                         isLoading(false)
-                        empty()
-                        toastLN("Добавлен новый сотрудник")
+                        toastLN(getString(R.string.added_new_teacher))
+                        navController.popBackStack()
                     }
                     ResourceState.ERROR -> {
                         isLoading(false)
@@ -110,26 +119,16 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
             etSalary.isEnabled = !b
             etConfirmPass.isEnabled = !b
             btnSave.isEnabled = !b
+            loading.visibility(b)
         }
     }
-    private fun empty() {
-        binding.apply {
-            etUsername.text!!.clear()
-            etPhone.text!!.clear()
-            etSalary.text!!.clear()
-            etPassword.text!!.clear()
-            etName.text!!.clear()
-            etConfirmPass.text!!.clear()
-            showPassword = false
-        }
-    }
-    private fun showPassword(){
-        if(showPassword){
+
+    private fun showPassword() {
+        if (showPassword) {
             binding.etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
             binding.showPass.setImageResource(R.drawable.ic_visible)
             showPassword = false
-        }
-        else {
+        } else {
             binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
             binding.showPass.setImageResource(R.drawable.ic_unvisible)
             showPassword = true

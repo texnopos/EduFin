@@ -5,14 +5,16 @@ import androidx.recyclerview.widget.RecyclerView
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
+import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.databinding.ItemGroupBinding
 
+
 class GroupAdapter: BaseAdapter<Group, GroupAdapter.GroupViewHolder>(){
-    inner class GroupViewHolder(val binding: ItemGroupBinding): RecyclerView.ViewHolder(binding.root){
-        fun populateModel(model: Group){
-            binding.name.text = model.id
-        }
+
+    var onItemClick: (id: String) -> Unit = {}
+    fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
+        this.onItemClick = onItemClick
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
@@ -23,5 +25,18 @@ class GroupAdapter: BaseAdapter<Group, GroupAdapter.GroupViewHolder>(){
 
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
         holder.populateModel(models[position])
+    }
+
+    inner class GroupViewHolder(val binding: ItemGroupBinding): RecyclerView.ViewHolder(binding.root){
+        fun populateModel(model: Group){
+            binding.apply {
+                name.text = model.name
+                days.text = model.days.toString()
+                time.text = model.time
+                clGroup.onClick {
+                    onItemClick.invoke(model.id)
+                }
+            }
+        }
     }
 }

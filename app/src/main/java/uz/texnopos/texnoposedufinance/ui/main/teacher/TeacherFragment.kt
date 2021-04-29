@@ -6,11 +6,14 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import org.koin.android.viewmodel.ext.android.viewModel
+import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentTeachersBinding
+import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 
 
 class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
@@ -21,6 +24,7 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
     private lateinit var navController: NavController
     private lateinit var binding: FragmentTeachersBinding
     private lateinit var bindingActionBar: ActionBarBinding
+    lateinit var parentNavController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,18 +39,34 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
         setUpObservers()
         binding.apply {
             srlTeachers.setOnRefreshListener {
-                viewModel.getAllEmployees()
+                viewModel.getAllTeachers()
+                loading.visibility(false)
             }
+
+        }
+        if (requireParentFragment().requireActivity() is MainActivity) {
+            parentNavController = Navigation.findNavController(
+                requireParentFragment().requireActivity() as
+                        MainActivity, R.id.nav_host
+            )
+        }
+        adapter.setOnItemClicked {
+            val action = MainFragmentDirections.actionMainFragmentToTeachersInfoFragment(it)
+            parentNavController.navigate(action)
         }
 
-        viewModel.getAllEmployees()
+        viewModel.getAllTeachers()
     }
 
     private fun setUpObservers() {
         binding.apply {
             viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
+                    ResourceState.LOADING -> {
+                        loading.visibility(true)
+                    }
                     ResourceState.SUCCESS -> {
+                        srlTeachers.isRefreshing = false
                         if (it.data!!.isNotEmpty()) {
                             tvEmptyList.visibility = View.GONE
                             rcvTeachers.visibility = View.VISIBLE
@@ -55,16 +75,31 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
                             tvEmptyList.visibility = View.VISIBLE
                             rcvTeachers.visibility = View.GONE
                         }
-                        srlTeachers.isRefreshing = false
+                        loading.visibility(false)
                     }
                     ResourceState.ERROR -> {
-                        toastLN(it.message)
                         srlTeachers.isRefreshing = false
-                    }
-                    else -> {
+                        toastLN(it.message)
+                        loading.visibility(false)
                     }
                 }
             })
         }
     }
 }
+/*private fun optionsClicked(view: View){
+    val menu = PopupMenu(requireContext(), view)
+    val menuInflater = menu.menuInflater
+    menuInflater.inflate(R.menu.teacher_menu, menu.menu)
+    menu.show()
+    menu.setOnMenuItemClickListener {id ->
+        binding.apply {
+            when(id.itemId){
+                R.id.delete_teacher ->{
+
+                }
+            }
+        }
+        return@setOnMenuItemClickListener true
+    }
+}*/
