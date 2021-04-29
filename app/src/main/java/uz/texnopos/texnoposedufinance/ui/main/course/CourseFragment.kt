@@ -17,10 +17,10 @@ import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 
-class CoursesFragment: BaseFragment(R.layout.fragment_courses) {
+class CourseFragment: BaseFragment(R.layout.fragment_courses) {
 
-    private val viewModel: CoursesViewModel by viewModel()
-    private val adapter = CoursesAdapter()
+    private val viewModel: CourseViewModel by viewModel()
+    private val adapter = CourseAdapter()
     private lateinit var binding: FragmentCoursesBinding
     lateinit var actBinding: ActionBarBinding
     lateinit var navController: NavController
@@ -48,6 +48,11 @@ class CoursesFragment: BaseFragment(R.layout.fragment_courses) {
         adapter.setAddGroupClicked {
             val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment(it)
             parentNavController.navigate(action)
+        }
+        adapter.groupAdapter.setOnItemClicked {
+            val action = MainFragmentDirections.actionMainFragmentToGroupInfoFragment(it)
+            parentNavController.navigate(action)
+
         }
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(

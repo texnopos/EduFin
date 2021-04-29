@@ -3,7 +3,6 @@ package uz.texnopos.texnoposedufinance.data.model.request
 import retrofit2.*
 import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
-import uz.texnopos.texnoposedufinance.ui.main.course.CoursesAdapter
 
 class NetworkHelper(private val apiInterface: ApiInterface) {
 //    fun postId(

@@ -13,7 +13,7 @@ import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.data.model.request.CourseRequest
 import uz.texnopos.texnoposedufinance.data.model.request.NetworkHelper
 
-class CoursesViewModel(private val networkHelper: NetworkHelper,) : ViewModel() {
+class CourseViewModel(private val networkHelper: NetworkHelper,) : ViewModel() {
     private val _courseList: MutableLiveData<Resource<List<Course>>> = MutableLiveData()
     val courseList: LiveData<Resource<List<Course>>>
         get() = _courseList

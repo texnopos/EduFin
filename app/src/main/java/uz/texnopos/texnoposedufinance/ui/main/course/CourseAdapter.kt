@@ -14,12 +14,12 @@ import uz.texnopos.texnoposedufinance.databinding.ItemCoursesBinding
 
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 
-class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
-    var onItemClick: (id: String) -> Unit = {}
+class CourseAdapter : BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
+    /*var onItemClick: (id: String) -> Unit = {}
     fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
         this.onItemClick = onItemClick
-    }
-
+    }*/
+    var groupAdapter = GroupAdapter()
     var setAddGroup: (id: String) -> Unit = {}
     fun setAddGroupClicked(addGroupId: (id: String) -> Unit) {
         this.setAddGroup = addGroupId
@@ -58,14 +58,13 @@ class CoursesAdapter : BaseAdapter<Course, CoursesAdapter.CoursesViewHolder>() {
                 cvGroups.visibility(false)
                 line.visibility(false)
                 tvCourseName.text = model.name
-                val g = model.groups.size.toString()
-                tvGroupCount.text = root.context.getString(R.string.group_count, g)
+                tvGroupCount.text = root.context.getString(R.string.group_count, model.groups.size.toString())
                 tvPupilsCount.text =
                     root.context.getString(R.string.period, model.duration)
                 rlLayout.setBackgroundResource(R.drawable.shape_teachers)
 
                 rlLayout.onClick {
-                    val groupAdapter = GroupAdapter()
+                    groupAdapter = GroupAdapter()
                     rvGroups.adapter = groupAdapter
                     groupAdapter.models = model.groups
                     if (cvGroups.visibility == View.GONE && addGroup.visibility == View.GONE) {

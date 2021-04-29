@@ -45,7 +45,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
         binding = FragmentAddGroupBinding.bind(view)
         bindingActBar = ActionBar2Binding.bind(view)
 
-        val adapter2 = ArrayAdapter(requireContext(), R.layout.item_spinner, allTeachers)
+        val teachersAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allTeachers)
 
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.create_group)
         navController = Navigation.findNavController(view)
@@ -65,8 +65,8 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                         ResourceState.LOADING -> loading.visibility(true)
                         ResourceState.SUCCESS -> {
                             loading.visibility(false)
-                            adapter2.clear()
-                            adapter2.addAll(it.data!!.map { e -> e.name })
+                            teachersAdapter.clear()
+                            teachersAdapter.addAll(it.data!!.map { e -> e.name })
                         }
                         ResourceState.ERROR -> {
                             loading.visibility(false)
@@ -74,7 +74,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                         }
                     }
                 })
-                actTeachers.setAdapter(adapter2)
+                actTeachers.setAdapter(teachersAdapter)
 
                 actTeachers.setOnItemClickListener { adapterView, _, i, _ ->
                     teacher = if (adapterView.getItemAtPosition(i).toString() != view.context.getString(R.string.doNotSelected)) {
@@ -127,10 +127,6 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                 btnSave.onClick {
                     var min = tpTime.minute.toString()
                     var hour = tpTime.hour.toString()
-                    if (tpTime.minute == 0)
-                        min = "${tpTime.minute}0"
-                    if (tpTime.hour == 0)
-                        hour = "${tpTime.hour}0"
                     if (tpTime.minute < 10)
                         min = "0${tpTime.minute}"
                     if (tpTime.hour < 10)

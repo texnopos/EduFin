@@ -22,8 +22,8 @@ import uz.texnopos.texnoposedufinance.data.model.request.NetworkHelper
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpViewModel
-import uz.texnopos.texnoposedufinance.ui.main.course.CoursesViewModel
-import uz.texnopos.texnoposedufinance.ui.main.course.add.AddCoursesViewModel
+import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
+import uz.texnopos.texnoposedufinance.ui.main.course.add.AddCourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 import uz.texnopos.texnoposedufinance.ui.main.teacher.add.AddTeacherViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupViewModel
@@ -84,8 +84,8 @@ val viewModelModule = module {
     viewModel { SignUpViewModel(get()) }
     viewModel { TeacherViewModel(get()) }
     viewModel { AddTeacherViewModel(get()) }
-    viewModel { CoursesViewModel(get()) }
-    viewModel { AddCoursesViewModel(get(), get()) }
+    viewModel { CourseViewModel(get()) }
+    viewModel { AddCourseViewModel(get(), get()) }
     viewModel { AddGroupViewModel(get(), get()) }
     viewModel { GroupViewModel(get()) }
 }

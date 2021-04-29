@@ -2,8 +2,6 @@ package uz.texnopos.texnoposedufinance.ui.main.course.add
 
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -18,9 +16,9 @@ import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
 
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddCoursesBinding
 
-class AddCoursesFragment : BaseFragment(R.layout.fragment_add_courses){
+class AddCourseFragment : BaseFragment(R.layout.fragment_add_courses){
 
-    private val viewModel: AddCoursesViewModel by viewModel()
+    private val viewModel: AddCourseViewModel by viewModel()
     lateinit var binding: FragmentAddCoursesBinding
     lateinit var bindingActBar: ActionBar2Binding
     lateinit var navController: NavController

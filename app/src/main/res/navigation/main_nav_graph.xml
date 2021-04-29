@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_course"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.course.CoursesFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.course.CourseFragment"
         android:label="CoursesFragment"
         tools:layout="@layout/fragment_courses" />
     <fragment

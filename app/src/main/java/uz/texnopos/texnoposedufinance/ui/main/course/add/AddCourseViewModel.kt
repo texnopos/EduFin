@@ -9,7 +9,7 @@ import uz.texnopos.texnoposedufinance.data.firebase.TeacherHelper
 import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.Teacher
 
-class AddCoursesViewModel(
+class AddCourseViewModel(
     private val helper: CourseHelper,
     private val teacherHelper: TeacherHelper
 ) : ViewModel() {

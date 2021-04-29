@@ -24,16 +24,15 @@ class GroupAdapter: BaseAdapter<Group, GroupAdapter.GroupViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
-        holder.populateModel(models[position], position)
+        holder.populateModel(models[position])
     }
 
     inner class GroupViewHolder(val binding: ItemGroupBinding): RecyclerView.ViewHolder(binding.root){
-        fun populateModel(model: Group, position: Int){
+        fun populateModel(model: Group){
             binding.apply {
                 name.text = model.name
                 days.text = model.days.toString()
                 time.text = model.time
-
                 clGroup.onClick {
                     onItemClick.invoke(model.id)
                 }
