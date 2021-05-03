@@ -7,12 +7,13 @@ import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.data.model.Teacher
 import java.util.*
 
-class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private val func: FirebaseFunctions) {
+class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val orgId = auth.currentUser!!.uid
 
     fun createGroup(name: String,
                     teacher: String,
                     courseId: String,
+                    courseName: String,
                     time: String,
                     startDate: String,
                     days: String,
@@ -24,6 +25,7 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private
             id = id,
             orgId = orgId,
             courseId = courseId,
+            courseName = courseName,
             name = name,
             time = time,
             startDate = startDate,
@@ -62,6 +64,15 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore, private
         db.collection("users/$orgId/groups").document(groupId).delete()
             .addOnSuccessListener {
                 onSuccess.invoke()
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
+    }
+    fun getDataCurrentGroup(groupId: String, onSuccess: (group: Group) -> Unit, onFailure: (msg: String?) -> Unit){
+        db.collection("users/$orgId/groups").document(groupId).get()
+            .addOnSuccessListener {
+                onSuccess.invoke(it.toObject(Group::class.java)!!)
             }
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)

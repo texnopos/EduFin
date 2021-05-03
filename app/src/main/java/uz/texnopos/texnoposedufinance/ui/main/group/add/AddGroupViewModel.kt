@@ -25,12 +25,13 @@ class AddGroupViewModel(private val helper: GroupHelper,
     fun createGroup(name: String,
                     teacher: String,
                     courseId: String,
+                    courseName: String,
                     time: String,
                     startDate: String,
                     days: String){
         _createGroup.value = Resource.loading()
         helper.createGroup(
-            name, teacher, courseId, time, startDate, days,
+            name, teacher, courseId, courseName, time, startDate, days,
             {
                 _createGroup.value = Resource.success(null)
             },
@@ -39,7 +40,6 @@ class AddGroupViewModel(private val helper: GroupHelper,
             }
         )
     }
-
     fun getAllTeachers() {
         _teacherList.value = Resource.loading()
         teacherHelper.getAllTeachers(

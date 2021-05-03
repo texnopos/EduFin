@@ -65,8 +65,8 @@
             android:id="@+id/action_mainFragment_to_teachersInfoFragment"
             app:destination="@id/teachersInfoFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_groupInfoFragment"
-            app:destination="@id/groupInfoFragment" />
+            android:id="@+id/action_mainFragment_to_addStudentFragment"
+            app:destination="@id/addStudentFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -95,7 +95,7 @@
         android:id="@+id/addCoursesFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.course.add.AddCourseFragment"
         android:label="AddCoursesFragment"
-        tools:layout="@layout/fragment_add_courses"/>
+        tools:layout="@layout/fragment_add_course"/>
     <fragment
         android:id="@+id/addGroupFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupFragment"
@@ -104,21 +104,24 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <argument
+            android:name="courseName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/teachersInfoFragment"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.info.TeachersInfoFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.info.TeacherInfoFragment"
         android:label="TeachersInfoFragment"
-        tools:layout="@layout/fragment_teachers_info">
+        tools:layout="@layout/fragment_teacher_info">
         <argument
             android:name="teacherId"
             app:argType="string"/>
     </fragment>
     <fragment
-        android:id="@+id/groupInfoFragment"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoFragment"
-        android:label="GroupInfoFragment"
-        tools:layout="@layout/fragment_group_info">
+        android:id="@+id/addStudentFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.add.AddStudentFragment"
+        android:label="AddStudentFragment"
+        tools:layout="@layout/fragment_add_student">
         <argument
             android:name="groupId"
             app:argType="string"/>

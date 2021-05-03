@@ -10,19 +10,21 @@ import uz.texnopos.texnoposedufinance.core.extentions.inflate
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.Course
+import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.databinding.ItemCoursesBinding
 
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 
-class CourseAdapter : BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
-    /*var onItemClick: (id: String) -> Unit = {}
-    fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
-        this.onItemClick = onItemClick
-    }*/
-    var groupAdapter = GroupAdapter()
-    var setAddGroup: (id: String) -> Unit = {}
-    fun setAddGroupClicked(addGroupId: (id: String) -> Unit) {
+class CourseAdapter: BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
+
+    private var setAddGroup: (id: String, name: String) -> Unit = { s: String, s1: String -> }
+    fun setAddGroupClicked(addGroupId: (id: String, name: String) -> Unit) {
         this.setAddGroup = addGroupId
+    }
+
+    private var onGroupItemClicked: (group: Group) -> Unit = {}
+    fun setOnGroupItemClickListener(onGroupItemClicked: (group: Group) -> Unit) {
+        this.onGroupItemClicked = onGroupItemClicked
     }
 
     var onResponse: (List<Course>) -> Unit = {}
@@ -39,7 +41,6 @@ class CourseAdapter : BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
         val itemView = parent.inflate(R.layout.item_courses)
         val binding = ItemCoursesBinding.bind(itemView)
         return CoursesViewHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: CoursesViewHolder, position: Int) {
@@ -58,13 +59,17 @@ class CourseAdapter : BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
                 cvGroups.visibility(false)
                 line.visibility(false)
                 tvCourseName.text = model.name
-                tvGroupCount.text = root.context.getString(R.string.group_count, model.groups.size.toString())
+                tvGroupCount.text =
+                    root.context.getString(R.string.group_count, model.groups.size.toString())
                 tvPupilsCount.text =
                     root.context.getString(R.string.period, model.duration)
                 rlLayout.setBackgroundResource(R.drawable.shape_teachers)
 
                 rlLayout.onClick {
-                    groupAdapter = GroupAdapter()
+                    val groupAdapter = GroupAdapter()
+                    groupAdapter.setOnItemClickListener {
+                        onGroupItemClicked.invoke(it)
+                    }
                     rvGroups.adapter = groupAdapter
                     groupAdapter.models = model.groups
                     if (cvGroups.visibility == View.GONE && addGroup.visibility == View.GONE) {
@@ -73,6 +78,7 @@ class CourseAdapter : BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
                         if (model.groups.isNotEmpty()) {
                             cvGroups.visibility(true)
                             rvGroups.visibility(true)
+
                         } else {
                             rvGroups.visibility(false)
                             cvGroups.visibility(false)
@@ -86,9 +92,9 @@ class CourseAdapter : BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
                         line.visibility(false)
                         rlLayout.setBackgroundResource(R.drawable.shape_teachers)
                     }
-                }
-                addGroup.onClick {
-                    setAddGroup.invoke(model.id)
+                    addGroup.onClick {
+                        setAddGroup.invoke(model.id, model.name)
+                    }
                 }
             }
         }

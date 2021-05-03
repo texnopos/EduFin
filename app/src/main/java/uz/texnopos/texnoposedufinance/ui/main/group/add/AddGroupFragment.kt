@@ -17,7 +17,7 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
+import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,13 +25,14 @@ import java.util.*
 class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
     private val viewModel: AddGroupViewModel by inject()
     private lateinit var binding: FragmentAddGroupBinding
-    private lateinit var bindingActBar: ActionBar2Binding
+    private lateinit var bindingActBar: ActionBarAddBinding
     lateinit var navController: NavController
     var id = ""
     var teacher = ""
     var courseTime = ""
     var start = ""
     var courseId = ""
+    var courseName = ""
     private var lessonDays = mutableMapOf<Int, String>()
     private val selectedLessonDays = mutableMapOf<Int, Boolean>()
     private val allTeachers = mutableListOf<String>()
@@ -43,7 +44,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentAddGroupBinding.bind(view)
-        bindingActBar = ActionBar2Binding.bind(view)
+        bindingActBar = ActionBarAddBinding.bind(view)
 
         val teachersAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allTeachers)
 
@@ -56,7 +57,6 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
             binding.apply {
                 val sdf = SimpleDateFormat("dd.MM.yyyy")
                 start = sdf.format(Calendar.getInstance().time).toString()
-                //start = LocalDateTime.now().toString()
 
                 tvStart.text = start
                 tpTime.setIs24HourView(true)
@@ -134,13 +134,15 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
 
                     courseTime = "$hour:$min"
                     courseId = safeArgs.id
+                    courseName = safeArgs.courseName
+
                     val name = groupName.text.toString()
                     val dates = tvDates.text.toString()
                     if (name.isEmpty()) groupName.error = view.context.getString(R.string.fillField)
                     if (dates.isEmpty()) toastLN(view.context.getString(R.string.daysNotSelected))
                     if(teacher == view.context.getString(R.string.doNotSelected) || teacher.isEmpty()) toastSHTop(view.context.getString(R.string.teachersNotSelected))
                     if (name.isNotEmpty() && tvDates.text.isNotEmpty() && teacher.isNotEmpty()) {
-                        viewModel.createGroup(name, teacher, courseId, courseTime, start, dates)
+                        viewModel.createGroup(name, teacher, courseId, courseName, courseTime, start, dates)
                         isLoading(true)
                     }
                 }

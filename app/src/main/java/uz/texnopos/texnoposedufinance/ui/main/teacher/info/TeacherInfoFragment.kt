@@ -14,22 +14,21 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.databinding.FragmentTeachersInfoBinding
+import uz.texnopos.texnoposedufinance.databinding.FragmentTeacherInfoBinding
 import uz.texnopos.texnoposedufinance.databinding.InfoActionBarBinding
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
-import uz.texnopos.texnoposedufinance.ui.main.teacher.info.TeachersInfoFragmentArgs
 
-class TeachersInfoFragment : BaseFragment(R.layout.fragment_teachers_info) {
-    lateinit var binding: FragmentTeachersInfoBinding
+class TeacherInfoFragment : BaseFragment(R.layout.fragment_teacher_info) {
+    lateinit var binding: FragmentTeacherInfoBinding
     lateinit var actBinding: InfoActionBarBinding
-    private val arg: TeachersInfoFragmentArgs by navArgs()
+    private val arg: TeacherInfoFragmentArgs by navArgs()
     lateinit var navController: NavController
     private val viewModel: TeacherViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentTeachersInfoBinding.bind(view)
+        binding = FragmentTeacherInfoBinding.bind(view)
         actBinding = InfoActionBarBinding.bind(view)
         navController = Navigation.findNavController(view)
 
@@ -130,7 +129,7 @@ class TeachersInfoFragment : BaseFragment(R.layout.fragment_teachers_info) {
             })
         }
     }
-    fun isLoading(b: Boolean){
+    private fun isLoading(b: Boolean){
         binding.apply {
             btnSave.enabled(!b)
             etName.enabled(!b)

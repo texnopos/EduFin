@@ -9,11 +9,10 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.databinding.ItemGroupBinding
 
-
 class GroupAdapter: BaseAdapter<Group, GroupAdapter.GroupViewHolder>(){
 
-    var onItemClick: (id: String) -> Unit = {}
-    fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
+    private var onItemClick: (Group) -> Unit = {}
+    fun setOnItemClickListener(onItemClick: (Group) -> Unit) {
         this.onItemClick = onItemClick
     }
 
@@ -31,10 +30,10 @@ class GroupAdapter: BaseAdapter<Group, GroupAdapter.GroupViewHolder>(){
         fun populateModel(model: Group){
             binding.apply {
                 name.text = model.name
-                days.text = model.days.toString()
+                days.text = model.days
                 time.text = model.time
                 clGroup.onClick {
-                    onItemClick.invoke(model.id)
+                    onItemClick.invoke(model)
                 }
             }
         }

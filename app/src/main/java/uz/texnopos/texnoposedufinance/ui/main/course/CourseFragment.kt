@@ -41,19 +41,19 @@ class CourseFragment: BaseFragment(R.layout.fragment_courses) {
         adapter.onResponse {
             adapter.models = it
         }
+        adapter.setOnGroupItemClickListener {
+            val action = CourseFragmentDirections.actionNavCourseToGroupInfoFragment(it.id)
+            navController.navigate(action)
+        }
         adapter.onFailure {
             toastLN(it)
         }
         actBinding.tvTitle.text = view.context.getString(R.string.courses)
-        adapter.setAddGroupClicked {
-            val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment(it)
+        adapter.setAddGroupClicked{ s, s1 ->
+            val action = MainFragmentDirections.actionMainFragmentToAddGroupFragment(s, s1)
             parentNavController.navigate(action)
         }
-        adapter.groupAdapter.setOnItemClicked {
-            val action = MainFragmentDirections.actionMainFragmentToGroupInfoFragment(it)
-            parentNavController.navigate(action)
 
-        }
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(
                 requireParentFragment().requireActivity() as
@@ -67,7 +67,6 @@ class CourseFragment: BaseFragment(R.layout.fragment_courses) {
             }
             rcvCourses.adapter = adapter
         }
-
         viewModel.getAllCourses(orgId)
     }
 

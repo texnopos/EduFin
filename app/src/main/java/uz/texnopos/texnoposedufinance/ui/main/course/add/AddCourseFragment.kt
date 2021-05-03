@@ -12,22 +12,22 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
+import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
+import uz.texnopos.texnoposedufinance.databinding.FragmentAddCourseBinding
 
-import uz.texnopos.texnoposedufinance.databinding.FragmentAddCoursesBinding
 
-class AddCourseFragment : BaseFragment(R.layout.fragment_add_courses){
+class AddCourseFragment : BaseFragment(R.layout.fragment_add_course){
 
     private val viewModel: AddCourseViewModel by viewModel()
-    lateinit var binding: FragmentAddCoursesBinding
-    lateinit var bindingActBar: ActionBar2Binding
+    lateinit var binding: FragmentAddCourseBinding
+    lateinit var bindingActBar: ActionBarAddBinding
     lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentAddCoursesBinding.bind(view)
-        bindingActBar = ActionBar2Binding.bind(view)
+        binding = FragmentAddCourseBinding.bind(view)
+        bindingActBar = ActionBarAddBinding.bind(view)
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.addCourse)
 
         navController = Navigation.findNavController(view)

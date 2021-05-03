@@ -14,7 +14,7 @@
             android:title="@string/courses"
             android:icon="@drawable/ic_folder"
             />
-        <item android:id="@+id/nav_employee"
+        <item android:id="@+id/nav_teacher"
             android:title="@string/employees"
             android:icon="@drawable/ic_employee" />
     </group>

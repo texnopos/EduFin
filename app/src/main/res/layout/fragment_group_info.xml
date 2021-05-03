@@ -2,29 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/purple_700">
 
     <include android:id="@+id/actionBar"
         layout="@layout/info_action_bar"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/margin_middle"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:layout_marginBottom="@dimen/margin_large"
-        android:background="@color/white"
-        app:cardCornerRadius="@dimen/margin_large"
-        app:layout_constraintBottom_toTopOf="@id/btnSave"
-        app:layout_constraintTop_toBottomOf="@id/actionBar">
-
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_middle">
+            android:layout_margin="@dimen/margin_middle"
+            app:layout_constraintTop_toBottomOf="@id/actionBar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -37,13 +28,13 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="@dimen/margin_standard"
-                    android:background="@color/purple_700"
                     app:cardCornerRadius="@dimen/margin_standard"
                     android:layout_marginHorizontal="@dimen/margin_middle">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:background="@color/white">
                         <TextView
                             android:id="@+id/tvName"
                             android:layout_width="wrap_content"
@@ -80,27 +71,6 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_standard"
                             />
-                        <TextView
-                            android:id="@+id/tvStart"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toBottomOf="@id/tvTime"
-                            app:layout_constraintStart_toStartOf="parent"
-                            android:layout_marginStart="@dimen/margin_standard"
-                            android:text="Kotlin #1"
-                            android:padding="@dimen/margin_middle"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_standard"
-                            />
-                        <ImageView
-                            android:id="@+id/imgEdit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:src="@drawable/ic_calendar"
-                            android:layout_marginEnd="@dimen/margin_standard"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -108,10 +78,12 @@
                     android:id="@+id/rcvStudents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/groupInfo"
+                    app:layout_constraintTop_toBottomOf="@id/groupInfo"
                     android:layout_marginTop="@dimen/margin_standard"
-
-                    />
+                    android:layout_marginHorizontal="@dimen/margin_standard"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/item_group_info"
+                    android:background="@color/white"/>
 
                 <ProgressBar
                     android:id="@+id/loading"
@@ -126,23 +98,22 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-    </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_standard"
-        android:layout_marginTop="@dimen/margin_standard"
-        android:layout_marginBottom="@dimen/margin_large"
-        android:background="@drawable/shape_button"
-        android:padding="@dimen/margin_standard"
-        android:text="@string/save"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_standard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+<!--    <Button-->
+<!--        android:id="@+id/btnSave"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="@dimen/margin_standard"-->
+<!--        android:layout_marginTop="@dimen/margin_standard"-->
+<!--        android:layout_marginBottom="@dimen/margin_large"-->
+<!--        android:background="@drawable/shape_button"-->
+<!--        android:padding="@dimen/margin_standard"-->
+<!--        android:text="@string/save"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="@dimen/text_size_standard"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
