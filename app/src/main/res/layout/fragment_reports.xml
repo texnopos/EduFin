@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_middle"
                 android:text="@string/s_expenses"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toEndOf="@id/icExpenses"
                 app:layout_constraintTop_toTopOf="parent"
                 android:textColor="@color/absoluteTextColor"/>
@@ -59,7 +59,7 @@
                 android:paddingHorizontal="@dimen/margin_small"
                 android:text="@string/minus"
                 android:textColor="@color/red"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/icExpenses" />
 
@@ -70,7 +70,7 @@
                 android:layout_marginTop="@dimen/margin_middle"
                 android:paddingHorizontal="@dimen/margin_small"
                 android:textColor="@color/red"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toEndOf="@id/tvMinus"
                 app:layout_constraintTop_toBottomOf="@id/icExpenses" />
 
@@ -81,7 +81,7 @@
                 android:layout_marginTop="@dimen/margin_middle"
                 android:text="@string/swm"
                 android:textColor="@color/red"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toEndOf="@id/amountExpenses"
                 app:layout_constraintTop_toBottomOf="@id/icExpenses" />
 
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_middle"
                 android:text="@string/s_incomes"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toEndOf="@id/icIncomes"
                 app:layout_constraintTop_toTopOf="parent"
                 android:textColor="@color/absoluteTextColor"/>
@@ -131,7 +131,7 @@
                 android:paddingHorizontal="@dimen/margin_small"
                 android:text="@string/plus"
                 android:textColor="@color/green"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/icIncomes" />
 
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_middle"
                 android:textColor="@color/green"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toEndOf="@id/tvPlus"
                 app:layout_constraintTop_toBottomOf="@id/icIncomes" />
 
@@ -153,7 +153,7 @@
                 android:paddingHorizontal="@dimen/margin_small"
                 android:text="@string/swm"
                 android:textColor="@color/green"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toEndOf="@id/amountIncomes"
                 app:layout_constraintTop_toBottomOf="@id/icIncomes" />
 

@@ -11,7 +11,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
-import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.FragmentTeacherInfoBinding
@@ -45,6 +44,10 @@ class TeacherInfoFragment : BaseFragment(R.layout.fragment_teacher_info) {
             btnHome.onClick {
                 navController.popBackStack()
             }
+
+            edit.onClick {
+                //
+            }
             binding.apply {
                 delete.onClick {
                     val dialog = AlertDialog.Builder(requireContext())
@@ -54,6 +57,7 @@ class TeacherInfoFragment : BaseFragment(R.layout.fragment_teacher_info) {
                     dialog.setPositiveButton("Да") { _, _ ->
                         viewModel.deleteTeacher(teacherId)
                         isLoading(true)
+                        navController.popBackStack()
                     }
                     dialog.setNegativeButton("Отмена") { dialog, _ ->
                         dialog.dismiss()
@@ -65,6 +69,7 @@ class TeacherInfoFragment : BaseFragment(R.layout.fragment_teacher_info) {
                     viewModel.updateDataCurrentTeacher(teacherId, etName.text.toString(),
                         etPhone.text.toString(), etUsername.text.toString(), etSalary.text.toString())
                     isLoading(true)
+                    navController.popBackStack()
                 }
 
             }
@@ -75,14 +80,13 @@ class TeacherInfoFragment : BaseFragment(R.layout.fragment_teacher_info) {
         binding.apply {
             viewModel.updateTeacher.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-                    ResourceState.LOADING -> isLoading(true)
+                    ResourceState.LOADING -> {
+                        loading.visibility(true)
+                    }
                     ResourceState.SUCCESS -> {
-                        isLoading(false)
-                        navController.popBackStack()
                         loading.visibility(false)
                     }
                     ResourceState.ERROR -> {
-                        isLoading(false)
                         toastLN(it.message)
                         loading.visibility(false)
                     }
@@ -99,7 +103,6 @@ class TeacherInfoFragment : BaseFragment(R.layout.fragment_teacher_info) {
                     ResourceState.SUCCESS -> {
                         isLoading(false)
                         toastLN("Успешно удалено")
-                        navController.popBackStack()
                     }
                     ResourceState.ERROR -> {
                         isLoading(false)
@@ -131,12 +134,21 @@ class TeacherInfoFragment : BaseFragment(R.layout.fragment_teacher_info) {
     }
     private fun isLoading(b: Boolean){
         binding.apply {
-            btnSave.enabled(!b)
-            etName.enabled(!b)
-            etPhone.enabled(!b)
-            etSalary.enabled(!b)
-            etUsername.enabled(!b)
-            loading.visibility(b)
+            btnSave.isEnabled = !b
+            etName.isEnabled = !b
+            etPhone.isEnabled = !b
+            etSalary.isEnabled = !b
+            etUsername.isEnabled = !b
+            loading.isEnabled = !b
+        }
+    }
+    private fun edited(b: Boolean){
+        binding.apply {
+            btnSave.isEnabled = b
+            etName.isEnabled = b
+            etPhone.isEnabled = b
+            etSalary.isEnabled = b
+            etUsername.isEnabled = b
         }
     }
 }

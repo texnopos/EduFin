@@ -6,8 +6,7 @@ import android.os.Bundle
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.databinding.DialogCalendarBinding
 
-class CalendarDialog(context: Context) :
-    Dialog(context) {
+class CalendarDialog(context: Context):Dialog(context) {
     lateinit var binding: DialogCalendarBinding
 
     var getData: (time: String) -> Unit = {}

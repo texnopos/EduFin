@@ -12,13 +12,11 @@ import retrofit2.Response
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 
 
-class CourseHelper(
-    auth: FirebaseAuth, private val db: FirebaseFirestore
-) {
+class CourseHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val orgId = auth.currentUser!!.uid
 
     fun addNewCourse(
-        name: String, duration: Int, price: Double,
+        name: String, duration: Int, price: Int,
         onSuccess: () -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {

@@ -4,6 +4,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.util.Assert
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
@@ -22,8 +25,8 @@ class CourseAdapter: BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
         this.setAddGroup = addGroupId
     }
 
-    private var onGroupItemClicked: (group: Group) -> Unit = {}
-    fun setOnGroupItemClickListener(onGroupItemClicked: (group: Group) -> Unit) {
+    private var onGroupItemClicked: (group: String, course: String) -> Unit = {s, s1 ->}
+    fun setOnGroupItemClickListener(onGroupItemClicked: (group: String, course: String) -> Unit) {
         this.onGroupItemClicked = onGroupItemClicked
     }
 
@@ -54,6 +57,8 @@ class CourseAdapter: BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
                 rvGroups.addItemDecoration(
                     DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL)
                 )
+                val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+                val jsonString = gsonPretty.toJson(Course(model.id, model.orgId, model.name, model.price, model.duration, model.groups ))
                 rvGroups.visibility(false)
                 addGroup.visibility(false)
                 cvGroups.visibility(false)
@@ -67,8 +72,8 @@ class CourseAdapter: BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
 
                 rlLayout.onClick {
                     val groupAdapter = GroupAdapter()
-                    groupAdapter.setOnItemClickListener {
-                        onGroupItemClicked.invoke(it)
+                    groupAdapter.setOnItemClickListener {group ->
+                        onGroupItemClicked.invoke(group, jsonString)
                     }
                     rvGroups.adapter = groupAdapter
                     groupAdapter.models = model.groups

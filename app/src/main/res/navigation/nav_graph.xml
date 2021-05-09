@@ -67,6 +67,12 @@
         <action
             android:id="@+id/action_mainFragment_to_addStudentFragment"
             app:destination="@id/addStudentFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addNewStudentParticipantFragment"
+            app:destination="@id/addNewStudentParticipantFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_selectStudentsFragment"
+            app:destination="@id/selectStudentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -121,9 +127,22 @@
         android:id="@+id/addStudentFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.student.add.AddStudentFragment"
         android:label="AddStudentFragment"
-        tools:layout="@layout/fragment_add_student">
+        tools:layout="@layout/fragment_add_student"/>
+    <fragment
+        android:id="@+id/addNewStudentParticipantFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.add.AddNewStudentParticipantFragment"
+        android:label="AddNewStudentParticipantFragment"
+        tools:layout="@layout/fragment_add_participant">
         <argument
             android:name="groupId"
             app:argType="string"/>
+        <argument
+            android:name="courseId"
+            app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/selectStudentsFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.group.select.SelectStudentsFragment"
+        android:label="SelectStudentsFragment"
+        tools:layout="@layout/fragment_select_students"/>
 </navigation>

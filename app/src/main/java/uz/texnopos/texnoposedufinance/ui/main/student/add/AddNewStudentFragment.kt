@@ -2,7 +2,6 @@ package uz.texnopos.texnoposedufinance.ui.main.student.add
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -12,31 +11,45 @@ import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
+import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddStudentBinding
+
 
 class AddStudentFragment: BaseFragment(R.layout.fragment_add_student) {
     lateinit var binding: FragmentAddStudentBinding
     lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
     private val viewModel: AddStudentViewModel by viewModel()
-    private val args: AddStudentFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddStudentBinding.bind(view)
         actBinding =  ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
-        toastLN(args.groupId)
         setUpObservers()
         actBinding.apply {
             btnHome.onClick{
                 navController.popBackStack()
             }
+            actionBarTitle.text = view.context.getString(R.string.addStudent)
         }
         binding.apply {
             btnSave.onClick {
-                viewModel.addStudent(etPhone.text.toString(), args.groupId, etName.text.toString())
+                val name = etName.text.toString()
+                val phone1 = etPhone1.text.toString()
+                val phone2 = etPhone2.text.toString()
+                val interested = etStudy.text.toString()
+                if(name.isEmpty()) etName.error = view.context.getString(R.string.fillField)
+                if(phone1.isEmpty()) etPhone1.error = view.context.getString(R.string.fillField)
+                if(phone2.isEmpty()) etPhone2.error = view.context.getString(R.string.fillField)
+                if(interested.isEmpty()) etStudy.error = view.context.getString(R.string.fillField)
+
+                if(name.isNotEmpty() && phone1.isNotEmpty() && interested.isNotEmpty() && phone2.isNotEmpty()){
+                    val phone = arrayListOf(phone1, phone2)
+                    viewModel.addStudent("", "", name, phone, interested, "", "", "", 0)
+                    isLoading(true)
+                }
             }
         }
     }
@@ -45,16 +58,29 @@ class AddStudentFragment: BaseFragment(R.layout.fragment_add_student) {
             viewModel.student.observe(viewLifecycleOwner, Observer {
                 when(it.status){
                     ResourceState.LOADING ->{
-
+                        isLoading(true)
                     }
                     ResourceState.SUCCESS ->{
-                        toastLN("added successfully")
+                        isLoading(false)
+                        navController.popBackStack()
+                        toastLN(view?.context!!.getString(R.string.added_successfully))
                     }
                     ResourceState.ERROR ->{
+                        isLoading(false)
                         toastLN(it.message)
                     }
                 }
             })
+        }
+    }
+    private fun isLoading(b: Boolean){
+        binding.apply {
+            etName.isEnabled = !b
+            etPhone1.isEnabled = !b
+            etPhone2.isEnabled = !b
+            etStudy.isEnabled = !b
+            btnSave.isEnabled = !b
+            loading.visibility(b)
         }
     }
 }

@@ -15,18 +15,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.data.firebase.*
-import uz.texnopos.texnoposedufinance.data.model.request.NetworkHelper
+import uz.texnopos.texnoposedufinance.data.network.NetworkHelper
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpViewModel
-import uz.texnopos.texnoposedufinance.ui.main.course.CourseAdapter
-import uz.texnopos.texnoposedufinance.ui.main.course.CourseFragment
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.course.add.AddCourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 import uz.texnopos.texnoposedufinance.ui.main.teacher.add.AddTeacherViewModel
-import uz.texnopos.texnoposedufinance.ui.main.group.GroupViewModel
+import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupViewModel
+import uz.texnopos.texnoposedufinance.ui.main.report.income.IncomeViewModel
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentsViewModel
 import uz.texnopos.texnoposedufinance.ui.main.student.add.AddStudentViewModel
 import java.util.concurrent.TimeUnit
 
@@ -76,8 +76,9 @@ val helperModule = module {
     single { TeacherHelper(get(), get()) }
     single { CourseHelper(get(), get()) }
     single { GroupHelper(get(), get()) }
-    single { NetworkHelper(get()) }
+    single { NetworkHelper(get(), get()) }
     single { StudentHelper(get(), get()) }
+    single { IncomeHelper(get(), get()) }
 }
 
 val viewModelModule = module {
@@ -88,8 +89,10 @@ val viewModelModule = module {
     viewModel { CourseViewModel(get()) }
     viewModel { AddCourseViewModel(get()) }
     viewModel { AddGroupViewModel(get(), get()) }
-    viewModel { GroupViewModel(get()) }
+    viewModel { GroupInfoViewModel(get(), get()) }
     viewModel { AddStudentViewModel(get()) }
+    viewModel { StudentsViewModel(get()) }
+    viewModel { IncomeViewModel(get()) }
 }
 val adapterModule = module {
 

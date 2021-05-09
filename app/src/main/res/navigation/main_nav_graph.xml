@@ -16,12 +16,8 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true" />
+
     </fragment>
-    <fragment
-        android:id="@+id/nav_teacher"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"
-        android:label="EmployeesFragment"
-        tools:layout="@layout/fragment_teachers" />
     <fragment
         android:id="@+id/nav_report"
         android:name="uz.texnopos.texnoposedufinance.ui.main.report.ReportsFragment"
@@ -38,7 +34,32 @@
         android:label="GroupInfoFragment"
         tools:layout="@layout/fragment_group_info">
         <argument
-            android:name="groupId"
+            android:name="group"
             app:argType="string"/>
+        <argument
+            android:name="course"
+            app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_addition"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.addition.AdditionFragment"
+        android:label="AdditionFragment"
+        tools:layout="@layout/fragment_addition">
+        <action
+            android:id="@+id/action_nav_addition_to_teacherFragment"
+            app:destination="@id/nav_teacher" />
+        <action
+            android:id="@+id/action_nav_addition_to_nav_student"
+            app:destination="@id/nav_student" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_teacher"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"
+        android:label="TeacherFragment"
+        tools:layout="@layout/fragment_teachers"/>
+    <fragment
+        android:id="@+id/nav_student"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.StudentsFragment"
+        android:label="StudentsFragment"
+        tools:layout="@layout/fragment_students"/>
 </navigation>

@@ -43,7 +43,7 @@ class AddCourseFragment : BaseFragment(R.layout.fragment_add_course){
                         !price.text.isNullOrEmpty() && !duration.text.isNullOrEmpty()
                     ) {
                         val name = name.text.toString()
-                        val price: Double = price.text.toString().toDouble()
+                        val price = price.text.toString().toInt()
                         val period = duration.text.toString().toInt()
                         viewModel.createCourse(name, period, price).toString()
                         isLoading(true)

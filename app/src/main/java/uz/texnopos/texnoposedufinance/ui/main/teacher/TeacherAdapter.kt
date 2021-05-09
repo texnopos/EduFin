@@ -24,12 +24,12 @@ class TeacherAdapter :
     }
 
     override fun onBindViewHolder(holder: TeacherViewHolder, position: Int) {
-        holder.populateModel(models[position], position)
+        holder.populateModel(models[position])
     }
 
     inner class TeacherViewHolder(private val binding: ItemTeacherBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun populateModel(model: Teacher, position: Int) {
+        fun populateModel(model: Teacher) {
             binding.apply {
                 tvTeacherName.text = model.name
                 tvUsername.text = model.username

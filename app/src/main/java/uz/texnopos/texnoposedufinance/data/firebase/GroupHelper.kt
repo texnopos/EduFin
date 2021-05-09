@@ -17,6 +17,7 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
                     time: String,
                     startDate: String,
                     days: String,
+                    created: String,
                     onSuccess: () -> Unit,
                     onFailure: (msg: String?) -> Unit
     ){
@@ -30,7 +31,8 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
             time = time,
             startDate = startDate,
             teacher = teacher,
-            days = days
+            days = days,
+            created = created
         )
         db.collection("users/$orgId/groups").document(id).set(newGroup)
             .addOnSuccessListener {
@@ -41,25 +43,6 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
             }
     }
 
-    fun getAllGroups(
-        courseId: String,
-        onSuccess: (list: List<Group>) -> Unit,
-        onFailure: (msg: String?) -> Unit
-    ){
-        db.collection("users/$orgId/groups")
-            .whereEqualTo("courseId", courseId).get()
-            .addOnSuccessListener {doc ->
-                if(doc.documents.isNotEmpty()){
-                    onSuccess.invoke(doc.documents.map {
-                        it.toObject(Group::class.java) ?: Group()
-                    })
-                }
-                else onSuccess.invoke(listOf())
-            }
-            .addOnFailureListener {
-                onFailure.invoke(it.localizedMessage)
-            }
-    }
     fun deleteGroup(groupId: String, onSuccess: () -> Unit, onFailure: (msg: String?) -> Unit){
         db.collection("users/$orgId/groups").document(groupId).delete()
             .addOnSuccessListener {

@@ -28,12 +28,13 @@ class AddGroupViewModel(private val helper: GroupHelper,
                     courseName: String,
                     time: String,
                     startDate: String,
-                    days: String){
+                    days: String,
+                    created: String){
         _createGroup.value = Resource.loading()
         helper.createGroup(
-            name, teacher, courseId, courseName, time, startDate, days,
+            name, teacher, courseId, courseName, time, startDate, days, created,
             {
-                _createGroup.value = Resource.success(null)
+                _createGroup.value = Resource.success(Group())
             },
             {
                 _createGroup.value = Resource.error(it)

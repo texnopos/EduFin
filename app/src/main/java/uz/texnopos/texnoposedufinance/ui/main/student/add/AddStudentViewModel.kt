@@ -12,9 +12,11 @@ class AddStudentViewModel(private val helper: StudentHelper): ViewModel() {
     val student: LiveData<Resource<Student>>
         get() = _student
 
-    fun addStudent(groupId: String, name: String, phone: String){
+    fun addStudent(groupId: String, courseId: String, name: String, phone: List<String>,
+                   interested: String,  passport: String, birthDate: String,
+                   address: String, contract: Int){
         _student.value = Resource.loading()
-        helper.addStudent(groupId, name, phone,{
+        helper.addStudent(groupId, courseId, name, phone, interested, passport, birthDate, address, contract, {
                 _student.value = Resource.success(Student())
             }, {
                 _student.value = Resource.error(it)

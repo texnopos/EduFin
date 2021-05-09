@@ -33,6 +33,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
     var start = ""
     var courseId = ""
     var courseName = ""
+    var created = ""
     private var lessonDays = mutableMapOf<Int, String>()
     private val selectedLessonDays = mutableMapOf<Int, Boolean>()
     private val allTeachers = mutableListOf<String>()
@@ -57,8 +58,10 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
             binding.apply {
                 val sdf = SimpleDateFormat("dd.MM.yyyy")
                 start = sdf.format(Calendar.getInstance().time).toString()
+                created = sdf.format(Calendar.getInstance().time).toString()
 
                 tvStart.text = start
+                tvGroupCreatedDate.text = created
                 tpTime.setIs24HourView(true)
                 viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                     when (it.status) {
@@ -142,7 +145,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                     if (dates.isEmpty()) toastLN(view.context.getString(R.string.daysNotSelected))
                     if(teacher == view.context.getString(R.string.doNotSelected) || teacher.isEmpty()) toastSHTop(view.context.getString(R.string.teachersNotSelected))
                     if (name.isNotEmpty() && tvDates.text.isNotEmpty() && teacher.isNotEmpty()) {
-                        viewModel.createGroup(name, teacher, courseId, courseName, courseTime, start, dates)
+                        viewModel.createGroup(name, teacher, courseId, courseName, courseTime, start, dates, created)
                         isLoading(true)
                     }
                 }

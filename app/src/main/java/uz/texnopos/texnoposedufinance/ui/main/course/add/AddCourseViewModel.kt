@@ -15,7 +15,7 @@ class AddCourseViewModel(private val helper: CourseHelper): ViewModel() {
     val createCourse: LiveData<Resource<Course>>
         get() = _createCourse
 
-    fun createCourse(name: String, duration: Int, price: Double) {
+    fun createCourse(name: String, duration: Int, price: Int) {
         _createCourse.value = Resource.loading()
         helper.addNewCourse(name, duration, price, {
                 _createCourse.value = Resource.success(Course())

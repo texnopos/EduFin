@@ -6,6 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.util.Assert
+import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.MainActivity
@@ -13,6 +15,8 @@ import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
+import uz.texnopos.texnoposedufinance.data.model.Course
+import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
@@ -25,8 +29,6 @@ class CourseFragment: BaseFragment(R.layout.fragment_courses) {
     lateinit var actBinding: ActionBarBinding
     lateinit var navController: NavController
     lateinit var parentNavController: NavController
-    private val auth: FirebaseAuth by inject()
-    lateinit var orgId: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,17 +36,16 @@ class CourseFragment: BaseFragment(R.layout.fragment_courses) {
         binding = FragmentCoursesBinding.bind(view)
         actBinding = ActionBarBinding.bind(view)
         navController = Navigation.findNavController(view)
-
-        orgId = auth.currentUser!!.uid
         setUpObservers()
 
         adapter.onResponse {
             adapter.models = it
         }
-        adapter.setOnGroupItemClickListener {
-            val action = CourseFragmentDirections.actionNavCourseToGroupInfoFragment(it.id)
+        adapter.setOnGroupItemClickListener {s, s1 ->
+            val action = CourseFragmentDirections.actionNavCourseToGroupInfoFragment(s, s1)
             navController.navigate(action)
         }
+
         adapter.onFailure {
             toastLN(it)
         }
@@ -62,12 +63,12 @@ class CourseFragment: BaseFragment(R.layout.fragment_courses) {
         }
         binding.apply {
             swlCourses.setOnRefreshListener {
-                viewModel.getAllCourses(orgId)
+                viewModel.getAllCourses()
                 loading.visibility(false)
             }
             rcvCourses.adapter = adapter
         }
-        viewModel.getAllCourses(orgId)
+        viewModel.getAllCourses()
     }
 
     private fun setUpObservers() {

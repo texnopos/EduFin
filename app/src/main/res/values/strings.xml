@@ -54,7 +54,7 @@
     <string name="addTeacher">Добавить учителя</string>
     <string name="add_plus">+</string>
     <string name="fillField">"Заполните поле "</string>
-    <string name="addCourse">Добавить кусру</string>
+    <string name="addCourse">Добавить курс</string>
     <string name="teachers">Сотрудники</string>
     <string name="confirmYourPass">Подтвердите пароль</string>
     <string name="doNotMatch">пароль и подтверждение не совпадают</string>
@@ -81,4 +81,20 @@
     <string name="daysNotSelected">У вас еще нет выбранных дней</string>
     <string name="teachersNotSelected">У вас еще нет выбранных учитель/учителница</string>
     <string name="addStudent">Добавить ученика</string>
+    <string name="study">Об учёбе</string>
+    <string name="groupCreated">Группа создана в</string>
+    <string name="contractNum">Договор</string>
+    <string name="addition">Ещё</string>
+    <string name="students">Ученики</string>
+    <string name="teacherInfo">Ментор: %1$s</string>
+    <string name="daysInfo">Дни и время: %1$s</string>
+    <string name="startInfo">Начала: %1$s</string>
+    <string name="_290000">290000 сум</string>
+    <string name="addPayment">Добавить платеж</string>
+    <string name="dayPayment">Когда оплащено?</string>
+    <string name="passport">Пасспорт</string>
+    <string name="address">Аддресс</string>
+    <string name="birthDate">ДД.ММ.ГГГГ</string>
+    <string name="addNewStudent">Добавить нового ученика</string>
+    <string name="selectStudents">Выбрать учеников</string>
 </resources>
