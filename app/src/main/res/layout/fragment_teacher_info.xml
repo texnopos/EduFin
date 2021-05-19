@@ -28,8 +28,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_middle">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/imgLogo"
@@ -48,8 +47,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/shape_square"
-                    android:drawableEnd="@drawable/ic_edit"
+                    android:background="@drawable/selector_square"
+                    android:drawableEnd="@drawable/ic_edit_"
                     android:hint="@string/fio"
                     android:inputType="text"
                     android:maxLines="1"
@@ -64,8 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/shape_square"
-                    android:drawableEnd="@drawable/ic_edit"
+                    android:background="@drawable/selector_square"
+                    android:drawableEnd="@drawable/ic_edit_"
                     android:hint="@string/phone_number"
                     android:inputType="phone"
                     android:maxLines="1"
@@ -80,8 +79,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/shape_square"
-                    android:drawableEnd="@drawable/ic_edit"
+                    android:background="@drawable/selector_square"
+                    android:drawableEnd="@drawable/ic_edit_"
                     android:hint="@string/salary"
                     android:inputType="number"
                     android:maxLines="1"
@@ -97,8 +96,8 @@
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_standard_middle"
                     android:layout_marginBottom="@dimen/margin_large"
-                    android:background="@drawable/shape_square"
-                    android:drawableEnd="@drawable/ic_edit"
+                    android:background="@drawable/selector_square"
+                    android:drawableEnd="@drawable/ic_edit_"
                     android:hint="@string/username"
                     android:inputType="text"
                     android:maxLines="1"

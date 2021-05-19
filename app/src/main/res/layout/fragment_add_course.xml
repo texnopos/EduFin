@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_700">
@@ -47,12 +48,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/shape_square"
+                    android:background="@drawable/selector_square"
                     android:hint="@string/courseName"
                     android:inputType="text"
                     android:padding="@dimen/margin_standard"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/logo"
                     android:maxLines="1"/>
 
@@ -62,14 +62,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/shape_square"
+                    android:background="@drawable/selector_square"
                     android:hint="@string/coursePayment"
                     android:inputType="number"
                     android:padding="@dimen/margin_standard"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
                     app:layout_constraintTop_toBottomOf="@id/name"
-                    android:maxLines="1"/>
+                    android:maxLines="1"
+                    />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/duration"
@@ -78,12 +78,11 @@
                     android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_standard_middle"
                     android:layout_marginBottom="@dimen/margin_large"
-                    android:background="@drawable/shape_square"
+                    android:background="@drawable/selector_square"
                     android:hint="@string/coursePeriod"
                     android:inputType="number"
                     android:padding="@dimen/margin_standard"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/price"
                     android:maxLines="1"/>

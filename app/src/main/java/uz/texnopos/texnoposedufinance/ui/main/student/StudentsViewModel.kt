@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import uz.texnopos.texnoposedufinance.core.Resource
 import uz.texnopos.texnoposedufinance.data.firebase.StudentHelper
 import uz.texnopos.texnoposedufinance.data.model.Student
+import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 
-class StudentsViewModel(private val helper: StudentHelper): ViewModel() {
+class StudentsViewModel(private val helper: StudentHelper, private val networkHelper: NetworkHelper): ViewModel() {
     private val _studentsList: MutableLiveData<Resource<List<Student>>> = MutableLiveData()
     val studentList: LiveData<Resource<List<Student>>>
         get() = _studentsList
@@ -25,12 +26,11 @@ class StudentsViewModel(private val helper: StudentHelper): ViewModel() {
     val selectStudentsList: LiveData<Resource<List<Student>>>
         get() = _selectStudentsList
 
-    //cloudFunctions Keliwi kk groupId ga qarap sortirovka qilatugin
-    fun getSelectStudents(groupId: String){
+    fun selectExistingStudentToGroup(groupId: String){
         _selectStudentsList.value = Resource.loading()
-        helper.getSelectStudents(groupId, {
+        networkHelper.selectExistingStudentToGroup(groupId, {
             _selectStudentsList.value = Resource.success(it)
-        },{
+        }, {
             _selectStudentsList.value = Resource.error(it)
         })
     }

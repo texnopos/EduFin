@@ -5,5 +5,5 @@ data class Participant(
     var studentId: String = "",
     var groupId: String = "",
     var courseId: String = "",
-    var orgId: String = ""
+    var contract: Int = 0
 )

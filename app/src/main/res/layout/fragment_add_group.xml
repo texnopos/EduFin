@@ -9,7 +9,7 @@
     <include
         android:id="@+id/actionBar"
         layout="@layout/action_bar_add"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -36,38 +36,40 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/spTeachers"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/margin_standard"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:hint="@string/selectTeacher"
                     android:layout_marginHorizontal="@dimen/margin_standard"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:hint="@string/selectTeacher"
+                    app:layout_constraintTop_toTopOf="parent">
+
                     <AutoCompleteTextView
                         android:id="@+id/actTeachers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="none"
-                        android:textSize="@dimen/text_size_standard"
                         android:padding="@dimen/margin_large_standard"
                         android:text="@string/doNotSelected"
+                        android:textSize="@dimen/text_size_standard"
                         tools:ignore="SpUsage" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/groupName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
                     android:layout_marginTop="@dimen/margin_standard_middle"
                     android:hint="@string/group_name"
+                    android:lines="1"
                     android:maxLines="1"
                     android:padding="@dimen/margin_large_standard"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
                     app:layout_constraintTop_toBottomOf="@id/spTeachers"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     tools:ignore="SpUsage" />
 
                 <TextView
@@ -104,19 +106,6 @@
                     tools:ignore="SpUsage" />
 
                 <TextView
-                    android:id="@+id/tvGroupCreatedDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_standard"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintStart_toEndOf="@id/tvLessonStarts"
-                    app:layout_constraintTop_toBottomOf="@id/tpTime"
-                    tools:ignore="SpUsage" />
-
-                <TextView
                     android:id="@+id/tvLessonStarts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,30 +118,17 @@
                     app:layout_constraintTop_toBottomOf="@id/tvGroupCreated"
                     tools:ignore="SpUsage" />
 
-                <TextView
-                    android:id="@+id/tvStart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_standard"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintStart_toEndOf="@id/tvLessonStarts"
-                    app:layout_constraintTop_toBottomOf="@id/tvGroupCreated"
-                    tools:ignore="SpUsage" />
-
                 <ImageView
                     android:id="@+id/imgCalendar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_calendar"
-                    app:layout_constraintTop_toBottomOf="@id/tpTime"
-                    android:padding="@dimen/margin_small"
                     android:layout_marginVertical="@dimen/margin_standard"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="@dimen/margin_standard"
-                    app:layout_constraintBottom_toTopOf="@id/llDays" />
+                    android:padding="@dimen/margin_small"
+                    android:src="@drawable/ic_calendar"
+                    app:layout_constraintBottom_toTopOf="@id/llDays"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tpTime" />
 
                 <TextView
                     android:id="@+id/tvDates"
@@ -166,9 +142,8 @@
                     android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@id/llDays"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvStart"
+                    app:layout_constraintTop_toBottomOf="@id/tvLessonStarts"
                     tools:ignore="SpUsage" />
-
 
                 <LinearLayout
                     android:id="@+id/llDays"
@@ -179,9 +154,9 @@
                     android:layout_marginBottom="@dimen/margin_large"
                     android:orientation="horizontal"
                     android:weightSum="7"
-                    tools:viewBindingIgnore="true"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDates">
+                    app:layout_constraintTop_toBottomOf="@id/tvDates"
+                    tools:viewBindingIgnore="true">
 
                     <TextView
                         android:id="@+id/mon"
@@ -189,13 +164,13 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/margin_small"
                         android:layout_weight="1"
+                        android:focusable="true"
                         android:gravity="center"
                         android:paddingVertical="@dimen/margin_standard_middle"
                         android:tag="1"
                         android:text="@string/mon"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size"
-                        android:focusable="true"
                         tools:ignore="SpUsage" />
 
                     <TextView

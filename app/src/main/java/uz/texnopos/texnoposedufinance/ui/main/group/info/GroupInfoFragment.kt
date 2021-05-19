@@ -1,21 +1,28 @@
 package uz.texnopos.texnoposedufinance.ui.main.group.info
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.Course
+import uz.texnopos.texnoposedufinance.data.model.CoursePayments
 import uz.texnopos.texnoposedufinance.data.model.Group
+import uz.texnopos.texnoposedufinance.data.model.SendParticipantDataRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentGroupInfoBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
@@ -27,17 +34,19 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
     private lateinit var binding: FragmentGroupInfoBinding
     private lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
-    private val viewModel: GroupInfoViewModel by inject()
+    private val viewModel: GroupInfoViewModel by viewModel()
     private val safeArgs: GroupInfoFragmentArgs by navArgs()
     lateinit var groupStr: String
     lateinit var courseStr: String
-    private val adapter = GroupInfoAdapter()
+    private val adapter: GroupInfoAdapter by inject()
     lateinit var group: Group
     lateinit var course: Course
     lateinit var dialog: PaymentDialog
-    var date: String = ""
-    var created = ""
+    var date: Long = 0L
+    var created: Long = 0L
     var amount = 0
+    lateinit var participantId: String
+    val auth: FirebaseAuth by inject()
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,8 +59,8 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
         group = gson.fromJson(groupStr, Group::class.java)
         course = gson.fromJson(courseStr, Course::class.java)
 
+        (requireParentFragment().requireParentFragment() as MainFragment).group = groupStr
         (requireParentFragment().requireParentFragment() as MainFragment).groupId = group.id
-        (requireParentFragment().requireParentFragment() as MainFragment).courseId = group.courseId
 
         binding = FragmentGroupInfoBinding.bind(view)
         actBinding = ActionBarAddBinding.bind(view)
@@ -60,33 +69,54 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
         adapter.periodCount = course.duration
         adapter.coursePrice = course.price
 
+        adapter.callStudentClicked {n, n1 ->
+            val dialog = AlertDialog.Builder(requireContext())
+            dialog.setTitle(context?.getString(R.string.callStudent))
+            dialog.setMessage(context?.getString(R.string.selectPhone))
+            dialog.setNegativeButton(context?.getString(R.string.phone2)) { d, _ ->
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(n1)))
+                requireActivity().startActivity(intent)
+                d.dismiss()
+            }
+            dialog.setPositiveButton(context?.getString(R.string.phone1)) { d, _ ->
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(n)))
+                requireActivity().startActivity(intent)
+                d.dismiss()
+            }
+            dialog.show()
+        }
+
         actBinding.apply {
             actionBarTitle.text = "${group.courseName}: ${group.name}"
             btnHome.onClick {
                 navController.popBackStack()
             }
         }
-        adapter.setOnStudentItemClickListener { participantId ->
+        setUpObservers()
+        viewModel.getGroupParticipants(group.id)
+        setUpObserversCoursePayment()
+        adapter.setOnStudentItemClickListener { pId ->
+            participantId = pId
             dialog = PaymentDialog(requireContext())
             dialog.show()
-            val sdf = SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
-            created = sdf.format(Calendar.getInstance().time).toString()
+            val cal = Calendar.getInstance()
+            created = cal.timeInMillis
             dialog.binding.btnYes.onClick {
-                var d = dialog.binding.dpDate.dayOfMonth.toString()
-                var m = dialog.binding.dpDate.month.toString()
-                var y = dialog.binding.dpDate.year.toString()
-                if (y.toInt() < 10) y = "0$y"
-                if (m.toInt() < 10) m = "0$m"
-                if (d.toInt() < 10) d = "0$d"
-                date = "$d.$m.$y"
-                if(dialog.binding.etPayment.text.toString().isNotEmpty()){
+                val d = dialog.binding.dpDate.dayOfMonth
+                val m = dialog.binding.dpDate.month
+                val y = dialog.binding.dpDate.year
+                cal.set(Calendar.DAY_OF_MONTH, d)
+                cal.set(Calendar.MONTH, m)
+                cal.set(Calendar.YEAR, y)
+                date = cal.timeInMillis
+                if (dialog.binding.etPayment.text.toString().isNotEmpty()) {
                     amount = dialog.binding.etPayment.text.toString().toInt()
+                    val id = UUID.randomUUID().toString()
                     if (amount > 0) {
-                        viewModel.addPayment(amount, date, created, participantId, group.id, group.courseId)
-                    }
+                        viewModel.coursePayment(CoursePayments(id, amount, date, created, participantId, group.id, group.courseId, auth.currentUser!!.uid))
+                        }
                     else dialog.dismiss()
-                }
-                 else {
+                } else {
                     dialog.binding.etPayment.error = context?.getString(R.string.fillField)
                 }
             }
@@ -104,12 +134,9 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
                 loading.visibility(false)
             }
         }
-        setUpObservers()
-        viewModel.getGroupParticipants(group.id)
-        setUpObserversAddPayment()
     }
 
-    private fun setUpObserversAddPayment() {
+    private fun setUpObserversCoursePayment() {
         binding.apply {
             viewModel.coursePayment.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -118,10 +145,11 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
                         srlStudents.isRefreshing = false
                     }
                     ResourceState.SUCCESS -> {
+                        dialog.dismiss()
                         isLoadingDialog(false)
                         srlStudents.isRefreshing = false
+                        viewModel.getGroupParticipants(group.id)
                         toastLN(context?.getString(R.string.added_successfully))
-                        dialog.dismiss()
                     }
                     ResourceState.ERROR -> {
                         isLoadingDialog(false)
@@ -134,14 +162,14 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
             )
         }
     }
-    fun isLoadingDialog(b: Boolean){
-        dialog.binding.apply {
 
+    private fun isLoadingDialog(b: Boolean) {
+        dialog.binding.apply {
+            btnYes.isEnabled = !b
+            btnCancel.isEnabled = !b
+            dpDate.isEnabled = !b
+            etPayment.isEnabled = !b
         }
-        dialog.binding.btnYes.isEnabled = !b
-        dialog.binding.btnCancel.isEnabled = !b
-        dialog.binding.dpDate.isEnabled = !b
-        dialog.binding.etPayment.isEnabled = !b
         binding.loading.visibility(b)
     }
 
@@ -155,7 +183,15 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
                     }
                     ResourceState.SUCCESS -> {
                         loading.visibility(false)
-                        adapter.models = it.data!!
+                        if (it.data!!.isNotEmpty()) {
+                            srlStudents.visibility(true)
+                            rcvStudents.visibility(true)
+                            adapter.models = it.data
+                        } else {
+                            srlStudents.visibility(false)
+                            rcvStudents.visibility(false)
+                            tvEmptyList.visibility(true)
+                        }
                         srlStudents.isRefreshing = false
                     }
                     ResourceState.ERROR -> {

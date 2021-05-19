@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import uz.texnopos.texnoposedufinance.core.Resource
 import uz.texnopos.texnoposedufinance.data.model.Course
-import uz.texnopos.texnoposedufinance.data.network.NetworkHelper
+import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 
 class CourseViewModel(private val networkHelper: NetworkHelper,) : ViewModel() {
     private val _courseList: MutableLiveData<Resource<List<Course>>> = MutableLiveData()

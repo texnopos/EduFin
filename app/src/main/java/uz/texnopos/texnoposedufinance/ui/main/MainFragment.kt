@@ -16,19 +16,19 @@ import uz.texnopos.texnoposedufinance.databinding.BottomSheetAddBinding
 import uz.texnopos.texnoposedufinance.databinding.BottomSheetAddStudentBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentMainBinding
 
-class MainFragment: BaseFragment(R.layout.fragment_main) {
+class MainFragment : BaseFragment(R.layout.fragment_main) {
     private lateinit var binding: FragmentMainBinding
     lateinit var navController: NavController
     lateinit var childNavController: NavController
+    lateinit var group: String
     lateinit var groupId: String
-    lateinit var courseId: String
+    var passportList: ArrayList<String> = arrayListOf()
     lateinit var bottomSheetAddStudentBinding: BottomSheetAddStudentBinding
 
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMainBinding.bind(view)
-
         setUpBottomNavigation()
         setAppBarCorersRadius()
         navController = Navigation.findNavController(view)
@@ -42,9 +42,15 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
                     val action = MainFragmentDirections.actionMainFragmentToAddTeacherFragment()
                     navController.navigate(action)
                 }
-                R.id.nav_student ->{
-                    val action = MainFragmentDirections.actionMainFragmentToAddStudentFragment()
-                    navController.navigate(action)
+                R.id.nav_student -> {
+                    if (passportList.size != 0) {
+                        val action = MainFragmentDirections.actionMainFragmentToAddStudentFragment((passportList as List<String>).toTypedArray())
+                        navController.navigate(action)
+                    }
+                    else{
+                        val action = MainFragmentDirections.actionMainFragmentToAddStudentFragment(arrayOf())
+                        navController.navigate(action)
+                    }
                 }
                 R.id.nav_course -> {
                     val action = MainFragmentDirections.actionMainFragmentToAddCoursesFragment()
@@ -60,21 +66,21 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
                     bottomSheetAddStudentBinding.apply {
                         addNewStudent.onClick {
                             bottomSheetDialog.dismiss()
-                            if (::groupId.isInitialized && ::courseId.isInitialized) {
-                                val action = MainFragmentDirections.actionMainFragmentToAddNewStudentParticipantFragment(groupId, courseId)
+                            if (::group.isInitialized) {
+                                val action = MainFragmentDirections.actionMainFragmentToAddParticipantFragment(group)
                                 navController.navigate(action)
-
                             }
                         }
                         selectStudents.onClick {
                             bottomSheetDialog.dismiss()
-                            val action = MainFragmentDirections.actionMainFragmentToSelectStudentsFragment()
-                            navController.navigate(action)
+                            if (::group.isInitialized) {
+                                val action = MainFragmentDirections.actionMainFragmentToSelectStudentsFragment(group)
+                                navController.navigate(action)
+                            }
                         }
                     }
                 }
             }
-
         }
     }
     private fun setUpBottomNavigation() {

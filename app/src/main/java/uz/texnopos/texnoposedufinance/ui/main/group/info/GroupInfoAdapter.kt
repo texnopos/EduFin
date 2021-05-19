@@ -8,47 +8,81 @@ import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.data.model.ParticipantResponse
+import uz.texnopos.texnoposedufinance.data.model.response.ParticipantResponse
 import uz.texnopos.texnoposedufinance.databinding.ItemGroupInfoBinding
 
-
-class GroupInfoAdapter : BaseAdapter<ParticipantResponse, GroupInfoAdapter.GroupInfoViewHolder>(){
+class GroupInfoAdapter : BaseAdapter<ParticipantResponse, GroupInfoAdapter.GroupInfoViewHolder>() {
     var periodCount = 0
     var coursePrice = 0
     private var onStudentItemClick: (participantId: String) -> Unit = { }
     fun setOnStudentItemClickListener(onStudentItemClick: (participantId: String) -> Unit) {
         this.onStudentItemClick = onStudentItemClick
     }
-    inner class GroupInfoViewHolder(val binding: ItemGroupInfoBinding): RecyclerView.ViewHolder(binding.root){
+    private var callStudent: (number1: String, number2: String) -> Unit = {number1, number2 ->  }
+    fun callStudentClicked(callStudent: (number1: String, number2: String) -> Unit) {
+        this.callStudent = callStudent
+    }
+    inner class GroupInfoViewHolder(val binding: ItemGroupInfoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private var periodViewList = mutableListOf<ImageView>()
         init {
             binding.apply {
-                periodViewList = mutableListOf(period1, period2, period3, period4, period5, period6, period7, period8, period9, period10, period11, period12)
+                periodViewList = mutableListOf(
+                    period1,
+                    period2,
+                    period3,
+                    period4,
+                    period5,
+                    period6,
+                    period7,
+                    period8,
+                    period9,
+                    period10,
+                    period11,
+                    period12
+                )
             }
         }
-        fun populateModel(model: ParticipantResponse){
+
+        fun populateModel(model: ParticipantResponse) {
             binding.apply {
-                tvName.text = model.student.name
-                setPeriodVisible(periodCount)
-                var paymentAmount = model.payments.map { it.amount }.sum()
-                var index = 0
-                while (paymentAmount > 0) {
-                    if (paymentAmount >= coursePrice) {
-                        paymentAmount -= coursePrice
-                        periodViewList[index].setImageResource(R.drawable.green_round)
-                    } else if (paymentAmount > 0) {
-                        paymentAmount = 0
-                        periodViewList[index].setImageResource(R.drawable.yellow_round)
+                model.apply {
+                    tvName.text = student.name
+                    tvAddress.text = student.address
+                    tvContactNum.text = participant.contract.toString()
+                    tvPassport.text = student.passport
+                    setPeriodVisible(periodCount)
+                    var paymentAmount = payments.map { it.amount }.sum()
+                    val remainder = paymentAmount - coursePrice * periodCount
+                    tvRemainder.text = remainder.toString()
+                    periodViewList.forEach {
+                        it.setImageResource(R.drawable.red_round)
                     }
-                    index++
+                    var index = 0
+                    while (paymentAmount > 0) {
+                        if (paymentAmount >= coursePrice) {
+                            paymentAmount -= coursePrice
+                            periodViewList[index].setImageResource(R.drawable.green_round)
+                        } else if (paymentAmount > 0) {
+                            paymentAmount = 0
+                            periodViewList[index].setImageResource(R.drawable.yellow_round)
+                        }
+                        index++
+                    }
+                }
+                btnCall.onClick {
+                    model.student.apply {
+                        callStudent.invoke(phone[0], phone[1])
+                    }
+
                 }
                 clStudentItem.onClick {
-                    onStudentItemClick.invoke(model.payments[0].participantId)
+                    onStudentItemClick.invoke(model.participant.id)
                 }
             }
-
         }
-        private fun setPeriodVisible(i: Int){
+
+        private fun setPeriodVisible(i: Int) {
             binding.apply {
                 repeat(i) {
                     periodViewList[it].visibility(true)

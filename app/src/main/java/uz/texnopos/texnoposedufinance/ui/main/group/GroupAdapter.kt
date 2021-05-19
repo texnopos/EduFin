@@ -33,7 +33,7 @@ class GroupAdapter: BaseAdapter<Group, GroupAdapter.GroupViewHolder>(){
         fun populateModel(model: Group){
             binding.apply {
                 val gsonPretty = GsonBuilder().setPrettyPrinting().create()
-                val jsonString = gsonPretty.toJson(Group(model.id, model.orgId, model.courseId,
+                val jsonString = gsonPretty.toJson(Group(model.id, model.courseId,
                 model.courseName, model.name, model.time, model.startDate, model.teacher, model.days, model.created))
                 name.text = model.name
                 days.text = model.days

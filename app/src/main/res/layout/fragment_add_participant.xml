@@ -41,106 +41,185 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:src="@drawable/logo"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etName"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/fio"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/imgLogo"
-                    android:background="@drawable/shape_square"
-                    />
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassportNum"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilBirthDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:hint="@string/birthDate"
+                    app:layout_constraintTop_toBottomOf="@id/tilName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/calendar">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tvBirthDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:enabled="false" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/calendar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilName"
+                    app:layout_constraintStart_toEndOf="@id/tilBirthDate"
+                    app:layout_constraintBottom_toTopOf="@id/tilPassportNum"
+                    android:layout_marginHorizontal="@dimen/margin_standard"
+                    android:padding="@dimen/margin_middle"
+                    android:src="@drawable/ic_calendar"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPassportNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/passport"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/etBirthDate"
-                    android:background="@drawable/shape_square"
-                    android:layout_marginTop="@dimen/margin_standard_middle"/>
+                    app:layout_constraintTop_toBottomOf="@id/tilBirthDate"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassportNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etBirthDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:hint="@string/birthDate"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/etName"
-                    android:background="@drawable/shape_square"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    />
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAddress"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/address"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/etPassportNum"
-                    android:background="@drawable/shape_square"
-                    android:layout_marginTop="@dimen/margin_standard_middle"/>
+                    app:layout_constraintTop_toBottomOf="@id/tilPassportNum"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhone1"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPhone1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/phone_number"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/etAddress"
-                    android:background="@drawable/shape_square"
-                    android:layout_marginTop="@dimen/margin_standard_middle"/>
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhone2"
+                    app:layout_constraintTop_toBottomOf="@id/tilAddress"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPhone1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPhone2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/phone_number"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/etPhone1"
-                    android:background="@drawable/shape_square"
-                    android:layout_marginTop="@dimen/margin_standard_middle"/>
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etContractNum"
+                    app:layout_constraintTop_toBottomOf="@id/tilPhone1"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPhone2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilContractNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/contractNum"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/etPhone2"
-                    android:background="@drawable/shape_square"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilPhone2"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
                     android:layout_marginBottom="@dimen/margin_large"
-                    />
-
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="@dimen/margin_middle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etContractNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
                 <ProgressBar
                     android:id="@+id/loading"
                     android:layout_width="wrap_content"
@@ -150,12 +229,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="gone"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

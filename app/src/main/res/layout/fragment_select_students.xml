@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/actionBar"
-        layout="@layout/action_bar"
+        layout="@layout/select_action_bar"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_standard"
         android:layout_marginTop="@dimen/margin_small"
-        android:background="@drawable/shape_square"
+        android:background="@drawable/selector_square"
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="@dimen/margin_middle"
         android:hint="@string/search"

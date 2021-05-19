@@ -15,22 +15,29 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.data.firebase.*
-import uz.texnopos.texnoposedufinance.data.network.NetworkHelper
+import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpViewModel
+import uz.texnopos.texnoposedufinance.ui.main.course.CourseAdapter
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.course.add.AddCourseViewModel
+import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 import uz.texnopos.texnoposedufinance.ui.main.teacher.add.AddTeacherViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupViewModel
+import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoAdapter
 import uz.texnopos.texnoposedufinance.ui.main.report.income.IncomeViewModel
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentAdapter
 import uz.texnopos.texnoposedufinance.ui.main.student.StudentsViewModel
-import uz.texnopos.texnoposedufinance.ui.main.student.add.AddStudentViewModel
+import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
+import uz.texnopos.texnoposedufinance.ui.main.student.add.select_existing_student.SelectExistingStudentAdapter
+import uz.texnopos.texnoposedufinance.ui.main.student.select.SelectStudentsAdapter
+import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherAdapter
 import java.util.concurrent.TimeUnit
 
-private const val baseUrl: String = "https://us-central1-texnopos-finance.cloudfunctions.net/"
+private const val baseUrl: String = "https://us-central1-texnopos-finance.cloudfunctions.net/api/"
 val firebaseModule = module {
     single { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }
@@ -79,6 +86,7 @@ val helperModule = module {
     single { NetworkHelper(get(), get()) }
     single { StudentHelper(get(), get()) }
     single { IncomeHelper(get(), get()) }
+    single { PaymentHelper(get(), get()) }
 }
 
 val viewModelModule = module {
@@ -89,11 +97,17 @@ val viewModelModule = module {
     viewModel { CourseViewModel(get()) }
     viewModel { AddCourseViewModel(get()) }
     viewModel { AddGroupViewModel(get(), get()) }
-    viewModel { GroupInfoViewModel(get(), get()) }
-    viewModel { AddStudentViewModel(get()) }
-    viewModel { StudentsViewModel(get()) }
+    viewModel { GroupInfoViewModel(get()) }
+    viewModel { CreateStudentViewModel(get(), get()) }
+    viewModel { StudentsViewModel(get(), get()) }
     viewModel { IncomeViewModel(get()) }
 }
 val adapterModule = module {
-
+    single{CourseAdapter()}
+    single{StudentAdapter()}
+    single{TeacherAdapter()}
+    single{GroupInfoAdapter()}
+    single{GroupAdapter()}
+    single{SelectStudentsAdapter()}
+    single {SelectExistingStudentAdapter()}
 }

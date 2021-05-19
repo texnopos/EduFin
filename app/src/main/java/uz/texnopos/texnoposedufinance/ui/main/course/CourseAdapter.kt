@@ -58,7 +58,7 @@ class CourseAdapter: BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
                     DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL)
                 )
                 val gsonPretty = GsonBuilder().setPrettyPrinting().create()
-                val jsonString = gsonPretty.toJson(Course(model.id, model.orgId, model.name, model.price, model.duration, model.groups ))
+                val jsonString = gsonPretty.toJson(Course(model.id, model.name, model.price, model.duration, model.groups ))
                 rvGroups.visibility(false)
                 addGroup.visibility(false)
                 cvGroups.visibility(false)

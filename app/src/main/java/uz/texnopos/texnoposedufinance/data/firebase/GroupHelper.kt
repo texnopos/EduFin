@@ -24,7 +24,6 @@ class GroupHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
         val id = UUID.randomUUID().toString()
         val newGroup = Group(
             id = id,
-            orgId = orgId,
             courseId = courseId,
             courseName = courseName,
             name = name,

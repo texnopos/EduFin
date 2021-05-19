@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_700">
+    android:background="@color/white">
 
     <include
         android:id="@+id/actionBar"
@@ -16,25 +18,28 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_standard"
         android:layout_marginTop="@dimen/margin_small"
-        android:background="@drawable/shape_square"
+        android:background="@drawable/selector_square"
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="@dimen/margin_middle"
         android:hint="@string/search"
         android:maxLength="1"
         android:padding="@dimen/margin_middle"
         android:textSize="@dimen/text_size_standard"
-        app:layout_constraintTop_toBottomOf="@id/actionBar" />
+        android:layout_marginBottom="@dimen/margin_middle"
+        app:layout_constraintTop_toBottomOf="@id/actionBar"
+        tools:ignore="SpUsage"
+        app:layout_constraintBottom_toTopOf="@id/srlTeachers"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srlTeachers"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_standard"
         android:layout_marginBottom="@dimen/margin_standard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etSearch">
+        app:layout_constraintTop_toBottomOf="@id/etSearch"
+        android:layout_marginTop="@dimen/margin_middle">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvTeachers"
@@ -50,12 +55,13 @@
         android:layout_height="wrap_content"
         android:text="@string/empty_list"
         android:textColor="?attr/textColor"
-        android:textSize="36sp"
+        android:textSize="@dimen/text_size_standard"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage" />
 
     <ProgressBar
         android:id="@+id/loading"

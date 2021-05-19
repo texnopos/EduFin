@@ -12,10 +12,7 @@
         tools:layout="@layout/fragment_courses" >
         <action
             android:id="@+id/action_nav_course_to_groupInfoFragment"
-            app:destination="@id/nav_group_info"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:destination="@id/nav_group_info" />
 
     </fragment>
     <fragment
@@ -47,10 +44,17 @@
         tools:layout="@layout/fragment_addition">
         <action
             android:id="@+id/action_nav_addition_to_teacherFragment"
-            app:destination="@id/nav_teacher" />
+            app:destination="@id/nav_teacher"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"
+            />
         <action
-            android:id="@+id/action_nav_addition_to_nav_student"
-            app:destination="@id/nav_student" />
+            android:id="@+id/action_nav_addition_to_StudentsFragment"
+            app:destination="@id/nav_student"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/nav_teacher"

@@ -24,7 +24,7 @@ import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 class CourseFragment: BaseFragment(R.layout.fragment_courses) {
 
     private val viewModel: CourseViewModel by viewModel()
-    private val adapter = CourseAdapter()
+    private val adapter: CourseAdapter by inject()
     private lateinit var binding: FragmentCoursesBinding
     lateinit var actBinding: ActionBarBinding
     lateinit var navController: NavController

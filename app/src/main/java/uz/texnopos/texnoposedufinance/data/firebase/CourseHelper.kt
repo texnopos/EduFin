@@ -22,7 +22,7 @@ class CourseHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     ) {
         val id = UUID.randomUUID().toString()
         val newCourse = Course(
-            name = name, id = id, duration = duration, price = price, orgId = orgId
+            name = name, id = id, duration = duration, price = price
 
         )
         db.collection("users/$orgId/courses").document(id).set(newCourse)

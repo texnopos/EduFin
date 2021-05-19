@@ -22,7 +22,7 @@ import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
+class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
     private val viewModel: AddGroupViewModel by inject()
     private lateinit var binding: FragmentAddGroupBinding
     private lateinit var bindingActBar: ActionBarAddBinding
@@ -59,9 +59,8 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                 val sdf = SimpleDateFormat("dd.MM.yyyy")
                 start = sdf.format(Calendar.getInstance().time).toString()
                 created = sdf.format(Calendar.getInstance().time).toString()
-
-                tvStart.text = start
-                tvGroupCreatedDate.text = created
+                tvLessonStarts.text = context?.getString(R.string.lessonStartsIn, start)
+                tvGroupCreated.text = context?.getString(R.string.groupCreated, created)
                 tpTime.setIs24HourView(true)
                 viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                     when (it.status) {
@@ -80,7 +79,9 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                 actTeachers.setAdapter(teachersAdapter)
 
                 actTeachers.setOnItemClickListener { adapterView, _, i, _ ->
-                    teacher = if (adapterView.getItemAtPosition(i).toString() != view.context.getString(R.string.doNotSelected)) {
+                    teacher = if (adapterView.getItemAtPosition(i)
+                            .toString() != view.context.getString(R.string.doNotSelected)
+                    ) {
                         viewModel.teacherList.value?.data!![i].name
                     } else ""
                 }
@@ -121,9 +122,21 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                 imgCalendar.onClick {
                     val dialog = CalendarDialog(requireContext())
                     dialog.show()
-                    dialog.getData { data ->
-                        start = data
-                        tvStart.text = start
+                    dialog.binding.apply {
+                        btnCancel.onClick {
+                            dialog.dismiss()
+                        }
+                        btnYes.onClick {
+                            var y = cvCalendar.year.toString()
+                            var m = (cvCalendar.month + 1).toString()
+                            var d = cvCalendar.dayOfMonth.toString()
+                            if (y.toInt() < 10) y = "0$y"
+                            if (m.toInt() < 10) m = "0$m"
+                            if (d.toInt() < 10) d = "0$d"
+                            start = "$d.$m.$y"
+                            tvLessonStarts.text = context?.getString(R.string.lessonStartsIn, start)
+                            dialog.dismiss()
+                        }
                     }
                 }
 
@@ -143,9 +156,20 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
                     val dates = tvDates.text.toString()
                     if (name.isEmpty()) groupName.error = view.context.getString(R.string.fillField)
                     if (dates.isEmpty()) toastLN(view.context.getString(R.string.daysNotSelected))
-                    if(teacher == view.context.getString(R.string.doNotSelected) || teacher.isEmpty()) toastSHTop(view.context.getString(R.string.teachersNotSelected))
+                    if (teacher == view.context.getString(R.string.doNotSelected) || teacher.isEmpty()) toastSHTop(
+                        view.context.getString(R.string.teachersNotSelected)
+                    )
                     if (name.isNotEmpty() && tvDates.text.isNotEmpty() && teacher.isNotEmpty()) {
-                        viewModel.createGroup(name, teacher, courseId, courseName, courseTime, start, dates, created)
+                        viewModel.createGroup(
+                            name,
+                            teacher,
+                            courseId,
+                            courseName,
+                            courseTime,
+                            start,
+                            dates,
+                            created
+                        )
                         isLoading(true)
                     }
                 }
@@ -213,10 +237,9 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group){
     private fun sort() {
         lessonDays = lessonDays.toSortedMap()
     }
-    private fun isLoading(b: Boolean){
+
+    private fun isLoading(b: Boolean) {
         binding.apply {
-            tvDates.enabled(!b)
-            tvStart.enabled(!b)
             groupName.enabled(!b)
             actTeachers.enabled(!b)
             btnSave.enabled(!b)

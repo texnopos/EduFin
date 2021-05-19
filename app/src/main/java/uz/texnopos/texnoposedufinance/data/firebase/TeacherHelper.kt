@@ -38,7 +38,6 @@ class TeacherHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
             id = id,
             username = username,
             password = password,
-            orgId = orgId,
             salary = salary
         )
         db.collection("users/$orgId/teachers").document(id).set(newTeacher)

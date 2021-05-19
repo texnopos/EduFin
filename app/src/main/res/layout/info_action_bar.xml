@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/delete"
-        android:src="@drawable/ic_edit_black"
+        android:src="@drawable/ic_edit"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:padding="@dimen/margin_middle"

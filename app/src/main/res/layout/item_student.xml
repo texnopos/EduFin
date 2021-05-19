@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/shape_students"
     android:layout_marginHorizontal="@dimen/margin_middle"
-    android:layout_marginTop="@dimen/margin_middle">
+    android:layout_marginBottom="@dimen/margin_middle"
+    android:id="@+id/clItemStudents">
 
     <TextView
         android:id="@+id/tvStudentName"
@@ -14,20 +14,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_standard"
         android:layout_marginHorizontal="@dimen/margin_standard"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size_standard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpUsage" />
-
     <TextView
         android:id="@+id/tvInterestedCourse"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_standard"
         android:layout_marginBottom="@dimen/margin_standard"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size_standard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

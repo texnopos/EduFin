@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
@@ -18,7 +19,7 @@ import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 
 class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
 
-    private val adapter = TeacherAdapter()
+    private val adapter: TeacherAdapter by inject()
     private val viewModel: TeacherViewModel by viewModel()
 
     private lateinit var navController: NavController
@@ -32,23 +33,17 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
         binding = FragmentTeachersBinding.bind(view)
         bindingActionBar = ActionBarBinding.bind(view)
         bindingActionBar.tvTitle.text = view.context.getString(R.string.teachers)
-
         navController = Navigation.findNavController(view)
-        binding.rcvTeachers.adapter = adapter
-
         setUpObservers()
         binding.apply {
+            rcvTeachers.adapter = adapter
             srlTeachers.setOnRefreshListener {
                 viewModel.getAllTeachers()
                 loading.visibility(false)
             }
-
         }
         if (requireParentFragment().requireActivity() is MainActivity) {
-            parentNavController = Navigation.findNavController(
-                requireParentFragment().requireActivity() as
-                        MainActivity, R.id.nav_host
-            )
+            parentNavController = Navigation.findNavController(requireParentFragment().requireActivity() as MainActivity, R.id.nav_host)
         }
         adapter.setOnItemClicked {
             val action = MainFragmentDirections.actionMainFragmentToTeachersInfoFragment(it)
@@ -63,10 +58,10 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
             viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {
-                        loading.visibility(true)
+                        isLoading(true)
                     }
                     ResourceState.SUCCESS -> {
-                        srlTeachers.isRefreshing = false
+                        isLoading(false)
                         if (it.data!!.isNotEmpty()) {
                             tvEmptyList.visibility = View.GONE
                             rcvTeachers.visibility = View.VISIBLE
@@ -75,15 +70,20 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
                             tvEmptyList.visibility = View.VISIBLE
                             rcvTeachers.visibility = View.GONE
                         }
-                        loading.visibility(false)
                     }
                     ResourceState.ERROR -> {
-                        srlTeachers.isRefreshing = false
+                        isLoading(false)
                         toastLN(it.message)
-                        loading.visibility(false)
                     }
                 }
             })
+        }
+    }
+    private fun isLoading(b: Boolean){
+        binding.apply {
+            loading.visibility(b)
+            srlTeachers.isRefreshing = false
+            rcvTeachers.visibility(!b)
         }
     }
 }

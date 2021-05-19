@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/clItemTeacher"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/margin_standard"
-    android:layout_marginTop="@dimen/margin_middle">
+    android:layout_marginBottom="@dimen/margin_middle">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciAva"

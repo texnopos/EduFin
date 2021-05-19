@@ -6,11 +6,10 @@ import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
 import uz.texnopos.texnoposedufinance.data.model.Student
-import uz.texnopos.texnoposedufinance.databinding.ItemGroupInfoBinding
 import uz.texnopos.texnoposedufinance.databinding.ItemStudentBinding
 
-class StudentsAdapter : BaseAdapter<Student, StudentsAdapter.StudentViewHolder>() {
-
+class StudentAdapter : BaseAdapter<Student, StudentAdapter.StudentViewHolder>() {
+    val passportList = mutableListOf<String>()
     var onItemClick: (id: String) -> Unit = {}
     fun setOnItemClicked(onItemClick: (id: String) -> Unit) {
         this.onItemClick = onItemClick
@@ -31,7 +30,9 @@ class StudentsAdapter : BaseAdapter<Student, StudentsAdapter.StudentViewHolder>(
         fun populateModel(model: Student) {
             binding.apply {
                 tvStudentName.text = model.name
-                tvInterestedCourse.text = model.interested
+                tvInterestedCourse.text = model.course
+                clItemStudents.setBackgroundResource(R.drawable.shape_teachers)
+                passportList.add(model.passport)
             }
         }
     }

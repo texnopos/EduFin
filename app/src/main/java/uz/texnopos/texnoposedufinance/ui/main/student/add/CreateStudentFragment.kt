@@ -2,7 +2,6 @@ package uz.texnopos.texnoposedufinance.ui.main.student.add
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ScrollView
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -14,26 +13,23 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
-import uz.texnopos.texnoposedufinance.databinding.FragmentAddParticipantBinding
+import uz.texnopos.texnoposedufinance.databinding.FragmentAddStudentBinding
 import java.util.*
 
-class AddNewStudentParticipantFragment: BaseFragment(R.layout.fragment_add_participant) {
-    lateinit var binding: FragmentAddParticipantBinding
+class CreateStudentFragment: BaseFragment(R.layout.fragment_add_student) {
+    lateinit var binding: FragmentAddStudentBinding
     lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
-    private val args: AddNewStudentParticipantFragmentArgs by navArgs()
-    private val viewModel: AddStudentViewModel by viewModel()
-    lateinit var groupId: String
-    lateinit var courseId: String
-
+    private val viewModel: CreateStudentViewModel by viewModel()
+    lateinit var studentId: String
+    var passportList = arrayOf<String>()
+    private val args: CreateStudentFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentAddParticipantBinding.bind(view)
+        binding = FragmentAddStudentBinding.bind(view)
         actBinding =  ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
-        setUpObservers()
-        groupId = args.groupId
-        courseId = args.courseId
+        setUpObserversStudent()
         actBinding.apply {
             btnHome.onClick{
                 navController.popBackStack()
@@ -42,35 +38,42 @@ class AddNewStudentParticipantFragment: BaseFragment(R.layout.fragment_add_parti
         }
         binding.apply {
             btnSave.onClick {
+                val passport = etPassportNum.text.toString()
                 val name = etName.text.toString()
                 val phone1 = etPhone1.text.toString()
                 val phone2 = etPhone2.text.toString()
-                val address = etAddress.text.toString()
-                val passport = etPassportNum.text.toString()
-                val birthDate = etBirthDate.text.toString()
-                val contract = etContractNum.text.toString()
-                var contractNum = 0
+                val interested = etStudy.text.toString()
+                if(passport.isEmpty()) etPassportNum.error = view.context.getString(R.string.fillField)
                 if(name.isEmpty()) etName.error = view.context.getString(R.string.fillField)
                 if(phone1.isEmpty()) etPhone1.error = view.context.getString(R.string.fillField)
                 if(phone2.isEmpty()) etPhone2.error = view.context.getString(R.string.fillField)
-                if(contract.isNotEmpty()) contractNum = contract.toInt()
-                /*if(address.isEmpty()) etAddress.error = view.context.getString(R.string.fillField)
-                if(passport.isEmpty()) etPassportNum.error = view.context.getString(R.string.fillField)
-                if(birthDate.isEmpty()) etBirthDate.error = view.context.getString(R.string.fillField)
-                if(contract.isEmpty()) etContractNum.error = view.context.getString(R.string.fillField)*/
-                scrollView.fullScroll(ScrollView.FOCUS_DOWN)
-                if(name.isNotEmpty() && phone1.isNotEmpty() && phone2.isNotEmpty() /*&& address.isNotEmpty() &&
-                        passport.isNotEmpty() && birthDate.isNotEmpty() && contract.isNotEmpty()*/){
+                if(interested.isEmpty()) etStudy.error = view.context.getString(R.string.fillField)
+                if(name.isNotEmpty() && phone1.isNotEmpty() && interested.isNotEmpty() && phone2.isNotEmpty()){
                     val phone = arrayListOf(phone1, phone2)
-                    viewModel.addStudent(groupId, courseId, name, phone, "", passport, birthDate, address, contractNum)
-                    isLoading(true)
+                    studentId = UUID.randomUUID().toString()
+                    passportList = args.passportList
+                    var k = true
+                    for(element in passportList){
+                        if(passport == element){
+                            k = false
+                            break
+                        }
+                    }
+                    if(k){
+                        viewModel.addStudent(studentId, name, phone, interested, passport, 0L, "")
+                        isLoading(true)
+                    }
+                    else {
+                        toastLN(context?.getString(R.string.thisStudentWasPreviouslyAdded))
+                    }
+
                 }
             }
         }
     }
-    private fun setUpObservers(){
+    private fun setUpObserversStudent(){
         binding.apply {
-            viewModel.student.observe(viewLifecycleOwner, Observer {
+            viewModel.createStudent.observe(viewLifecycleOwner, Observer {
                 when(it.status){
                     ResourceState.LOADING ->{
                         isLoading(true)
@@ -93,10 +96,7 @@ class AddNewStudentParticipantFragment: BaseFragment(R.layout.fragment_add_parti
             etName.isEnabled = !b
             etPhone1.isEnabled = !b
             etPhone2.isEnabled = !b
-            etAddress.isEnabled = !b
-            etPassportNum.isEnabled = !b
-            etBirthDate.isEnabled = !b
-            etContractNum.isEnabled = !b
+            etStudy.isEnabled = !b
             btnSave.isEnabled = !b
             loading.visibility(b)
         }

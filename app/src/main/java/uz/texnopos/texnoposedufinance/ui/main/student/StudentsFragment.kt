@@ -3,6 +3,7 @@ package uz.texnopos.texnoposedufinance.ui.main.student
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
@@ -10,12 +11,14 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentStudentsBinding
+import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 
 class StudentsFragment: BaseFragment(R.layout.fragment_students) {
     lateinit var binding: FragmentStudentsBinding
     lateinit var actionBarBinding: ActionBarBinding
     private val viewModel: StudentsViewModel by viewModel()
-    private val adapter = StudentsAdapter()
+    private val adapter: StudentAdapter by inject()
+    var passportList: ArrayList<String> = arrayListOf()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentStudentsBinding.bind(view)
@@ -31,7 +34,6 @@ class StudentsFragment: BaseFragment(R.layout.fragment_students) {
         actionBarBinding.apply {
             tvTitle.text = context?.getString(R.string.students)
         }
-
         viewModel.getAllStudents()
     }
     private fun setUpObservers(){
@@ -39,21 +41,29 @@ class StudentsFragment: BaseFragment(R.layout.fragment_students) {
             viewModel.studentList.observe(viewLifecycleOwner, Observer {
                 when(it.status){
                     ResourceState.LOADING ->{
-                        srlStudents.isRefreshing = false
-                        loading.visibility(true)
+                        isLoading(true)
                     }
                     ResourceState.SUCCESS ->{
-                        srlStudents.isRefreshing = false
+                        isLoading(false)
                         adapter.models = it.data!!
-                        loading.visibility(false)
+                        it.data.forEach {student ->
+                            passportList.add(student.passport)
+                        }
+                        (requireParentFragment().requireParentFragment() as MainFragment).passportList = passportList
                     }
                     ResourceState.ERROR ->{
-                        srlStudents.isRefreshing = false
+                        isLoading(false)
                         toastLN(it.message)
-                        loading.visibility(false)
                     }
                 }
             })
+        }
+    }
+    private fun isLoading(b: Boolean){
+        binding.apply {
+            loading.visibility(b)
+            srlStudents.isRefreshing = false
+            rcvStudents.visibility(!b)
         }
     }
 }
