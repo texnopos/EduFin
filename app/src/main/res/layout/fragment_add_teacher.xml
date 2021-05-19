@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:mask="http://schemas.android.com/tools"
     android:background="@color/purple_700">
 
     <include
@@ -44,109 +44,162 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etName"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/selector_square"
+                    android:layout_marginTop="@dimen/margin_middle"
                     android:hint="@string/fio"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imgLogo" />
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/imgLogo">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/selector_square"
-                    android:hint="@string/phone_number"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etName" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etSalary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/selector_square"
-                    android:hint="@string/salary"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etPhone" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/selector_square"
-                    android:hint="@string/username"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etSalary"/>
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/selector_square"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etUsername"/>
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/showPass"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etName"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/etConfirmPass"
-                        app:layout_constraintTop_toBottomOf="@id/etUsername"
-                        android:src="@drawable/ic_unvisible"
-                        android:layout_marginEnd="@dimen/margin_standard"/>
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etConfirmPass"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPhone"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:layout_marginBottom="@dimen/margin_large"
-                    android:background="@drawable/selector_square"
-                    android:hint="@string/confirmYourPass"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_standard"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    android:hint="@string/phone_number"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tilName">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilSalary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    android:hint="@string/salary"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tilPhone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSalary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUsername"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    android:hint="@string/username"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tilSalary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPassword"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    android:hint="@string/password"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tilUsername">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilConfirmPassword"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    android:hint="@string/confirm_password"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tilPassword"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/margin_large">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etConfirmPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/showPass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_standard"
+                    android:src="@drawable/ic_unvisible"
+                    app:layout_constraintBottom_toTopOf="@id/tilConfirmPassword"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etPassword"
-                    app:layout_goneMarginBottom="@dimen/margin_large"/>
-                
+                    app:layout_constraintTop_toBottomOf="@id/tilUsername" />
                 <ProgressBar
                     android:id="@+id/loading"
                     android:layout_width="wrap_content"
@@ -159,19 +212,20 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.cardview.widget.CardView>
-    <Button
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="@dimen/margin_standard"
         android:layout_marginHorizontal="@dimen/margin_standard"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:layout_marginBottom="@dimen/margin_large"
         android:background="@drawable/shape_button"
         android:padding="@dimen/margin_standard"
         android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_standard"
-        android:layout_marginBottom="@dimen/margin_large" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

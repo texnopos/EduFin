@@ -42,50 +42,76 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/selector_square"
+                    android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/courseName"
-                    android:inputType="text"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/logo"
-                    android:maxLines="1"/>
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/price"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:background="@drawable/selector_square"
+                    android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/coursePayment"
-                    android:inputType="number"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/name"
-                    android:maxLines="1"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/tilName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/duration"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDuration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
-                    android:layout_marginBottom="@dimen/margin_large"
-                    android:background="@drawable/selector_square"
+                    android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/coursePeriod"
-                    android:inputType="number"
-                    android:padding="@dimen/margin_standard"
-                    android:textColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/tilPrice"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    android:layout_marginTop="@dimen/margin_middle"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/price"
-                    android:maxLines="1"/>
+                    android:layout_marginBottom="@dimen/margin_large">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ProgressBar
                     android:id="@+id/loading"
@@ -101,7 +127,7 @@
         </ScrollView>
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,6 +141,7 @@
         android:textSize="@dimen/text_size_standard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpUsage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

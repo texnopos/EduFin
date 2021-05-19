@@ -56,21 +56,28 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/groupName"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGroupName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:layout_marginTop="@dimen/margin_standard_middle"
                     android:hint="@string/group_name"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:padding="@dimen/margin_large_standard"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_standard"
                     app:layout_constraintTop_toBottomOf="@id/spTeachers"
-                    tools:ignore="SpUsage" />
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxCornerRadiusTopEnd="@dimen/margin_small"
+                    app:boxCornerRadiusBottomStart="@dimen/margin_small"
+                    app:boxCornerRadiusBottomEnd="@dimen/margin_small"
+                    app:boxCornerRadiusTopStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_middle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/groupName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_standard"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/time"
@@ -81,7 +88,7 @@
                     android:text="@string/time"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_standard"
-                    app:layout_constraintTop_toBottomOf="@id/groupName"
+                    app:layout_constraintTop_toBottomOf="@id/tilGroupName"
                     tools:ignore="SpUsage" />
 
                 <TimePicker
