@@ -48,12 +48,4 @@ class StudentHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
                 onFailure.invoke(it.message)
             }
     }
-    /*fun createParticipant(id: String, studentId: String, groupId: String, courseId: String, contract: Int, onSuccess: () -> Unit, onFailure: (msg: String?) -> Unit){
-        val participant = Participant(id, studentId, groupId, courseId, contract)
-        db.collection("users/$orgId/participants").document(id).set(participant)
-            .addOnFailureListener {
-                onFailure.invoke(it.message)
-            }
-            .addOnSuccessListener { onSuccess.invoke() }
-    }*/
 }

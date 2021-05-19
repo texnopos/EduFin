@@ -24,12 +24,12 @@ import uz.texnopos.texnoposedufinance.data.model.CreateParticipantRequest
 import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.data.model.SendParticipantDataRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
-import uz.texnopos.texnoposedufinance.databinding.FragmentAddParticipantBinding
+import uz.texnopos.texnoposedufinance.databinding.FragmentCreateParticipantBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import java.util.*
 
-class CreateParticipantFragment : BaseFragment(R.layout.fragment_add_participant) {
-    lateinit var binding: FragmentAddParticipantBinding
+class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_participant) {
+    lateinit var binding: FragmentCreateParticipantBinding
     lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
     private lateinit var parentNavController: NavController
@@ -48,10 +48,10 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_add_participant
     private lateinit var participant: CreateParticipantRequest
     lateinit var orgId: String
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentAddParticipantBinding.bind(view)
+        binding = FragmentCreateParticipantBinding.bind(view)
         actBinding = ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
         orgId = auth.currentUser!!.uid
@@ -76,13 +76,18 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_add_participant
                         val y = cvCalendar.year
                         val m = cvCalendar.month
                         val d = cvCalendar.dayOfMonth
+                        val yStr = y.toString()
+                        var mStr = (m + 1).toString()
+                        var dStr = d.toString()
+                        if(dStr.length != 2) dStr = "0$dStr"
+                        if(mStr.length != 2) mStr = "0$mStr"
                         val cal = Calendar.getInstance()
                         cal.set(Calendar.DAY_OF_MONTH, d)
                         cal.set(Calendar.MONTH, m)
                         cal.set(Calendar.YEAR, y)
                         birthDate = cal.timeInMillis
                         tvBirthDate.isEnabled = true
-                        tvBirthDate.setText(birthDate.toString())
+                        tvBirthDate.setText("$dStr.$mStr.$yStr")
                         dialog.dismiss()
                     }
                     btnCancel.onClick {
@@ -146,14 +151,14 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_add_participant
                                 val gsonPretty = GsonBuilder().setPrettyPrinting().create()
                                 val jsonString = gsonPretty.toJson(
                                     SendParticipantDataRequest(
-                                        studentId,
-                                        myGroup.id,
-                                        myGroup.courseId,
-                                        auth.currentUser!!.uid,
-                                        passport,
-                                        orgId,
-                                        contractNum,
-                                        phone
+                                        id = studentId,
+                                        studentId = "",
+                                        groupId = myGroup.id,
+                                        courseId = myGroup.courseId,
+                                        orgId = auth.currentUser!!.uid,
+                                        passport = passport,
+                                        contract = contractNum,
+                                        phone = phone
                                     )
                                 )
                                 val action = CreateParticipantFragmentDirections.actionCreateParticipantFragmentToSelectExistingStudentFragment(jsonString)

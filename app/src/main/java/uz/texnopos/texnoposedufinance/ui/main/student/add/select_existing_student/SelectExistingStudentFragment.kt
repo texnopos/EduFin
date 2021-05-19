@@ -23,7 +23,7 @@ import uz.texnopos.texnoposedufinance.databinding.FragmentSelectExistingStudentB
 import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
 import java.util.*
 
-class SelectExistingStudentFragment: BaseFragment(R.layout.fragment_select_existing_student){
+class SelectExistingStudentFragment : BaseFragment(R.layout.fragment_select_existing_student) {
     private val adapter: SelectExistingStudentAdapter by inject()
     private val viewModel: CreateStudentViewModel by viewModel()
     lateinit var binding: FragmentSelectExistingStudentBinding
@@ -32,6 +32,7 @@ class SelectExistingStudentFragment: BaseFragment(R.layout.fragment_select_exist
     private val args: SelectExistingStudentFragmentArgs by navArgs()
     lateinit var newParticipant: SendParticipantDataRequest
     private val auth: FirebaseAuth by inject()
+    private lateinit var studentArgs: SendParticipantDataRequest
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSelectExistingStudentBinding.bind(view)
@@ -40,8 +41,8 @@ class SelectExistingStudentFragment: BaseFragment(R.layout.fragment_select_exist
         val orgId = auth.currentUser!!.uid
         setUpObservers()
         val gson = Gson()
-        val passport = gson.fromJson(args.passport, SendParticipantDataRequest::class.java)
-        viewModel.getStudentByPassport(passport.passport)
+        studentArgs = gson.fromJson(args.passport, SendParticipantDataRequest::class.java)
+        viewModel.getStudentByPassport(studentArgs.passport)
         actBinding.apply {
             actionBarTitle.text = context?.getString(R.string.selectStudents)
             btnHome.onClick {
@@ -53,10 +54,10 @@ class SelectExistingStudentFragment: BaseFragment(R.layout.fragment_select_exist
             rcvStudents.adapter = adapter
             srlStudents.setOnRefreshListener {
                 loading.visibility(false)
-                viewModel.getStudentByPassport(passport.passport)
+                viewModel.getStudentByPassport(studentArgs.passport)
             }
         }
-        adapter.setOnItemClickListener {s ->
+        adapter.setOnItemClickListener { s ->
             val student = gson.fromJson(s, Student::class.java)
             val dialog = AlertDialog.Builder(requireContext())
             dialog.setTitle(context?.getString(R.string.addStudent))
@@ -66,14 +67,24 @@ class SelectExistingStudentFragment: BaseFragment(R.layout.fragment_select_exist
             }
             dialog.setPositiveButton(context?.getString(R.string.add)) { d, _ ->
                 val id = UUID.randomUUID().toString()
-                newParticipant = SendParticipantDataRequest(id, student.id, passport.groupId, passport.courseId, orgId, passport.passport, passport.contract, passport.phone)
+                newParticipant = SendParticipantDataRequest(
+                    id,
+                    student.id,
+                    studentArgs.groupId,
+                    studentArgs.courseId,
+                    orgId,
+                    studentArgs.passport,
+                    studentArgs.contract,
+                    studentArgs.phone
+                )
                 viewModel.createParticipantWithStudentId(newParticipant)
                 d.dismiss()
             }
             dialog.show()
         }
     }
-    fun setUpObservers(){
+
+    fun setUpObservers() {
         binding.apply {
             viewModel.studentsList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -104,7 +115,7 @@ class SelectExistingStudentFragment: BaseFragment(R.layout.fragment_select_exist
         }
     }
 
-    private fun setUpObserversCreateParticipant(){
+    private fun setUpObserversCreateParticipant() {
         binding.apply {
             viewModel.createParticipantWithStudentId.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -115,10 +126,10 @@ class SelectExistingStudentFragment: BaseFragment(R.layout.fragment_select_exist
                     ResourceState.SUCCESS -> {
                         loading.visibility(false)
                         srlStudents.isRefreshing = false
-                        if(it.data == "contract exists"){
+                        if (it.data == "contract exists") {
                             toastLN(context?.getString(R.string.contractExists))
                         }
-                        if(it.data == "success" ){
+                        if (it.data == "success") {
                             toastLN(context?.getString(R.string.added_successfully))
                             navController.popBackStack()
                         }

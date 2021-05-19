@@ -146,7 +146,7 @@
         android:id="@+id/addParticipantFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.student.add.CreateParticipantFragment"
         android:label="AddParticipantFragment"
-        tools:layout="@layout/fragment_add_participant">
+        tools:layout="@layout/fragment_create_participant">
         <argument
             android:name="group"
             app:argType="string"/>
