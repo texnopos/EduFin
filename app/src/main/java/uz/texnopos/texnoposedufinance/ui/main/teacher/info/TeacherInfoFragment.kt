@@ -39,7 +39,7 @@ class TeacherInfoFragment : BaseFragment(R.layout.fragment_teacher_info) {
         isLoading(true)
 
         actBinding.apply {
-            actionBarTitle.text = view.context.getString(R.string.teachers_info)
+            actionBarTitle.text = view.context.getString(R.string.info)
 
             btnHome.onClick {
                 navController.popBackStack()

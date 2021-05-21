@@ -68,7 +68,7 @@
     <string name="fri">Пт</string>
     <string name="sat">Сб</string>
     <string name="sun">Вс</string>
-    <string name="teachers_info">Данные</string>
+    <string name="info">Данные</string>
     <string name="delete">Удалить</string>
     <string name="edit">Изменить</string>
     <string name="added_new_teacher">Добавлен новый учитель/учителница</string>
@@ -113,4 +113,11 @@
     <string name="selectPhone">Вы должны выбрать номер телефона!</string>
     <string name="phone1">номер телефона 1</string>
     <string name="phone2">номер телефона 2</string>
+    <string name="organization">Исполнитель</string>
+    <string name="bank">Банк</string>
+    <string name="inn">ИНН</string>
+    <string name="mfo">МФО</string>
+    <string name="score">р/счет</string>
+    <string name="phone_">Телефон</string>
+    <string name="director">Директор</string>
 </resources>

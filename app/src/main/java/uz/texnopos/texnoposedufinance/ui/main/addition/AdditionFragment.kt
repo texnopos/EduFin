@@ -51,6 +51,11 @@ class AdditionFragment : BaseFragment(R.layout.fragment_addition) {
                 val action = AdditionFragmentDirections.actionNavAdditionToStudentsFragment()
                 navController.navigate(action)
             }
+            info.onClick {
+                bottomSheetDialog.dismiss()
+                val action = AdditionFragmentDirections.actionNavAdditionToInfoFragment()
+                navController.navigate(action)
+            }
             signOut.onClick {
                 val dialog = AlertDialog.Builder(requireContext())
                 dialog.setTitle(context?.getString(R.string.sign_out))

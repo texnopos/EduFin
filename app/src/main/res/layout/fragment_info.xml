@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_700">
+
+    <include android:id="@+id/actionBar"
+        layout="@layout/action_bar"/>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvAbout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_middle"
+        android:layout_marginVertical="@dimen/margin_standard"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/margin_standard"
+        app:layout_constraintTop_toBottomOf="@id/actionBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="?android:attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ProgressBar
+                        android:id="@+id/loading"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:visibility="gone"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="@string/organization"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="Наш аддресс"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="@string/phone_"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvScore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescScore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="@string/score"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescMfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="@string/mfo"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvInn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescInn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="@string/inn"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvBank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescBank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="@string/bank"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDirector"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescDirector"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="@string/director"/>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

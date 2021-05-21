@@ -41,7 +41,7 @@ class SelectExistingStudentFragment : BaseFragment(R.layout.fragment_select_exis
         val orgId = auth.currentUser!!.uid
         setUpObservers()
         val gson = Gson()
-        studentArgs = gson.fromJson(args.passport, SendParticipantDataRequest::class.java)
+        studentArgs = gson.fromJson(args.student, SendParticipantDataRequest::class.java)
         viewModel.getStudentByPassport(studentArgs.passport)
         actBinding.apply {
             actionBarTitle.text = context?.getString(R.string.selectStudents)

@@ -42,6 +42,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                     val action = MainFragmentDirections.actionMainFragmentToAddTeacherFragment()
                     navController.navigate(action)
                 }
+                R.id.nav_info ->{
+                    val action = MainFragmentDirections.actionMainFragmentToAddInfoFragment()
+                    navController.navigate(action)
+                }
                 R.id.nav_student -> {
                     if (passportList.size != 0) {
                         val action = MainFragmentDirections.actionMainFragmentToAddStudentFragment((passportList as List<String>).toTypedArray())
@@ -78,6 +82,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                                 navController.navigate(action)
                             }
                         }
+
+
                     }
                 }
             }
