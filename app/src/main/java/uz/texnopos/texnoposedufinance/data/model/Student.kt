@@ -7,5 +7,6 @@ data class Student(
     var course: String = "",
     var passport: String = "",
     var birthDate: Long = 0,
+    var createdDate: Long = 0,
     var address: String = ""
 )

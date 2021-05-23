@@ -67,7 +67,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
         }
 
         binding.apply {
-            calendar.onClick {
+            etBirthDate.onClick {
                 val dialog = CalendarDialog(requireContext())
                 dialog.show()
                 createdDate = Calendar.getInstance().timeInMillis
@@ -79,15 +79,14 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                         val yStr = y.toString()
                         var mStr = (m + 1).toString()
                         var dStr = d.toString()
-                        if(dStr.length != 2) dStr = "0$dStr"
-                        if(mStr.length != 2) mStr = "0$mStr"
+                        if (dStr.length != 2) dStr = "0$dStr"
+                        if (mStr.length != 2) mStr = "0$mStr"
                         val cal = Calendar.getInstance()
                         cal.set(Calendar.DAY_OF_MONTH, d)
                         cal.set(Calendar.MONTH, m)
                         cal.set(Calendar.YEAR, y)
                         birthDate = cal.timeInMillis
-                        tvBirthDate.isEnabled = true
-                        tvBirthDate.setText("$dStr.$mStr.$yStr")
+                        etBirthDate.setText("$dStr.$mStr.$yStr")
                         dialog.dismiss()
                     }
                     btnCancel.onClick {
@@ -113,18 +112,31 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                 if (phone1.isEmpty()) etPhone1.error = view.context.getString(R.string.fillField)
                 if (phone2.isEmpty()) etPhone2.error = view.context.getString(R.string.fillField)
                 if (contract.isNotEmpty()) contractNum = contract.toInt()
-                if (passport.isEmpty()) etPassportNum.error = view.context.getString(R.string.fillField)
-                if(address.isEmpty()) etAddress.error = view.context.getString(R.string.fillField)
-                if(birthDate == 0L) tvBirthDate.error = view.context.getString(R.string.fillField)
-                if(contract.isEmpty()) etContractNum.error = view.context.getString(R.string.fillField)
+                if (passport.isEmpty()) etPassportNum.error =
+                    view.context.getString(R.string.fillField)
+                if (address.isEmpty()) etAddress.error = view.context.getString(R.string.fillField)
+                if (birthDate == 0L) etBirthDate.error = view.context.getString(R.string.fillField)
+                if (contract.isEmpty()) etContractNum.error =
+                    view.context.getString(R.string.fillField)
                 scrollView.fullScroll(ScrollView.FOCUS_DOWN)
                 if (name.isNotEmpty() && phone1.isNotEmpty() && phone2.isNotEmpty() && passport.isNotEmpty()
-                && address.isNotEmpty() && birthDate != 0L && contract.isNotEmpty()) {
+                    && address.isNotEmpty() && birthDate != 0L && contract.isNotEmpty()
+                ) {
                     phone = arrayListOf(phone1, phone2)
                     studentId = UUID.randomUUID().toString()
                     participant = CreateParticipantRequest(
-                        auth.currentUser!!.uid, myGroup.courseId, myGroup.id, studentId, name,
-                        passport, contractNum, birthDate, createdDate, phone, address, myGroup.courseName
+                        auth.currentUser!!.uid,
+                        myGroup.courseId,
+                        myGroup.id,
+                        studentId,
+                        name,
+                        passport,
+                        contractNum,
+                        birthDate,
+                        createdDate,
+                        phone,
+                        address,
+                        myGroup.courseName
                     )
                     viewModel.createParticipantIfStudentNotExists(participant)
                 }
@@ -143,7 +155,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                     }
                     ResourceState.SUCCESS -> {
                         isLoading(false)
-                        if(it.data == "exists"){
+                        if (it.data == "exists") {
                             val dialog = AlertDialog.Builder(requireContext())
                             dialog.setTitle(context?.getString(R.string.thisStudentWasPreviouslyAdded))
                             dialog.setMessage(context?.getString(R.string.createStudentDialog))
@@ -161,15 +173,28 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                                         phone = phone
                                     )
                                 )
-                                val action = CreateParticipantFragmentDirections.actionCreateParticipantFragmentToSelectExistingStudentFragment(jsonString)
+                                val action =
+                                    CreateParticipantFragmentDirections.actionCreateParticipantFragmentToSelectExistingStudentFragment(
+                                        jsonString
+                                    )
                                 parentNavController.navigate(action)
                                 d.dismiss()
                             }
                             dialog.setPositiveButton(context?.getString(R.string.add)) { d, _ ->
                                 viewModel.createParticipantWithNewStudent(
                                     CreateParticipantRequest(
-                                        auth.currentUser!!.uid, myGroup.courseId, myGroup.id, studentId, name,
-                                        passport, contractNum, birthDate, createdDate, phone, address, myGroup.courseName
+                                        auth.currentUser!!.uid,
+                                        myGroup.courseId,
+                                        myGroup.id,
+                                        studentId,
+                                        name,
+                                        passport,
+                                        contractNum,
+                                        birthDate,
+                                        createdDate,
+                                        phone,
+                                        address,
+                                        myGroup.courseName
                                     )
                                 )
                                 d.dismiss()
@@ -177,10 +202,10 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                             }
                             dialog.show()
                         }
-                        if(it.data == "contract exists"){
+                        if (it.data == "contract exists") {
                             toastLN(context?.getString(R.string.contractExists))
                         }
-                        if(it.data == "success" ){
+                        if (it.data == "success") {
                             toastLN(context?.getString(R.string.added_successfully))
                             navController.popBackStack()
                         }
@@ -193,24 +218,25 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
             })
         }
     }
-    private fun setUpObserversStudent(){
+
+    private fun setUpObserversStudent() {
         binding.apply {
             viewModel.student.observe(viewLifecycleOwner, Observer {
-                when(it.status){
-                    ResourceState.LOADING ->{
+                when (it.status) {
+                    ResourceState.LOADING -> {
                         isLoading(true)
                     }
-                    ResourceState.SUCCESS ->{
+                    ResourceState.SUCCESS -> {
                         isLoading(false)
-                        if(it.data == "contract exists"){
+                        if (it.data == "contract exists") {
                             toastLN(context?.getString(R.string.contractExists))
                         }
-                        if(it.data == "success"){
+                        if (it.data == "success") {
                             toastLN(context?.getString(R.string.added_successfully))
                             navController.popBackStack()
                         }
                     }
-                    ResourceState.ERROR ->{
+                    ResourceState.ERROR -> {
                         isLoading(false)
                         toastLN(it.message)
                     }
@@ -218,6 +244,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
             })
         }
     }
+
     private fun isLoading(b: Boolean) {
         binding.apply {
             etName.isEnabled = !b
@@ -227,7 +254,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
             etPassportNum.isEnabled = !b
             etContractNum.isEnabled = !b
             btnSave.isEnabled = !b
-            tvBirthDate.isEnabled = !b
+            etBirthDate.isEnabled = !b
             loading.visibility(b)
         }
     }

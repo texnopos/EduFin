@@ -45,7 +45,15 @@ class StudentsFragment: BaseFragment(R.layout.fragment_students) {
                     }
                     ResourceState.SUCCESS ->{
                         isLoading(false)
-                        adapter.models = it.data!!
+                        if(it.data!!.isNotEmpty()){
+                            rcvStudents.visibility(true)
+                            tvEmptyList.visibility(false)
+                        }
+                        else{
+                            rcvStudents.visibility(false)
+                            tvEmptyList.visibility(true)
+                        }
+                        adapter.models = it.data
                         it.data.forEach {student ->
                             passportList.add(student.passport)
                         }

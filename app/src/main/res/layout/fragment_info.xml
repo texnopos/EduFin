@@ -193,6 +193,25 @@
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
                         android:text="@string/director"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_text_size"
+                        tools:ignore="SpUsage" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDescEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:textSize="@dimen/small_text_size"
+                        tools:ignore="SpUsage"
+                        android:text="@string/email"/>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

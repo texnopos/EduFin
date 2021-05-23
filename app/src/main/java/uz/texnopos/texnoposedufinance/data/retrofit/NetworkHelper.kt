@@ -20,25 +20,31 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
                 response.body().let {
                     onSuccess.invoke(it!!)
                 }
-                if(response.body()!!.isEmpty()){
+                if (response.body()!!.isEmpty()) {
                     onSuccess.invoke(listOf())
                 }
             }
 
         })
     }
-
-    fun getGroupParticipants(id: String, onSuccess: (List<ParticipantResponse>) -> Unit, onFailure: (msg: String) -> Unit) {
+    fun getGroupParticipants(
+        id: String,
+        onSuccess: (List<ParticipantResponse>) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
         val call: Call<List<ParticipantResponse>> = apiInterface.getGroupParticipants(orgId, id)
         call.enqueue(object : Callback<List<ParticipantResponse>> {
             override fun onFailure(call: Call<List<ParticipantResponse>>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
-            override fun onResponse(call: Call<List<ParticipantResponse>>, response: Response<List<ParticipantResponse>>) {
+            override fun onResponse(
+                call: Call<List<ParticipantResponse>>,
+                response: Response<List<ParticipantResponse>>
+            ) {
                 response.body().let {
                     onSuccess.invoke(it!!)
                 }
-                if(response.body()!!.isEmpty()){
+                if (response.body().isNullOrEmpty()) {
                     onSuccess.invoke(listOf())
                 }
             }
@@ -46,31 +52,41 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
 
     }
 
-    fun selectExistingStudentToGroup(groupId: String, onSuccess: (List<Student>) -> Unit, onFailure: (msg: String) -> Unit) {
+    fun selectExistingStudentToGroup(
+        groupId: String,
+        onSuccess: (List<Student>) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
         val call: Call<List<Student>> = apiInterface.selectExistingStudentToGroup(orgId, groupId)
-        call.enqueue(object: Callback<List<Student>>{
+        call.enqueue(object : Callback<List<Student>> {
             override fun onFailure(call: Call<List<Student>>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
+
             override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
                 response.body().let {
                     onSuccess.invoke(it!!)
                 }
-                if(response.body()!!.isEmpty()){
+                if (response.body()!!.isEmpty()) {
                     onSuccess.invoke(listOf())
                 }
             }
         })
     }
 
-    fun createParticipantIfStudentNotExists(data: CreateParticipantRequest, onSuccess: (status: String) -> Unit, onFailure: (msg: String) -> Unit) {
+    fun createParticipantIfStudentNotExists(
+        data: CreateParticipantRequest,
+        onSuccess: (status: String) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
         val call: Call<PostResponse> = apiInterface.createParticipantIfStudentNotExists(data)
-        call.enqueue(object: Callback<PostResponse>{
+        call.enqueue(object : Callback<PostResponse> {
             override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
+
             override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     response.body()?.let {
                         onSuccess.invoke(it.status)
                     } ?: onFailure("Непредвиденная ошибка")
@@ -79,50 +95,67 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
         })
     }
 
-    fun createParticipantWithNewStudent(data: CreateParticipantRequest, onSuccess: (String) -> Unit, onFailure: (msg: String) -> Unit) {
+    fun createParticipantWithNewStudent(
+        data: CreateParticipantRequest,
+        onSuccess: (String) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
         val call: Call<PostResponse> = apiInterface.createParticipantWithNewStudent(data)
-        call.enqueue(object: Callback<PostResponse>{
+        call.enqueue(object : Callback<PostResponse> {
             override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
+
             override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
-                if(response.isSuccessful){
-                    response.body()?.let{
+                if (response.isSuccessful) {
+                    response.body()?.let {
                         onSuccess.invoke(it.status)
-                    }?: onFailure("Непредвиденная ошибка")
+                    } ?: onFailure("Непредвиденная ошибка")
                 } else {
                     onFailure(response.errorBody().toString())
                 }
             }
         })
     }
-    fun coursePayment(data: CoursePayments, onSuccess: (String) -> Unit, onFailure: (msg: String) -> Unit){
+
+    fun coursePayment(
+        data: CoursePayments,
+        onSuccess: (String) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
         val call: Call<PostResponse> = apiInterface.coursePayment(data)
-        call.enqueue(object: Callback<PostResponse>{
+        call.enqueue(object : Callback<PostResponse> {
             override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
+
             override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
-                if(response.isSuccessful){
-                    response.body()?.let{
+                if (response.isSuccessful) {
+                    response.body()?.let {
                         onSuccess.invoke(it.status)
-                    }?: onFailure("Непредвиденная ошибка")
+                    } ?: onFailure("Непредвиденная ошибка")
                 }
             }
 
         })
     }
-    fun createParticipantWithStudentId(data: SendParticipantDataRequest, onSuccess: (String) -> Unit, onFailure: (msg: String) -> Unit) {
+
+    fun createParticipantWithStudentId(
+        data: SendParticipantDataRequest,
+        onSuccess: (String) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
         val call: Call<PostResponse> = apiInterface.createParticipantWithStudentId(data)
-        call.enqueue(object: Callback<PostResponse>{
+        call.enqueue(object : Callback<PostResponse> {
             override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
+
             override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
-                if(response.isSuccessful){
-                    response.body()?.let{
+                if (response.isSuccessful) {
+                    response.body()?.let {
                         onSuccess.invoke(it.status)
-                    }?: onFailure("Непредвиденная ошибка")
+                    } ?: onFailure("Непредвиденная ошибка")
                 } else {
                     onFailure(response.errorBody().toString())
                 }
@@ -130,17 +163,22 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
         })
     }
 
-    fun checkContract(data: ContractRequest, onSuccess: (String) -> Unit, onFailure: (msg: String) -> Unit) {
+    fun checkContract(
+        data: ContractRequest,
+        onSuccess: (String) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
         val call: Call<PostResponse> = apiInterface.checkContract(data)
-        call.enqueue(object: Callback<PostResponse>{
+        call.enqueue(object : Callback<PostResponse> {
             override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
+
             override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
-                if(response.isSuccessful){
-                    response.body()?.let{
+                if (response.isSuccessful) {
+                    response.body()?.let {
                         onSuccess.invoke(it.status)
-                    }?: onFailure("Непредвиденная ошибка")
+                    } ?: onFailure("Непредвиденная ошибка")
                 } else {
                     onFailure(response.errorBody().toString())
                 }

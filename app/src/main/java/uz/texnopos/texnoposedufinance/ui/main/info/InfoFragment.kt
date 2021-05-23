@@ -44,6 +44,7 @@ class InfoFragment: BaseFragment(R.layout.fragment_info) {
                         tvPhone.text = it.data.phone
                         tvScore.text = it.data.score
                         tvDirector.text = it.data.director
+                        tvEmail.text = it.data.email
                     }
                     ResourceState.ERROR -> {
                         loading.visibility(false)

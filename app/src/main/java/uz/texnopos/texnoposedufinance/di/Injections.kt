@@ -2,6 +2,7 @@ package uz.texnopos.texnoposedufinance.di
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
@@ -48,6 +49,7 @@ val firebaseModule = module {
             .requestIdToken(androidApplication().applicationContext.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
     }
     single { GoogleSignIn.getClient(androidApplication().applicationContext, get()) }
 }

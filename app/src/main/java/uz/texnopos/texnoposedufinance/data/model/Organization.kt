@@ -8,5 +8,6 @@ data class Organization(
     var phone: String = "",
     var inn: String = "",
     var director: String = "",
-    var bank: String = ""
+    var bank: String = "",
+    var email: String = ""
 )

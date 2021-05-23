@@ -1,12 +1,12 @@
 package uz.texnopos.texnoposedufinance.data.firebase
-
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 class AuthHelper(private val auth: FirebaseAuth, private val db: FirebaseFirestore) {
-
     fun signUp(
         email: String, password: String,
         onSuccess: () -> Unit,
@@ -56,5 +56,8 @@ class AuthHelper(private val auth: FirebaseAuth, private val db: FirebaseFiresto
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
             }
+    }
+    fun signOut(){
+        auth.signOut()
     }
 }

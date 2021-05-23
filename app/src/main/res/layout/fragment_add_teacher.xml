@@ -86,7 +86,8 @@
                         android:id="@+id/etPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:inputType="phone"
+                        android:digits="+0123456789"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black" />
@@ -172,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_middle"
-                    android:hint="@string/confirm_password"
+                    android:hint="@string/confirmYourPass"
                     app:boxCornerRadiusBottomEnd="16dp"
                     app:boxCornerRadiusBottomStart="16dp"
                     app:boxCornerRadiusTopEnd="16dp"
@@ -185,7 +186,7 @@
                         android:id="@+id/etConfirmPass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:inputType="textPassword"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black" />
@@ -221,11 +222,12 @@
         android:layout_marginTop="@dimen/margin_standard"
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@drawable/shape_button"
-        android:padding="@dimen/margin_standard"
+        android:padding="@dimen/margin_middle"
         android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_standard"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        mask:ignore="SpUsage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -51,7 +51,6 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         groupStr = safeArgs.group
         courseStr = safeArgs.course
 
@@ -65,7 +64,7 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
         binding = FragmentGroupInfoBinding.bind(view)
         actBinding = ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
-
+        setUpObservers()
         adapter.periodCount = course.duration
         adapter.coursePrice = course.price
 
@@ -92,7 +91,6 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
                 navController.popBackStack()
             }
         }
-        setUpObservers()
         viewModel.getGroupParticipants(group.id)
         setUpObserversCoursePayment()
         adapter.setOnStudentItemClickListener { pId ->

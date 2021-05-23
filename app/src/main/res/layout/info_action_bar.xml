@@ -13,7 +13,7 @@
         android:padding="@dimen/margin_middle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cancel"
+        app:srcCompat="@drawable/ic_cancel"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView

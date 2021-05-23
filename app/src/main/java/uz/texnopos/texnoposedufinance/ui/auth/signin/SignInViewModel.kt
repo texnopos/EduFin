@@ -39,4 +39,7 @@ class SignInViewModel(private val authHelper: AuthHelper) : ViewModel() {
             })
     }
 
+    fun signOut(){
+        authHelper.signOut()
+    }
 }

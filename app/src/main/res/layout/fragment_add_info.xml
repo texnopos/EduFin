@@ -108,7 +108,8 @@
                         android:id="@+id/etPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:inputType="phone"
+                        android:digits="+0123456789"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black" />
@@ -257,7 +258,7 @@
         android:layout_marginTop="@dimen/margin_standard"
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@drawable/shape_button"
-        android:padding="@dimen/margin_standard"
+        android:padding="@dimen/margin_middle"
         android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_standard"

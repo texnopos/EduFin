@@ -71,7 +71,7 @@ class AddCourseFragment : BaseFragment(R.layout.fragment_add_course){
 
                     ResourceState.SUCCESS -> {
                         isLoading(false)
-                        toastLNCenter("Доваблен новый курс")
+                        toastLNCenter(context?.getString(R.string.added_successfully))
                         navController.popBackStack()
                     }
                     ResourceState.ERROR -> {

@@ -47,6 +47,7 @@ class SelectExistingStudentFragment : BaseFragment(R.layout.fragment_select_exis
             actionBarTitle.text = context?.getString(R.string.selectStudents)
             btnHome.onClick {
                 navController.popBackStack()
+
             }
         }
         setUpObserversCreateParticipant()

@@ -68,7 +68,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilBirthDate"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:hint="@string/birthDate"
@@ -79,30 +79,19 @@
                     app:boxCornerRadiusBottomEnd="16dp"
                     app:boxCornerRadiusTopStart="16dp"
                     android:layout_marginTop="@dimen/margin_middle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/calendar">
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tvBirthDate"
+                        android:id="@+id/etBirthDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black"
-                        android:enabled="false" />
+                        android:drawableEnd="@drawable/ic_calendar"/>
+
                 </com.google.android.material.textfield.TextInputLayout>
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/calendar"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilName"
-                    app:layout_constraintStart_toEndOf="@id/tilBirthDate"
-                    app:layout_constraintBottom_toTopOf="@id/tilPassportNum"
-                    android:layout_marginHorizontal="@dimen/margin_standard"
-                    android:padding="@dimen/margin_middle"
-                    android:src="@drawable/ic_calendar"/>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPassportNum"
                     android:layout_width="match_parent"
@@ -166,7 +155,8 @@
                         android:id="@+id/etPhone1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:inputType="phone"
+                        android:digits="+0123456789"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black"/>
@@ -189,7 +179,8 @@
                         android:id="@+id/etPhone2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:inputType="phone"
+                        android:digits="+0123456789"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black"/>
@@ -241,7 +232,7 @@
         android:layout_marginTop="@dimen/margin_standard"
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@drawable/shape_button"
-        android:padding="@dimen/margin_standard"
+        android:padding="@dimen/margin_middle"
         android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_standard"

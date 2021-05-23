@@ -60,7 +60,6 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
                 start = sdf.format(Calendar.getInstance().time).toString()
                 created = sdf.format(Calendar.getInstance().time).toString()
                 tvLessonStarts.text = context?.getString(R.string.lessonStartsIn, start)
-                tvGroupCreated.text = context?.getString(R.string.groupCreated, created)
                 tpTime.setIs24HourView(true)
                 viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                     when (it.status) {
@@ -119,7 +118,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
                     check()
                 }
 
-                imgCalendar.onClick {
+                tvLessonStarts.onClick {
                     val dialog = CalendarDialog(requireContext())
                     dialog.show()
                     dialog.binding.apply {

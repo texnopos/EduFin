@@ -135,7 +135,7 @@
         android:layout_marginTop="@dimen/margin_standard"
         android:layout_marginBottom="@dimen/margin_large"
         android:background="@drawable/shape_button"
-        android:padding="@dimen/margin_standard"
+        android:padding="@dimen/margin_middle"
         android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_standard"

@@ -9,14 +9,20 @@ import uz.texnopos.texnoposedufinance.data.model.*
 import uz.texnopos.texnoposedufinance.data.model.response.PostResponse
 import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 
-class CreateStudentViewModel(private val helper: StudentHelper, private val networkHelper: NetworkHelper) : ViewModel() {
+class CreateStudentViewModel(
+    private val helper: StudentHelper,
+    private val networkHelper: NetworkHelper
+) : ViewModel() {
     private val _createStudent: MutableLiveData<Resource<Student>> = MutableLiveData()
     val createStudent: LiveData<Resource<Student>>
         get() = _createStudent
-    fun addStudent(id: String, name: String, phone: List<String>, interested: String, passport: String,
-                   birthDate: Long, address: String){
+
+    fun addStudent(
+        id: String, name: String, phone: List<String>, interested: String, passport: String,
+        birthDate: Long, createdDate: Long, address: String
+    ) {
         _createStudent.value = Resource.loading()
-        helper.addStudent(id, name, phone, interested, passport, birthDate, address, {
+        helper.addStudent(id, name, phone, interested, passport, birthDate, createdDate, address, {
             _createStudent.value = Resource.success(Student())
         }, {
             _createStudent.value = Resource.error(it)
@@ -50,10 +56,13 @@ class CreateStudentViewModel(private val helper: StudentHelper, private val netw
         }
         )
     }
-    private val _createParticipantWithStudentId: MutableLiveData<Resource<String>> = MutableLiveData()
+
+    private val _createParticipantWithStudentId: MutableLiveData<Resource<String>> =
+        MutableLiveData()
     val createParticipantWithStudentId: LiveData<Resource<String>>
         get() = _createParticipantWithStudentId
-    fun createParticipantWithStudentId(data: SendParticipantDataRequest){
+
+    fun createParticipantWithStudentId(data: SendParticipantDataRequest) {
         _createParticipantWithStudentId.value = Resource.loading()
         networkHelper.createParticipantWithStudentId(data, {
             _createParticipantWithStudentId.value = Resource.success(it)
@@ -79,7 +88,8 @@ class CreateStudentViewModel(private val helper: StudentHelper, private val netw
     private val _contract: MutableLiveData<Resource<String>> = MutableLiveData()
     val contract: LiveData<Resource<String>>
         get() = _contract
-    fun checkContract(data: ContractRequest){
+
+    fun checkContract(data: ContractRequest) {
         _contract.value = Resource.loading()
         networkHelper.checkContract(data, {
             _contract.value = Resource.success(it)

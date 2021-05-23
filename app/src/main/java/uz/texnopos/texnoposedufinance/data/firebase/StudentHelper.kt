@@ -8,41 +8,55 @@ import java.util.*
 
 class StudentHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val orgId = auth.currentUser!!.uid
-     fun addStudent(id: String, name: String, phone: List<String>, interested: String, passport: String,
-                    birthDate: Long, address: String, onSuccess: () -> Unit, onFailure: (msg: String?) -> Unit){
-         val newStudent = Student(id, name, phone, interested, passport, birthDate, address)
-         db.collection("users/$orgId/students").document(id).set(newStudent)
-             .addOnSuccessListener {
-                 onSuccess.invoke()
-             }
-             .addOnFailureListener {
-                 onFailure.invoke(it.localizedMessage)
-             }
-     }
-    fun getAllStudents(onSuccess: (List<Student>) -> Unit, onFailure: (msg: String?) -> Unit){
+    fun addStudent(
+        id: String,
+        name: String,
+        phone: List<String>,
+        interested: String,
+        passport: String,
+        birthDate: Long,
+        createdDate: Long,
+        address: String,
+        onSuccess: () -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val newStudent =
+            Student(id, name, phone, interested, passport, birthDate, createdDate, address)
+        db.collection("users/$orgId/students").document(id).set(newStudent)
+            .addOnSuccessListener {
+                onSuccess.invoke()
+            }
+            .addOnFailureListener {
+                onFailure.invoke(it.localizedMessage)
+            }
+    }
+
+    fun getAllStudents(onSuccess: (List<Student>) -> Unit, onFailure: (msg: String?) -> Unit) {
         db.collection("users/$orgId/students").get()
             .addOnSuccessListener { doc ->
-                if(doc.documents.isNotEmpty()){
+                if (doc.documents.isNotEmpty()) {
                     onSuccess.invoke(doc.documents.map {
                         it.toObject(Student::class.java) ?: Student()
                     })
-                }
-                else onSuccess.invoke(listOf())
+                } else onSuccess.invoke(listOf())
             }
             .addOnFailureListener {
                 onFailure.invoke(it.message)
             }
     }
 
-    fun getStudentByPassport(passport: String, onSuccess: (List<Student>) -> Unit, onFailure: (msg: String?) -> Unit){
+    fun getStudentByPassport(
+        passport: String,
+        onSuccess: (List<Student>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
         db.collection("users/$orgId/students").whereEqualTo("passport", passport).get()
             .addOnSuccessListener { doc ->
-                if(doc.documents.isNotEmpty()){
+                if (doc.documents.isNotEmpty()) {
                     onSuccess.invoke(doc.documents.map {
                         it.toObject(Student::class.java) ?: Student()
                     })
-                }
-                else onSuccess.invoke(listOf())
+                } else onSuccess.invoke(listOf())
             }
             .addOnFailureListener {
                 onFailure.invoke(it.message)

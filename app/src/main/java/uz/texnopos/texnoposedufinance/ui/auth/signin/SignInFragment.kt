@@ -3,15 +3,12 @@ package uz.texnopos.texnoposedufinance.ui.auth.signin
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
@@ -34,93 +31,93 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentSignInBinding.bind(view)
-
         navController = Navigation.findNavController(view)
         setUpObservers()
+        setUpObserversGoogle()
 
-
-        binding.btnSignIn.onClick {
-            val email: String = binding.etEmail.text.toString()
-            val password: String = binding.etPassword.text.toString()
-            if (email.isNotEmpty() && password.isNotEmpty()){
-                viewModel.signIn(email, password)
+        binding.apply {
+            btnSignIn.onClick {
+                val email: String = etEmail.text.toString()
+                val password: String = etPassword.text.toString()
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    viewModel.signIn(email, password)
+                } else {
+                    if (email.isEmpty())
+                        etEmail.error = getString(R.string.email_not_entered_error)
+                    if (password.isEmpty())
+                        etPassword.error = getString(R.string.enter_your_password_error)
+                }
             }
-            else {
-                if (email.isEmpty())
-                    binding.etEmail.error = getString(R.string.email_not_entered_error)
-                if (password.isEmpty())
-                    binding.etPassword.error = getString(R.string.enter_your_password_error)
+            btnSignUp.onClick {
+                val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
+                navController.navigate(action)
             }
-        }
-        binding.btnSignUp.onClick {
-            val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
-            navController.navigate(action)
-        }
-        binding.btnGoogle.onClick {
-            signIn()
+            btnGoogle.onClick {
+                signIn()
+            }
         }
     }
 
     private fun setUpObservers() {
-        viewModel.signInResult.observe(viewLifecycleOwner, Observer{
-            when(it.status) {
-                ResourceState.LOADING -> binding.loading.visibility(true)
-                ResourceState.SUCCESS -> {
-                    binding.loading.visibility(false)
-                    val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
-                    navController.navigate(action)
+        binding.apply {
+            viewModel.signInResult.observe(viewLifecycleOwner, Observer{
+                when(it.status) {
+                    ResourceState.LOADING -> loading.visibility(true)
+                    ResourceState.SUCCESS -> {
+                        loading.visibility(false)
+                        val action = SignInFragmentDirections.actionSignInFragmentToMainFragment()
+                        navController.navigate(action)
+                    }
+                    ResourceState.ERROR -> {
+                        toastLN(it.message)
+                        loading.visibility(false)
+                    }
                 }
-                ResourceState.ERROR -> {
-                    toastLN(it.message)
-                    binding.loading.visibility(false)
-                }
-            }
-        })
+            })
+        }
     }
 
     private fun setUpObserversGoogle() {
-        viewModel.googleAuthResult.observe(viewLifecycleOwner, Observer{
-            when(it.status) {
-                ResourceState.SUCCESS -> {
-                    binding.loading.visibility(false)
-                    val action = SignInFragmentDirections.actionSignInFragmentToMainFragment()
-                    navController.navigate(action)
+        binding.apply {
+            viewModel.googleAuthResult.observe(viewLifecycleOwner, Observer{
+                when(it.status) {
+                    ResourceState.SUCCESS -> {
+                        loading.visibility(false)
+                        val action = SignInFragmentDirections.actionSignInFragmentToMainFragment()
+                        navController.navigate(action)
+                    }
+                    ResourceState.ERROR -> {
+                        toastLN(it.message)
+                        loading.visibility(false)
+                    }
+                    else -> {
+                        loading.visibility(true)
+                    }
                 }
-                ResourceState.ERROR -> {
-                    toastLN(it.message)
-                    binding.loading.visibility(false)
-                }
-                else -> {
-                    binding.loading.visibility(true)
-                }
-            }
 
-        })
+            })
+        }
     }
-
     private fun signIn() {
-        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, SIGN_IN)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SIGN_IN) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 account?.let {
                     viewModel.firebaseAuthWithGoogle(it)
-                    setUpObserversGoogle()
                 }
             } catch (e: ApiException) {
                 when(e.statusCode){
-                    7-> toastLN("Internetti qosin")
+                    7-> toastLN(context?.getString(R.string.connectInternet))
+                    else -> toastLN(e.localizedMessage)
                 }
-                Toast.makeText(requireContext(), e.localizedMessage/*"Google sign in failed:("*/, Toast.LENGTH_LONG).show()
             }
         }
     }
-
 }

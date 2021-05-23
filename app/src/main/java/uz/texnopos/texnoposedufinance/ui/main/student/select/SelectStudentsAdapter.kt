@@ -22,7 +22,7 @@ class SelectStudentsAdapter : BaseAdapter<Student, SelectStudentsAdapter.SelectS
                 tvStudentName.text = model.name
                 tvInterestedCourse.text = model.course
                 val gsonPretty = GsonBuilder().setPrettyPrinting().create()
-                val jsonString = gsonPretty.toJson(Student(model.id, model.name, model.phone, model.course, model.passport, model.birthDate, model.address))
+                val jsonString = gsonPretty.toJson(Student(model.id, model.name, model.phone, model.course, model.passport, model.birthDate, model.createdDate, model.address))
                 clSelectStudent.onClick {
                     onItemClicked.invoke(jsonString)
                 }
