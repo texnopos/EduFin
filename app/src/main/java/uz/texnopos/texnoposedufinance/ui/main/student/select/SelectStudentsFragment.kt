@@ -24,14 +24,16 @@ import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
 import java.util.*
 
 class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
-    lateinit var binding: FragmentSelectStudentsBinding
-    lateinit var actBinding: SelectActionBarBinding
+    private lateinit var binding: FragmentSelectStudentsBinding
+    private lateinit var actBinding: SelectActionBarBinding
     private val adapter: SelectStudentsAdapter by inject()
     private val viewModel: StudentsViewModel by viewModel()
     private val vm: CreateStudentViewModel by viewModel()
     private val args: SelectStudentsFragmentArgs by navArgs()
-    lateinit var newParticipant: SendParticipantDataRequest
+    private lateinit var newParticipant: SendParticipantDataRequest
     private val auth: FirebaseAuth by inject()
+    private val gson = Gson()
+    private lateinit var group: Group
     private lateinit var navController: NavController
     private lateinit var dialog: DialogAddContract
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,8 +42,7 @@ class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
         actBinding = SelectActionBarBinding.bind(view)
         navController = Navigation.findNavController(view)
         val orgId = auth.currentUser!!.uid
-        val gson = Gson()
-        val group = gson.fromJson(args.groupId, Group::class.java)
+        group = gson.fromJson(args.groupId, Group::class.java)
         setUpObservers()
         actBinding.apply {
             tvSelectedItem.text = context?.getString(R.string.selectStudents)
@@ -106,7 +107,6 @@ class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
                 when (it.status) {
                     ResourceState.LOADING -> {
                         isLoadingDialog(true)
-
                     }
                     ResourceState.SUCCESS -> {
                         isLoadingDialog(false)
@@ -179,7 +179,7 @@ class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
                         if (st.data == "success") {
                             vm.createParticipantWithStudentId(newParticipant)
                             toastLN(context?.getString(R.string.added_successfully))
-                            viewModel.getAllStudents()
+                            viewModel.selectExistingStudentToGroup(group.id)
                             dialog.binding.loading.visibility(false)
                             dialog.dismiss()
                         }
