@@ -9,24 +9,17 @@ import uz.texnopos.texnoposedufinance.data.firebase.TeacherHelper
 import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.Teacher
 
-class AddCourseViewModel(
-    private val helper: CourseHelper,
-    private val teacherHelper: TeacherHelper
-) : ViewModel() {
+class AddCourseViewModel(private val helper: CourseHelper): ViewModel() {
 
     private val _createCourse: MutableLiveData<Resource<Course>> = MutableLiveData()
-
     val createCourse: LiveData<Resource<Course>>
         get() = _createCourse
 
-    fun createCourse(name: String, duration: Int, price: Double) {
+    fun createCourse(name: String, duration: Int, price: Int) {
         _createCourse.value = Resource.loading()
-        helper.addNewCourse(
-            name, duration, price,
-            {
+        helper.addNewCourse(name, duration, price, {
                 _createCourse.value = Resource.success(Course())
-            },
-            {
+            }, {
                 _createCourse.value = Resource.error(it)
             }
         )

@@ -11,10 +11,9 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
-import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.databinding.ActionBar2Binding
+import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddTeacherBinding
 
 
@@ -23,14 +22,14 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
     private val viewModel: AddTeacherViewModel by viewModel()
     private lateinit var binding: FragmentAddTeacherBinding
     private lateinit var navController: NavController
-    private lateinit var actBinding: ActionBar2Binding
+    private lateinit var actBinding: ActionBarAddBinding
     var showPassword = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         binding = FragmentAddTeacherBinding.bind(view)
-        actBinding = ActionBar2Binding.bind(view)
+        actBinding = ActionBarAddBinding.bind(view)
 
         actBinding.actionBarTitle.text = view.context.getString(R.string.addTeacher)
         setUpObservers()

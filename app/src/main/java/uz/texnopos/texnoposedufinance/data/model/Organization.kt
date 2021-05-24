@@ -1,9 +1,13 @@
 package uz.texnopos.texnoposedufinance.data.model
 
 data class Organization(
-    val id: String = "",
-    val name: String = "",
-    val address: String = "",
-    val phone: String = "",
-    val INN: String = ""
+    var name: String = "",
+    var address: String = "",
+    var score: String  = "",
+    var mfo: String = "",
+    var phone: String = "",
+    var inn: String = "",
+    var director: String = "",
+    var bank: String = "",
+    var email: String = ""
 )

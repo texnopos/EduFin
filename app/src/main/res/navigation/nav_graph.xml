@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
-
     <fragment
         android:id="@+id/signUpFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpFragment"
@@ -22,7 +21,6 @@
         android:name="uz.texnopos.texnoposedufinance.ui.auth.signin.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in">
-
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
@@ -65,8 +63,29 @@
             android:id="@+id/action_mainFragment_to_teachersInfoFragment"
             app:destination="@id/teachersInfoFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_groupInfoFragment"
-            app:destination="@id/groupInfoFragment" />
+            android:id="@+id/action_mainFragment_to_addStudentFragment"
+            app:destination="@id/addStudentFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addParticipantFragment"
+            app:destination="@id/addParticipantFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_selectStudentsFragment"
+            app:destination="@id/selectStudentsFragment"
+            />
+        <action
+            android:id="@+id/action_mainFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"
+            />
+        <action
+            android:id="@+id/action_mainFragment_to_addInfoFragment"
+            app:destination="@id/addInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -95,7 +114,7 @@
         android:id="@+id/addCoursesFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.course.add.AddCourseFragment"
         android:label="AddCoursesFragment"
-        tools:layout="@layout/fragment_add_courses"/>
+        tools:layout="@layout/fragment_add_course"/>
     <fragment
         android:id="@+id/addGroupFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupFragment"
@@ -104,23 +123,68 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <argument
+            android:name="courseName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/teachersInfoFragment"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.info.TeachersInfoFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.info.TeacherInfoFragment"
         android:label="TeachersInfoFragment"
-        tools:layout="@layout/fragment_teachers_info">
+        tools:layout="@layout/fragment_teacher_info">
         <argument
             android:name="teacherId"
             app:argType="string"/>
     </fragment>
     <fragment
-        android:id="@+id/groupInfoFragment"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoFragment"
-        android:label="GroupInfoFragment"
-        tools:layout="@layout/fragment_group_info">
+        android:id="@+id/addStudentFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentFragment"
+        android:label="AddStudentFragment"
+        tools:layout="@layout/fragment_add_student">
+        <argument
+            android:name="passportList"
+            app:argType="string[]"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addParticipantFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.add.CreateParticipantFragment"
+        android:label="AddParticipantFragment"
+        tools:layout="@layout/fragment_create_participant">
+        <argument
+            android:name="group"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_createParticipantFragment_to_selectExistingStudentFragment"
+            app:destination="@id/selectExistingStudentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/addParticipantFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/selectStudentsFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.select.SelectStudentsFragment"
+        android:label="SelectStudentsFragment"
+        tools:layout="@layout/fragment_select_students">
         <argument
             android:name="groupId"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/selectExistingStudentFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.add.select_existing_student.SelectExistingStudentFragment"
+        android:label="SelectExistingStudentFragment"
+        tools:layout="@layout/fragment_select_existing_student">
+        <argument
+            android:name="student"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addInfoFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.info.add.AddInfoFragment"
+        android:label="AddInfoFragment"
+        tools:layout="@layout/fragment_add_info"/>
 </navigation>

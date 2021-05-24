@@ -12,13 +12,11 @@ class TeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
     val teacherList: LiveData<Resource<List<Teacher>>>
         get() = _teacherList
 
-
     fun getAllTeachers() {
-        helper.getAllTeachers(
-            {
+        _teacherList.value = Resource.loading()
+        helper.getAllTeachers({
                 _teacherList.value = Resource.success(it)
-            },
-            {
+            }, {
                 _teacherList.value = Resource.error(it)
             }
         )
@@ -29,11 +27,10 @@ class TeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
         get() = _deleted
 
     fun deleteTeacher(teacherId: String) {
-        helper.deleteTeacher(teacherId,
-            {
+        _deleted.value = Resource.loading()
+        helper.deleteTeacher(teacherId, {
                 _deleted.value = Resource.success(Teacher())
-            },
-            {
+            }, {
                 _deleted.value = Resource.error(it)
             })
     }
@@ -42,11 +39,10 @@ class TeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
     val current: LiveData<Resource<Teacher>>
         get() = _current
     fun getDataCurrentTeacher(teacherId: String) {
-        helper.getDataCurrentTeacher(teacherId,
-            {
+        _current.value = Resource.loading()
+        helper.getDataCurrentTeacher(teacherId, {
                 _current.value = Resource.success(it)
-            },
-            {
+            }, {
                 _current.value = Resource.error(it)
             })
     }
@@ -55,12 +51,11 @@ class TeacherViewModel(private val helper: TeacherHelper) : ViewModel() {
     val updateTeacher: LiveData<Resource<Teacher>>
         get() = _updateTeacher
     fun updateDataCurrentTeacher(teacherId: String, name: String, phone: String, username: String, salary: String){
-        helper.updateDataCurrentTeacher(teacherId, name, phone, username, salary,
-            {
+        _updateTeacher.value = Resource.loading()
+        helper.updateDataCurrentTeacher(teacherId, name, phone, username, salary, {
                 _updateTeacher.value = Resource.success(Teacher())
             }, {
                 _updateTeacher.value = Resource.error(it)
             })
     }
-
 }

@@ -12,19 +12,17 @@ import retrofit2.Response
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 
 
-class CourseHelper(
-    auth: FirebaseAuth, private val db: FirebaseFirestore
-) {
+class CourseHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val orgId = auth.currentUser!!.uid
 
     fun addNewCourse(
-        name: String, duration: Int, price: Double,
+        name: String, duration: Int, price: Int,
         onSuccess: () -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val id = UUID.randomUUID().toString()
         val newCourse = Course(
-            name = name, id = id, duration = duration, price = price, orgId = orgId
+            name = name, id = id, duration = duration, price = price
 
         )
         db.collection("users/$orgId/courses").document(id).set(newCourse)

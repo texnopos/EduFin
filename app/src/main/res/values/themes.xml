@@ -21,4 +21,7 @@
     <style name="BottomAppBarOverlay">
         <item name="colorControlNormal">@color/black</item>
     </style>
+    <style name="CheckboxStyle" parent="Theme.TexnoPOSEDUFinance">
+        <item name="background">@color/white</item>
+    </style>
 </resources>

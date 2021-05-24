@@ -4,16 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/clItemTeacher"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/margin_standard"
-    android:layout_marginTop="@dimen/margin_middle">
+    android:layout_marginBottom="@dimen/margin_middle">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciAva"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="@dimen/margin_small_standard"
-        android:layout_marginTop="@dimen/margin_small_standard"
+        android:layout_marginStart="@dimen/margin_standard_middle"
+        android:layout_marginTop="@dimen/margin_standard_middle"
         android:src="@drawable/profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

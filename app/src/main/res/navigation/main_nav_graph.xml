@@ -9,12 +9,11 @@
         android:id="@+id/nav_course"
         android:name="uz.texnopos.texnoposedufinance.ui.main.course.CourseFragment"
         android:label="CoursesFragment"
-        tools:layout="@layout/fragment_courses" />
-    <fragment
-        android:id="@+id/nav_employee"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"
-        android:label="EmployeesFragment"
-        tools:layout="@layout/fragment_teachers" />
+        tools:layout="@layout/fragment_courses" >
+        <action
+            android:id="@+id/action_nav_course_to_groupInfoFragment"
+            app:destination="@id/nav_group_info" />
+    </fragment>
     <fragment
         android:id="@+id/nav_report"
         android:name="uz.texnopos.texnoposedufinance.ui.main.report.ReportsFragment"
@@ -24,5 +23,57 @@
         android:id="@+id/nav_history"
         android:name="uz.texnopos.texnoposedufinance.ui.main.operation.OperationsFragment"
         android:label="OperationsFragment"
-        tools:layout="@layout/fragment_operation" />
+        tools:layout="@layout/fragment_operations" />
+    <fragment
+        android:id="@+id/nav_group_info"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoFragment"
+        android:label="GroupInfoFragment"
+        tools:layout="@layout/fragment_group_info">
+        <argument
+            android:name="group"
+            app:argType="string"/>
+        <argument
+            android:name="course"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_addition"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.addition.AdditionFragment"
+        android:label="AdditionFragment"
+        tools:layout="@layout/fragment_addition">
+        <action
+            android:id="@+id/action_nav_addition_to_teacherFragment"
+            app:destination="@id/nav_teacher"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"
+            />
+        <action
+            android:id="@+id/action_nav_addition_to_StudentsFragment"
+            app:destination="@id/nav_student"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_nav_addition_to_infoFragment"
+            app:destination="@id/nav_info"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_teacher"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"
+        android:label="TeacherFragment"
+        tools:layout="@layout/fragment_teachers"/>
+    <fragment
+        android:id="@+id/nav_student"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.StudentsFragment"
+        android:label="StudentsFragment"
+        tools:layout="@layout/fragment_students"/>
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.info.InfoFragment"
+        android:label="InfoFragment"
+        tools:layout="@layout/fragment_info"/>
 </navigation>
