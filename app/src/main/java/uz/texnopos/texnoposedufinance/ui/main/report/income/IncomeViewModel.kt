@@ -14,8 +14,8 @@ class IncomeViewModel(private val helper: IncomeHelper): ViewModel() {
     fun addPayment(amount: Int, date: Long, createdDate: Long, participantId: String,
                    groupId: String, courseId: String){
         _coursePayment.value = Resource.loading()
-        helper.addCoursePaymentToIncome(amount, date, createdDate, participantId, groupId, courseId,
+        /*helper.addCoursePaymentToIncome(amount, date, createdDate, participantId, groupId, courseId,
             {_coursePayment.value = Resource.success(CoursePayments())},
-            {_coursePayment.value = Resource.error(it)})
+            {_coursePayment.value = Resource.error(it)})*/
     }
 }

@@ -89,7 +89,8 @@
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black"
-                        android:drawableEnd="@drawable/ic_calendar"/>
+                        android:drawableEnd="@drawable/ic_calendar"
+                        android:focusable="false" />
 
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout

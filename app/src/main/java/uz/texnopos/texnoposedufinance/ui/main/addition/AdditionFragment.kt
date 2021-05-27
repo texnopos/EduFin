@@ -1,18 +1,12 @@
 package uz.texnopos.texnoposedufinance.ui.main.addition
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.MainActivity
@@ -62,6 +56,11 @@ class AdditionFragment : BaseFragment(R.layout.fragment_addition) {
             info.onClick {
                 bottomSheetDialog.dismiss()
                 val action = AdditionFragmentDirections.actionNavAdditionToInfoFragment()
+                navController.navigate(action)
+            }
+            category.onClick {
+                bottomSheetDialog.dismiss()
+                val action = AdditionFragmentDirections.actionNavAdditionToCategoryFragment()
                 navController.navigate(action)
             }
             signOut.onClick {

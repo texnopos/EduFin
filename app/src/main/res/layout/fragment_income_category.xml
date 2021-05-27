@@ -1,53 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-
-    <include
-        android:id="@+id/actionBar"
-        layout="@layout/action_bar"
-        app:layout_constraintTop_toTopOf="parent" />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilSearch"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_middle"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:hint="@string/search"
-        app:boxCornerRadiusBottomEnd="@dimen/margin_standard"
-        app:boxCornerRadiusBottomStart="@dimen/margin_standard"
-        app:boxCornerRadiusTopEnd="@dimen/margin_standard"
-        app:boxCornerRadiusTopStart="@dimen/margin_standard"
-        app:layout_constraintTop_toBottomOf="@id/actionBar">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size"
-            tools:ignore="SpUsage" />
-    </com.google.android.material.textfield.TextInputLayout>
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/srlStudents"
+        android:id="@+id/srlCategory"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_middle"
         android:layout_marginBottom="@dimen/margin_standard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tilSearch">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/margin_middle">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvStudents"
+            android:id="@+id/rcvCategory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -67,6 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpUsage" />
+
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="wrap_content"

@@ -32,7 +32,7 @@
     <string name="courseName">Название курса (обязательно)</string>
     <string name="create_group">Добавить группу</string>
     <string name="group_count">Группы: %1$s</string>
-    <string name="participants_count">Учащихся: %1$d</string>
+    <string name="participants_count">Студенты: %1$d</string>
     <string name="period">Период: %1$d</string>
     <string name="add">Добавить</string>
     <string name="s_expenses">Расходы</string>
@@ -75,12 +75,12 @@
     <string name="doNotSelected">Не выбрано</string>
     <string name="daysNotSelected">У вас еще нет выбранных дней</string>
     <string name="teachersNotSelected">У вас еще нет выбранных учитель/учителница</string>
-    <string name="addStudent">Добавить ученика</string>
+    <string name="addStudent">Добавить студента</string>
     <string name="study">Об учёбе</string>
     <string name="groupCreated">Группа создана в %1$s</string>
     <string name="contractNum">Договор</string>
     <string name="addition">Ещё</string>
-    <string name="students">Участники</string>
+    <string name="students">Студенты</string>
     <string name="teacherInfo">Ментор: %1$s</string>
     <string name="daysInfo">Дни и время: %1$s</string>
     <string name="startInfo">Начала: %1$s</string>
@@ -90,7 +90,7 @@
     <string name="passport">Пасспорт</string>
     <string name="address">Адрес</string>
     <string name="birthDate">ДД.ММ.ГГГГ</string>
-    <string name="addNewStudent">Добавить нового участника</string>
+    <string name="addNewStudent">Добавить нового студента</string>
     <string name="selectStudents">Выбрать участников</string>
     <string name="select">Выбрать</string>
     <string name="about">Информация</string>
@@ -120,4 +120,14 @@
     <string name="attention">Внимание</string>
     <string name="connectInternet">Включите в Интернете</string>
     <string name="doItAnyway">Все равно довабить</string>
+    <string name="category">Категории</string>
+    <string name="add_category">Добавить категории</string>
+    <string name="categoryName">Названия категория</string>
+    <string name="incomeCategoryName">Название категории дохода</string>
+    <string name="expenseCategoryName">Название категории расходов</string>
+    <string name="rent">аренда</string>
+    <string name="salary_x">зарплата</string>
+    <string name="course_pay">взнос</string>
+    <string name="categories_added">Категории успешно добавлены</string>
+    <string name="open_app">Приложение успешно открылось</string>
 </resources>

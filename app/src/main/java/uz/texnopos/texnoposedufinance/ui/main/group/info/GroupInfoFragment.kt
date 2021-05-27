@@ -26,6 +26,7 @@ import uz.texnopos.texnoposedufinance.data.model.SendParticipantDataRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentGroupInfoBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
+import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 import uz.texnopos.texnoposedufinance.ui.main.report.income.PaymentDialog
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,6 +36,7 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
     private lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
     private val viewModel: GroupInfoViewModel by viewModel()
+    private val ctViewModel: CategoryViewModel by viewModel()
     private val safeArgs: GroupInfoFragmentArgs by navArgs()
     lateinit var groupStr: String
     lateinit var courseStr: String
@@ -47,13 +49,11 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
     var amount = 0
     lateinit var participantId: String
     val auth: FirebaseAuth by inject()
-
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         groupStr = safeArgs.group
         courseStr = safeArgs.course
-
         val gson = Gson()
         group = gson.fromJson(groupStr, Group::class.java)
         course = gson.fromJson(courseStr, Course::class.java)
@@ -111,7 +111,9 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
                     amount = dialog.binding.etPayment.text.toString().toInt()
                     val id = UUID.randomUUID().toString()
                     if (amount > 0) {
-                        viewModel.coursePayment(CoursePayments(id, amount, date, created, participantId, group.id, group.courseId, auth.currentUser!!.uid))
+                        viewModel.coursePayment(CoursePayments(id = id, amount = amount, date = date,
+                            createdDate = created, participantId = participantId, groupId = group.id,
+                            courseId = group.courseId, orgId = auth.currentUser!!.uid, category = context?.getString(R.string.course_pay)!!))
                         }
                     else dialog.dismiss()
                 } else {

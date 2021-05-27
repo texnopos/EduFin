@@ -33,5 +33,4 @@ interface ApiInterface {
 
     @POST("checkContract")
     fun checkContract(@Body data: ContractRequest): Call<PostResponse>
-
 }
