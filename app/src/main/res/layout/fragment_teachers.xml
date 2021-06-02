@@ -12,23 +12,31 @@
         layout="@layout/action_bar"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <EditText
-        android:id="@+id/etSearch"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilSearch"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_standard"
-        android:layout_marginTop="@dimen/margin_small"
-        android:background="@drawable/selector_square"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="@dimen/margin_middle"
+        android:layout_marginHorizontal="@dimen/margin_middle"
+        android:layout_marginTop="@dimen/margin_middle"
         android:hint="@string/search"
-        android:maxLength="1"
-        android:padding="@dimen/margin_middle"
-        android:textSize="@dimen/text_size_standard"
-        android:layout_marginBottom="@dimen/margin_middle"
-        app:layout_constraintTop_toBottomOf="@id/actionBar"
-        tools:ignore="SpUsage"
-        app:layout_constraintBottom_toTopOf="@id/srlTeachers"/>
+        app:boxCornerRadiusBottomEnd="@dimen/margin_standard"
+        app:boxCornerRadiusBottomStart="@dimen/margin_standard"
+        app:boxCornerRadiusTopEnd="@dimen/margin_standard"
+        app:boxCornerRadiusTopStart="@dimen/margin_standard"
+        app:layout_constraintTop_toBottomOf="@id/actionBar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            tools:ignore="SpUsage" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srlTeachers"
@@ -38,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etSearch"
+        app:layout_constraintTop_toBottomOf="@id/tilSearch"
         android:layout_marginTop="@dimen/margin_middle">
 
         <androidx.recyclerview.widget.RecyclerView

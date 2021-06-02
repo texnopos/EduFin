@@ -8,5 +8,6 @@ data class CoursePayments(
     var participantId: String = "",
     var groupId: String = "",
     var courseId: String = "",
-    var orgId: String = ""
+    var orgId: String = "",
+    var category: String = ""
 )

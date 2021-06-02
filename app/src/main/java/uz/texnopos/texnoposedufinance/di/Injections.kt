@@ -20,6 +20,7 @@ import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
 import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpViewModel
+import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseAdapter
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.course.add.AddCourseViewModel
@@ -90,7 +91,8 @@ val helperModule = module {
     single { StudentHelper(get(), get()) }
     single { IncomeHelper(get(), get()) }
     single { PaymentHelper(get(), get()) }
-    single {InfoHelper(get(), get())}
+    single { InfoHelper(get(), get()) }
+    single { CategoryHelper(get(), get()) }
 }
 
 val viewModelModule = module {
@@ -105,14 +107,15 @@ val viewModelModule = module {
     viewModel { CreateStudentViewModel(get(), get()) }
     viewModel { StudentsViewModel(get(), get()) }
     viewModel { IncomeViewModel(get()) }
-    viewModel{InfoViewModel(get())}
+    viewModel { InfoViewModel(get()) }
+    viewModel { CategoryViewModel(get()) }
 }
 val adapterModule = module {
-    single{CourseAdapter()}
-    single{StudentAdapter()}
-    single{TeacherAdapter()}
-    single{GroupInfoAdapter()}
-    single{GroupAdapter()}
-    single{SelectStudentsAdapter()}
-    single {SelectExistingStudentAdapter()}
+    single { CourseAdapter() }
+    single { StudentAdapter() }
+    single { TeacherAdapter() }
+    single { GroupInfoAdapter() }
+    single { GroupAdapter() }
+    single { SelectStudentsAdapter() }
+    single { SelectExistingStudentAdapter() }
 }

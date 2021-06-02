@@ -86,6 +86,10 @@
         <action
             android:id="@+id/action_mainFragment_to_addInfoFragment"
             app:destination="@id/addInfoFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment"
+            />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -187,4 +191,13 @@
         android:name="uz.texnopos.texnoposedufinance.ui.main.info.add.AddInfoFragment"
         android:label="AddInfoFragment"
         tools:layout="@layout/fragment_add_info"/>
+    <fragment
+        android:id="@+id/addCategoryFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.category.AddCategoryFragment"
+        android:label="AddCategoryFragment"
+        tools:layout="@layout/item_add_expense_category">
+        <argument
+            android:name="position"
+            app:argType="integer"/>
+    </fragment>
 </navigation>

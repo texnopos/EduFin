@@ -184,7 +184,8 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -227,7 +228,7 @@
         </ScrollView>
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
