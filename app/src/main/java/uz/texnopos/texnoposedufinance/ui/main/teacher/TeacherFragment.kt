@@ -49,7 +49,6 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
             val action = MainFragmentDirections.actionMainFragmentToTeachersInfoFragment(it)
             parentNavController.navigate(action)
         }
-
         viewModel.getAllTeachers()
     }
 

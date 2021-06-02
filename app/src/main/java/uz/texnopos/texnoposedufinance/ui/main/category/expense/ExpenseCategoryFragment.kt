@@ -3,6 +3,8 @@ package uz.texnopos.texnoposedufinance.ui.main.category.expense
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
@@ -18,15 +20,17 @@ class ExpenseCategoryFragment: BaseFragment(R.layout.fragment_expense_category){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentExpenseCategoryBinding.bind(view)
+        setUpObservers()
         binding.apply {
             rcvCategory.adapter = adapter
-            setUpObservers()
-            viewModel.getAllExpenseCategories()
             srlCategory.setOnRefreshListener {
                 srlCategory.isRefreshing = false
+                loading.visibility(false)
                 viewModel.getAllExpenseCategories()
             }
+            rcvCategory.addItemDecoration(DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL))
         }
+        viewModel.getAllExpenseCategories()
     }
     private fun setUpObservers(){
         binding.apply {

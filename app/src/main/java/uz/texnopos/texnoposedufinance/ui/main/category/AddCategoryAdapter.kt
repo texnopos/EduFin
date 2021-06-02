@@ -8,6 +8,7 @@ import uz.texnopos.texnoposedufinance.ui.main.category.expense.add.AddExpenseCat
 import uz.texnopos.texnoposedufinance.ui.main.category.income.add.AddIncomeCategoryFragment
 
 class AddCategoryAdapter(
+    private val fr: AddCategoryFragment,
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle
 ) :
@@ -16,10 +17,10 @@ class AddCategoryAdapter(
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                AddExpenseCategoryFragment()
+                AddExpenseCategoryFragment(fr)
             }
             else -> {
-                AddIncomeCategoryFragment()
+                AddIncomeCategoryFragment(fr)
             }
         }
     }

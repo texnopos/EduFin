@@ -3,6 +3,7 @@ package uz.texnopos.texnoposedufinance.ui.main.category.income
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
@@ -26,6 +27,7 @@ class IncomeCategoryFragment : BaseFragment(R.layout.fragment_income_category) {
                 srlCategory.isRefreshing = false
                 viewModel.getAllIncomeCategories()
             }
+            rcvCategory.addItemDecoration(DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL))
         }
     }
 

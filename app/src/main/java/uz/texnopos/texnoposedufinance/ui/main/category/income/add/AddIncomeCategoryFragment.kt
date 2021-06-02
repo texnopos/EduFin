@@ -12,9 +12,10 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ItemAddIncomeCategoryBinding
+import uz.texnopos.texnoposedufinance.ui.main.category.AddCategoryFragment
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 
-class AddIncomeCategoryFragment: BaseFragment(R.layout.item_add_income_category){
+class AddIncomeCategoryFragment(private val fr: AddCategoryFragment): BaseFragment(R.layout.item_add_income_category){
     private lateinit var binding: ItemAddIncomeCategoryBinding
     val viewModel: CategoryViewModel by viewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,6 +42,7 @@ class AddIncomeCategoryFragment: BaseFragment(R.layout.item_add_income_category)
                     ResourceState.SUCCESS ->{
                         isLoading(false)
                         toastLN(context?.getString(R.string.added_successfully))
+                        fr.navController.popBackStack()
                     }
                     ResourceState.ERROR ->{
                         isLoading(false)

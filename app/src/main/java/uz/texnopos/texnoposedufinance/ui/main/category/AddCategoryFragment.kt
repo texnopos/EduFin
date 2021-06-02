@@ -14,7 +14,7 @@ import uz.texnopos.texnoposedufinance.databinding.FragmentAddCategoryBinding
 
 class AddCategoryFragment: BaseFragment(R.layout.fragment_add_category) {
     private lateinit var binding: FragmentAddCategoryBinding
-    private lateinit var navController: NavController
+    lateinit var navController: NavController
     private lateinit var adapter: AddCategoryAdapter
     private lateinit var actBinding: ActionBarAddBinding
     private val args: AddCategoryFragmentArgs by navArgs()
@@ -24,7 +24,7 @@ class AddCategoryFragment: BaseFragment(R.layout.fragment_add_category) {
         actBinding = ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
         val pos = args.position
-        adapter = AddCategoryAdapter(requireActivity().supportFragmentManager, lifecycle)
+        adapter = AddCategoryAdapter(this, requireActivity().supportFragmentManager, lifecycle)
         actBinding.apply {
             actionBarTitle.text = context?.getString(R.string.add_category)
             btnHome.onClick {

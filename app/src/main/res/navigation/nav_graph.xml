@@ -88,7 +88,8 @@
             app:destination="@id/addInfoFragment" />
         <action
             android:id="@+id/action_mainFragment_to_addCategoryFragment"
-            app:destination="@id/addCategoryFragment" />
+            app:destination="@id/addCategoryFragment"
+            />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"

@@ -22,7 +22,18 @@ class CategoryHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     }
     fun getAllIncomeCategories(onSuccess: (List<IncomeCategory>) -> Unit,
                                onFailure: (msg: String?) -> Unit){
-        db.collection("users/$orgId/incomeCategory").get()
+        db.collection("users/$orgId/incomeCategory").addSnapshotListener { value, error ->
+            if(error != null){
+                onFailure.invoke(error.message.toString())
+            }
+            val categories = mutableListOf<IncomeCategory>()
+            for(doc in value!!){
+                categories.add(doc.toObject(IncomeCategory::class.java))
+                }
+            onSuccess.invoke(categories)
+            }
+        }
+        /*db.collection("users/$orgId/incomeCategory").get()
             .addOnSuccessListener {doc ->
                 if(doc.documents.isNotEmpty()){
                     onSuccess.invoke(doc.documents.map {
@@ -33,11 +44,22 @@ class CategoryHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
             }
             .addOnFailureListener {
                 onFailure.invoke(it.message)
-            }
-    }
+            }*/
+
     fun getAllExpenseCategories(onSuccess: (List<ExpenseCategory>) -> Unit,
                                onFailure: (msg: String?) -> Unit){
-        db.collection("users/$orgId/expenseCategory").get()
+
+        db.collection("users/$orgId/expenseCategory").addSnapshotListener { value, error ->
+            if(error != null){
+                onFailure.invoke(error.message.toString())
+            }
+            val categories = mutableListOf<ExpenseCategory>()
+            for(doc in value!!){
+                categories.add(doc.toObject(ExpenseCategory::class.java))
+            }
+            onSuccess.invoke(categories)
+        }
+        /*db.collection("users/$orgId/expenseCategory").get()
             .addOnSuccessListener {doc ->
                 if(doc.documents.isNotEmpty()){
                     onSuccess.invoke(doc.documents.map {
@@ -48,7 +70,7 @@ class CategoryHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
             }
             .addOnFailureListener {
                 onFailure.invoke(it.message)
-            }
+            }*/
     }
 
     fun addExpenseCategory(name: String, onSuccess: () -> Unit,
