@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_700">
+
+    <LinearLayout
+        android:id="@+id/llReports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clExpense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin_standard"
+            android:layout_marginHorizontal="@dimen/margin_middle"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:background="@drawable/shape_form"
+            >
+
+            <ImageView
+                android:id="@+id/icExpenses"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_expense"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <TextView
+                android:id="@+id/tvExpenses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_middle"
+                android:text="@string/s_expenses"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toEndOf="@id/icExpenses"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/absoluteTextColor"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/tvMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:paddingHorizontal="@dimen/margin_small"
+                android:text="@string/minus"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icExpenses"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/amountExpenses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:paddingHorizontal="@dimen/margin_small"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toEndOf="@id/tvMinus"
+                app:layout_constraintTop_toBottomOf="@id/icExpenses"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/tvSwm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:text="@string/swm"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toEndOf="@id/amountExpenses"
+                app:layout_constraintTop_toBottomOf="@id/icExpenses"
+                tools:ignore="SpUsage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clIncome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_standard"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/margin_middle"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:background="@drawable/shape_form">
+
+            <ImageView
+                android:id="@+id/icIncomes"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_incomes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvIncomes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_middle"
+                android:text="@string/s_incomes"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toEndOf="@id/icIncomes"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/absoluteTextColor"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/tvPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:paddingHorizontal="@dimen/margin_small"
+                android:text="@string/plus"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icIncomes"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/amountIncomes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toEndOf="@id/tvPlus"
+                app:layout_constraintTop_toBottomOf="@id/icIncomes"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/tvIncSwm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:paddingHorizontal="@dimen/margin_small"
+                android:text="@string/swm"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toEndOf="@id/amountIncomes"
+                app:layout_constraintTop_toBottomOf="@id/icIncomes"
+                tools:ignore="SpUsage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_middle"
+        android:layout_marginBottom="@dimen/margin_middle"
+        app:cardCornerRadius="@dimen/margin_large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llReports"
+        android:layout_marginHorizontal="@dimen/margin_middle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.anychart.AnyChartView
+                android:id="@+id/anyChartView"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_standard"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/anyChartView"
+                android:layout_marginHorizontal="@dimen/margin_small"/>
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

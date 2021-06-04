@@ -1,5 +1,6 @@
 package uz.texnopos.texnoposedufinance.ui.main.group.info
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +45,7 @@ class GroupInfoAdapter : BaseAdapter<ParticipantResponse, GroupInfoAdapter.Group
             }
         }
 
+        @SuppressLint("ResourceAsColor")
         fun populateModel(model: ParticipantResponse) {
             binding.apply {
                 model.apply {
@@ -54,6 +56,17 @@ class GroupInfoAdapter : BaseAdapter<ParticipantResponse, GroupInfoAdapter.Group
                     setPeriodVisible(periodCount)
                     var paymentAmount = payments.map { it.amount }.sum()
                     val remainder = paymentAmount - coursePrice * periodCount
+                    when {
+                        remainder > 0 -> {
+                            tvRemainder.setTextColor(R.color.green)
+                            tvRemainder.visibility(true)
+                        }
+                        remainder == 0 -> tvRemainder.visibility(false)
+                        else -> {
+                            tvRemainder.setTextColor(R.color.red)
+                            tvRemainder.visibility(true)
+                        }
+                    }
                     tvRemainder.text = remainder.toString()
                     periodViewList.forEach {
                         it.setImageResource(R.drawable.red_round)

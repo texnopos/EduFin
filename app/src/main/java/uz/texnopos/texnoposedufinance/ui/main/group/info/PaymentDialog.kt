@@ -1,4 +1,4 @@
-package uz.texnopos.texnoposedufinance.ui.main.report.income
+package uz.texnopos.texnoposedufinance.ui.main.group.info
 
 import android.app.Dialog
 import android.content.Context

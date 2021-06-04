@@ -18,9 +18,11 @@ import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 class AddExpenseCategoryFragment(private val fr: AddCategoryFragment): BaseFragment(R.layout.item_add_expense_category){
     private lateinit var binding: ItemAddExpenseCategoryBinding
     val viewModel: CategoryViewModel by viewModel()
+    private lateinit var navController: NavController
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = ItemAddExpenseCategoryBinding.bind(view)
+        navController = Navigation.findNavController(view)
         binding.apply {
             setUpObservers()
             btnSave.onClick {
@@ -28,6 +30,7 @@ class AddExpenseCategoryFragment(private val fr: AddCategoryFragment): BaseFragm
                 if(name.isEmpty()) etCategoryName.error = context?.getString(R.string.fillField)
                 if(name.isNotEmpty()){
                     viewModel.addExpenseCategory(name)
+                    navController.popBackStack()
                 }
             }
         }

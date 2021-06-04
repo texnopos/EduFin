@@ -88,8 +88,13 @@
             app:destination="@id/addInfoFragment" />
         <action
             android:id="@+id/action_mainFragment_to_addCategoryFragment"
-            app:destination="@id/addCategoryFragment"
-            />
+            app:destination="@id/addCategoryFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addIncomeFragment"
+            app:destination="@id/addIncomeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -199,5 +204,44 @@
         <argument
             android:name="position"
             app:argType="integer"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addIncomeFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.report.income.add.AddIncomeFragment"
+        android:label="AddIncomeFragment"
+        tools:layout="@layout/fragment_add_income">
+        <action
+            android:id="@+id/action_addIncomeFragment_to_incomeCategoryFragment"
+            app:destination="@id/incomeCategoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.report.expense.add.AddExpenseFragment"
+        android:label="AddExpenseFragment"
+        tools:layout="@layout/fragment_add_expense">
+        <argument
+            android:name="name"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_addExpenseFragment_to_myExpenseCategoryFragment"
+            app:destination="@id/myExpenseCategoryFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/incomeCategoryFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.category.income.IncomeCategoryFragment"
+        android:label="IncomeCategoryFragment"
+        tools:layout="@layout/fragment_income_category"/>
+    <fragment
+        android:id="@+id/myExpenseCategoryFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.category.expense.my.MyExpenseCategoryFragment"
+        android:label="MyExpenseCategoryFragment">
+        <action
+            android:id="@+id/action_myExpenseCategoryFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

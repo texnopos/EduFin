@@ -46,7 +46,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
     private lateinit var phone: ArrayList<String>
     private var createdDate: Long = 0L
     private lateinit var participant: CreateParticipantRequest
-    lateinit var orgId: String
+    private lateinit var orgId: String
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

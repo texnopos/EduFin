@@ -28,6 +28,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     lateinit var groupId: String
     var passportList: ArrayList<String> = arrayListOf()
     var pos = -1
+    var
+            temp = -1
     private lateinit var bottomSheetAddStudentBinding: BottomSheetAddStudentBinding
 
     @SuppressLint("InflateParams")
@@ -42,6 +44,16 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         binding.bnvMain.menu.getItem(2).isEnabled = false
         binding.fabMain.onClick {
             when (childNavController.currentDestination?.id) {
+                R.id.nav_report ->{
+                    if(temp == 0){
+                        val action = MainFragmentDirections.actionMainFragmentToAddExpenseFragment("")
+                        navController.navigate(action)
+                    }
+                    if(temp == 1){
+                        val action = MainFragmentDirections.actionMainFragmentToAddIncomeFragment()
+                        navController.navigate(action)
+                    }
+                }
                 R.id.nav_teacher -> {
                     val action = MainFragmentDirections.actionMainFragmentToAddTeacherFragment()
                     navController.navigate(action)

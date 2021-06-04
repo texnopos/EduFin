@@ -22,13 +22,10 @@ import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.CoursePayments
 import uz.texnopos.texnoposedufinance.data.model.Group
-import uz.texnopos.texnoposedufinance.data.model.SendParticipantDataRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentGroupInfoBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
-import uz.texnopos.texnoposedufinance.ui.main.report.income.PaymentDialog
-import java.text.SimpleDateFormat
 import java.util.*
 
 class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
@@ -95,7 +92,10 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
         setUpObserversCoursePayment()
         adapter.setOnStudentItemClickListener { pId ->
             participantId = pId
-            dialog = PaymentDialog(requireContext())
+            dialog =
+                PaymentDialog(
+                    requireContext()
+                )
             dialog.show()
             val cal = Calendar.getInstance()
             created = cal.timeInMillis

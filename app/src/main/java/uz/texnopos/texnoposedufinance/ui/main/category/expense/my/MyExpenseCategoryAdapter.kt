@@ -1,4 +1,4 @@
-package uz.texnopos.texnoposedufinance.ui.main.category.expense
+package uz.texnopos.texnoposedufinance.ui.main.category.expense.my
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +9,7 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.ExpenseCategory
 import uz.texnopos.texnoposedufinance.databinding.ItemCategoryBinding
 
-class ExpenseCategoryAdapter: BaseAdapter<ExpenseCategory, ExpenseCategoryAdapter.ExpenseCategoryVH>(){
+class MyExpenseCategoryAdapter : BaseAdapter<ExpenseCategory, MyExpenseCategoryAdapter.ExpenseCategoryVH>(){
     private var onItemClicked: (name: String) -> Unit = {}
     fun setOnItemClickListener(onGroupItemClicked: (name: String) -> Unit) {
         this.onItemClicked = onGroupItemClicked

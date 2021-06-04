@@ -14,9 +14,10 @@ import uz.texnopos.texnoposedufinance.databinding.FragmentExpenseCategoryBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 
 class ExpenseCategoryFragment: BaseFragment(R.layout.fragment_expense_category){
-    lateinit var binding: FragmentExpenseCategoryBinding
-    val adapter = ExpenseCategoryAdapter()
+    private lateinit var binding: FragmentExpenseCategoryBinding
+    private val adapter = ExpenseCategoryAdapter()
     private val viewModel: CategoryViewModel by viewModel()
+    private lateinit var category: String
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentExpenseCategoryBinding.bind(view)
@@ -31,6 +32,9 @@ class ExpenseCategoryFragment: BaseFragment(R.layout.fragment_expense_category){
             rcvCategory.addItemDecoration(DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL))
         }
         viewModel.getAllExpenseCategories()
+        adapter.setOnItemClickListener {
+            category = it
+        }
     }
     private fun setUpObservers(){
         binding.apply {

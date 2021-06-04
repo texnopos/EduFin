@@ -182,7 +182,7 @@
                     android:layout_marginEnd="@dimen/margin_middle"
                     android:visibility="gone"/>
             </LinearLayout>
-            <com.google.android.material.textview.MaterialTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvRemainder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

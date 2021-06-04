@@ -130,4 +130,9 @@
     <string name="course_pay">взнос</string>
     <string name="categories_added">Категории успешно добавлены</string>
     <string name="open_app">Приложение успешно открылось</string>
+    <string name="enterMoney">Введите сумму</string>
+    <string name="selectCategory">Выберите категорию</string>
+    <string name="note">Заметка</string>
+    <string name="date_time">Дата и время операции</string>
+    <string name="addExpense">Добавить расход</string>
 </resources>
