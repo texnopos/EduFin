@@ -135,4 +135,14 @@
     <string name="note">Заметка</string>
     <string name="date_time">Дата и время операции</string>
     <string name="addExpense">Добавить расход</string>
+    <string name="doNotSelectedTime">Вы не выбрали дату</string>
+    <string name="doNotSelectedCategory">Вы не выбрали категорию</string>
+    <string name="selectCourse">Выбрать курс</string>
+    <string name="selectGroup">Выбрать группу</string>
+    <string name="selectParticipant">Выбрать участника</string>
+    <string name="addIncome">Добавить доход</string>
+    <string name="fromText">С %1$s</string>
+    <string name="toText">По %1$s</string>
+    <string name="sort">Фильтр</string>
+    <string name="selectOtherDate">Вы должны выбрать другую дату!</string>
 </resources>

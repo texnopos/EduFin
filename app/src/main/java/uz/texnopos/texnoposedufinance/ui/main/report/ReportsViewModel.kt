@@ -12,9 +12,9 @@ class ReportsViewModel(private val helper: ReportHelper): ViewModel() {
     private val _income: MutableLiveData<Resource<Income>> = MutableLiveData()
         val income: LiveData<Resource<Income>>
         get() = _income
-    fun addIncome(amount: Int, date: Long, createdDate: Long, category: String){
+    fun addIncome(amount: Int, date: Long, createdDate: Long, category: String, note: String){
         _income.value = Resource.loading()
-        helper.addIncome(amount = amount, date = date, createdDate = createdDate, category = category,
+        helper.addIncome(amount = amount, date = date, createdDate = createdDate, category = category, note = note,
             onSuccess = {
                 _income.value = Resource.success(Income())
             }, onFailure  =  {
@@ -25,9 +25,9 @@ class ReportsViewModel(private val helper: ReportHelper): ViewModel() {
     private val _expense: MutableLiveData<Resource<Expense>> = MutableLiveData()
     val expense: LiveData<Resource<Expense>>
         get() = _expense
-    fun addExpense(amount: Int, date: Long, createdDate: Long, category: String){
+    fun addExpense(amount: Int, date: Long, createdDate: Long, category: String, note: String){
         _expense.value = Resource.loading()
-        helper.addExpense(amount = amount, date = date, createdDate = createdDate, category = category,
+        helper.addExpense(amount = amount, date = date, createdDate = createdDate, category = category, note = note,
             onSuccess = {
                 _expense.value = Resource.success(Expense())
             }, onFailure  =  {

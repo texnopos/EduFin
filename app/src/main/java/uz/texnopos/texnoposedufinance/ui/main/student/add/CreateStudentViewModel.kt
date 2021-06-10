@@ -97,5 +97,4 @@ class CreateStudentViewModel(
             _contract.value = Resource.error(it)
         })
     }
-
 }

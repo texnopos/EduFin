@@ -8,7 +8,6 @@
         android:id="@+id/actionBar"
         layout="@layout/action_bar_add"
         app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -33,8 +32,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_middle">
 
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilMoney"
+                    android:id="@+id/tilAmount"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etMoney"
+                        android:id="@+id/etAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -59,27 +59,23 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCategory"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_middle"
-                    android:hint="@string/selectCategory"
-                    app:boxCornerRadiusBottomEnd="@dimen/margin_standard"
-                    app:boxCornerRadiusBottomStart="@dimen/margin_standard"
-                    app:boxCornerRadiusTopEnd="@dimen/margin_standard"
-                    app:boxCornerRadiusTopStart="@dimen/margin_standard"
-                    app:layout_constraintTop_toBottomOf="@id/tilMoney">
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:hint="@string/add_category"
+                    app:layout_constraintTop_toBottomOf="@id/tilAmount">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etCategory"
+                    <AutoCompleteTextView
+                        android:id="@+id/actCategory"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black"
-                        android:focusable="false"/>
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:padding="@dimen/margin_large_standard"
+                        android:text="@string/doNotSelected"
+                        android:textSize="@dimen/text_size_standard"
+                        tools:ignore="SpUsage" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

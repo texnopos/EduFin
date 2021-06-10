@@ -1,3 +1,4 @@
+
 package uz.texnopos.texnoposedufinance.ui.main.category.income
 
 import android.view.ViewGroup
@@ -15,6 +16,30 @@ class IncomeCategoryAdapter: BaseAdapter<IncomeCategory, IncomeCategoryAdapter.I
                 tvCategoryName.text = model.name
             }
         }
+    }
+
+    fun onAdded(data: IncomeCategory) {
+        val list = models.toMutableList()
+        list.add(data)
+        models = list
+        notifyItemInserted(list.lastIndex)
+    }
+
+    fun onModified(data: IncomeCategory) {
+        val prev = models.find { it.id == data.id }!!
+        val index = models.indexOf(prev)
+        val list = models.toMutableList()
+        list[index] = data
+        models = list
+        notifyItemChanged(index)
+    }
+
+    fun onRemoved(data: IncomeCategory) {
+        val index = models.indexOf(data)
+        val list = models.toMutableList()
+        list.removeAt(index)
+        models = list
+        notifyItemRemoved(index)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncomeCategoryVH {

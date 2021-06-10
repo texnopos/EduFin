@@ -14,10 +14,16 @@ interface ApiInterface {
     fun getAllCourses(@Query("id") userId: String): Call<List<Course>>
 
     @GET("getGroupParticipants")
-    fun getGroupParticipants(@Query("orgId") orgId: String, @Query("groupId") id: String): Call<List<ParticipantResponse>>
+    fun getGroupParticipants(
+        @Query("orgId") orgId: String,
+        @Query("groupId") id: String
+    ): Call<List<ParticipantResponse>>
 
     @GET("selectExistingStudentToGroup")
-    fun selectExistingStudentToGroup(@Query("orgId") orgId: String, @Query("groupId") groupId: String): Call<List<Student>>
+    fun selectExistingStudentToGroup(
+        @Query("orgId") orgId: String,
+        @Query("groupId") groupId: String
+    ): Call<List<Student>>
 
     @POST("createParticipantIfStudentNotExists")
     fun createParticipantIfStudentNotExists(@Body data: CreateParticipantRequest): Call<PostResponse>

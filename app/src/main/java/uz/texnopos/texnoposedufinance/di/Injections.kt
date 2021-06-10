@@ -31,6 +31,7 @@ import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoAdapter
 import uz.texnopos.texnoposedufinance.ui.main.info.InfoViewModel
+import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
 import uz.texnopos.texnoposedufinance.ui.main.report.income.IncomeViewModel
 import uz.texnopos.texnoposedufinance.ui.main.student.StudentAdapter
 import uz.texnopos.texnoposedufinance.ui.main.student.StudentsViewModel
@@ -93,6 +94,7 @@ val helperModule = module {
     single { PaymentHelper(get(), get()) }
     single { InfoHelper(get(), get()) }
     single { CategoryHelper(get(), get()) }
+    single { ReportHelper(get(), get()) }
 }
 
 val viewModelModule = module {
@@ -109,6 +111,7 @@ val viewModelModule = module {
     viewModel { IncomeViewModel(get()) }
     viewModel { InfoViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
+    viewModel { ReportsViewModel(get()) }
 }
 val adapterModule = module {
     single { CourseAdapter() }

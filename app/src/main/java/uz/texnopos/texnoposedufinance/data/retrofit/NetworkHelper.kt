@@ -16,6 +16,7 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
             override fun onFailure(call: Call<List<Course>>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
+
             override fun onResponse(call: Call<List<Course>>, response: Response<List<Course>>) {
                 response.body().let {
                     onSuccess.invoke(it!!)
@@ -27,6 +28,7 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
 
         })
     }
+
     fun getGroupParticipants(
         id: String,
         onSuccess: (List<ParticipantResponse>) -> Unit,
@@ -37,6 +39,7 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
             override fun onFailure(call: Call<List<ParticipantResponse>>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
             }
+
             override fun onResponse(
                 call: Call<List<ParticipantResponse>>,
                 response: Response<List<ParticipantResponse>>

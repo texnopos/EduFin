@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
-import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.RealtimeChangesResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.FragmentIncomeCategoryBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
@@ -35,23 +35,26 @@ class IncomeCategoryFragment : BaseFragment(R.layout.fragment_income_category) {
         binding.apply {
             viewModel.incomeCategory.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-                    ResourceState.LOADING -> {
+                    RealtimeChangesResourceState.LOADING -> {
                         srlCategory.isRefreshing = false
                         loading.visibility(true)
                     }
-                    ResourceState.SUCCESS -> {
+                    RealtimeChangesResourceState.ADDED -> {
                         srlCategory.isRefreshing = false
                         loading.visibility(false)
-                        adapter.models = it.data!!
-                        if (it.data.isEmpty()) {
-                            rcvCategory.visibility(false)
-                            tvEmptyList.visibility(true)
-                        } else {
-                            rcvCategory.visibility(true)
-                            tvEmptyList.visibility(false)
-                        }
+                        adapter.onAdded(it.data!!)
                     }
-                    ResourceState.ERROR -> {
+                    RealtimeChangesResourceState.MODIFIED -> {
+                        srlCategory.isRefreshing = false
+                        loading.visibility(false)
+                        adapter.onModified(it.data!!)
+                    }
+                    RealtimeChangesResourceState.REMOVED -> {
+                        srlCategory.isRefreshing = false
+                        loading.visibility(false)
+                        adapter.onRemoved(it.data!!)
+                    }
+                    RealtimeChangesResourceState.ERROR -> {
                         toastLN(it.message)
                         srlCategory.isRefreshing = false
                         loading.visibility(false)

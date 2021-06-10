@@ -35,7 +35,7 @@
                 android:layout_margin="@dimen/margin_middle">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilMoney"
+                    android:id="@+id/tilAmount"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etMoney"
+                        android:id="@+id/etAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -60,28 +60,91 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCategory"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_middle"
-                    android:hint="@string/selectCategory"
-                    app:boxCornerRadiusBottomEnd="@dimen/margin_standard"
-                    app:boxCornerRadiusBottomStart="@dimen/margin_standard"
-                    app:boxCornerRadiusTopEnd="@dimen/margin_standard"
-                    app:boxCornerRadiusTopStart="@dimen/margin_standard"
-                    app:layout_constraintTop_toBottomOf="@id/tilMoney">
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:hint="@string/add_category"
+                    app:layout_constraintTop_toBottomOf="@id/tilAmount">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etCategory"
+                    <AutoCompleteTextView
+                        android:id="@+id/actCategory"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:padding="@dimen/margin_large_standard"
+                        android:text="@string/doNotSelected"
+                        android:textSize="@dimen/text_size_standard"
+                        tools:ignore="SpUsage" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCourse"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:enabled="false"
+                    android:hint="@string/selectCourse"
+                    app:layout_constraintTop_toBottomOf="@id/tilCategory">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actCourse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:padding="@dimen/margin_large_standard"
+                        android:text="@string/doNotSelected"
+                        android:textSize="@dimen/text_size_standard"
+                        tools:ignore="SpUsage" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGroup"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:enabled="false"
+                    android:hint="@string/selectGroup"
+                    app:layout_constraintTop_toBottomOf="@id/tilCourse">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:padding="@dimen/margin_large_standard"
+                        android:text="@string/doNotSelected"
+                        android:textSize="@dimen/text_size_standard"
+                        tools:ignore="SpUsage" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilParticipant"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:enabled="false"
+                    android:hint="@string/selectParticipant"
+                    app:layout_constraintTop_toBottomOf="@id/tilGroup">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actParticipant"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:padding="@dimen/margin_large_standard"
+                        android:text="@string/doNotSelected"
+                        android:textSize="@dimen/text_size_standard"
+                        tools:ignore="SpUsage" />
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilNote"
@@ -95,7 +158,7 @@
                     app:boxCornerRadiusBottomStart="@dimen/margin_standard"
                     app:boxCornerRadiusTopEnd="@dimen/margin_standard"
                     app:boxCornerRadiusTopStart="@dimen/margin_standard"
-                    app:layout_constraintTop_toBottomOf="@id/tilCategory">
+                    app:layout_constraintTop_toBottomOf="@id/tilParticipant">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etNote"
@@ -134,6 +197,16 @@
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <ProgressBar
+                    android:id="@+id/loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>

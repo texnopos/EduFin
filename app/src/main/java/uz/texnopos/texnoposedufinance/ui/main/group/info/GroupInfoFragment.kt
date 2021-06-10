@@ -33,7 +33,6 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
     private lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
     private val viewModel: GroupInfoViewModel by viewModel()
-    private val ctViewModel: CategoryViewModel by viewModel()
     private val safeArgs: GroupInfoFragmentArgs by navArgs()
     lateinit var groupStr: String
     lateinit var courseStr: String
@@ -46,6 +45,7 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
     var amount = 0
     lateinit var participantId: String
     val auth: FirebaseAuth by inject()
+
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,7 +65,7 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
         adapter.periodCount = course.duration
         adapter.coursePrice = course.price
 
-        adapter.callStudentClicked {n, n1 ->
+        adapter.callStudentClicked { n, n1 ->
             val dialog = AlertDialog.Builder(requireContext())
             dialog.setTitle(context?.getString(R.string.callStudent))
             dialog.setMessage(context?.getString(R.string.selectPhone))
@@ -111,11 +111,20 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
                     amount = dialog.binding.etPayment.text.toString().toInt()
                     val id = UUID.randomUUID().toString()
                     if (amount > 0) {
-                        viewModel.coursePayment(CoursePayments(id = id, amount = amount, date = date,
-                            createdDate = created, participantId = participantId, groupId = group.id,
-                            courseId = group.courseId, orgId = auth.currentUser!!.uid, category = context?.getString(R.string.course_pay)!!))
-                        }
-                    else dialog.dismiss()
+                        viewModel.coursePayment(
+                            CoursePayments(
+                                id = id,
+                                amount = amount,
+                                date = date,
+                                createdDate = created,
+                                participantId = participantId,
+                                groupId = group.id,
+                                courseId = group.courseId,
+                                orgId = auth.currentUser!!.uid,
+                                category = context?.getString(R.string.course_pay)!!
+                            )
+                        )
+                    } else dialog.dismiss()
                 } else {
                     dialog.binding.etPayment.error = context?.getString(R.string.fillField)
                 }

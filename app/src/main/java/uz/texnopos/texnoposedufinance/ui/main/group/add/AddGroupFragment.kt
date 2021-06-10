@@ -43,10 +43,8 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentAddGroupBinding.bind(view)
         bindingActBar = ActionBarAddBinding.bind(view)
-
         val teachersAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allTeachers)
 
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.create_group)

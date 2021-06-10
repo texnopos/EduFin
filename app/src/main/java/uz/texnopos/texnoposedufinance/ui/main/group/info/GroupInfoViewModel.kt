@@ -37,5 +37,4 @@ class GroupInfoViewModel(private val helper: NetworkHelper) : ViewModel() {
             _coursePayment.value = Resource.error(it)
         })
     }
-
 }
