@@ -72,7 +72,6 @@
                         android:id="@+id/actCategory"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="none"
                         android:padding="@dimen/margin_large_standard"
                         android:text="@string/doNotSelected"
                         android:textSize="@dimen/text_size_standard"

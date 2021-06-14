@@ -13,8 +13,8 @@ import uz.texnopos.texnoposedufinance.databinding.FragmentIncomeCategoryBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 
 class IncomeCategoryFragment : BaseFragment(R.layout.fragment_income_category) {
-    lateinit var binding: FragmentIncomeCategoryBinding
-    val adapter = IncomeCategoryAdapter()
+    private lateinit var binding: FragmentIncomeCategoryBinding
+    private val adapter = IncomeCategoryAdapter()
     private val viewModel: CategoryViewModel by viewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -1,9 +1,9 @@
 package uz.texnopos.texnoposedufinance.ui.main.report.income.add
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
@@ -11,6 +11,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.RealtimeChangesResourceState
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
@@ -19,12 +20,11 @@ import uz.texnopos.texnoposedufinance.data.model.CoursePayments
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddIncomeBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
+import uz.texnopos.texnoposedufinance.ui.main.category.income.IncomeCategoryAdapter
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
-import uz.texnopos.texnoposedufinance.ui.main.student.StudentsViewModel
-import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
 import java.util.*
 
 class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
@@ -57,7 +57,8 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
     private lateinit var groupAdapter: ArrayAdapter<String>
     private lateinit var participantAdapter: ArrayAdapter<String>
     private lateinit var actBinding: ActionBarAddBinding
-
+    private val adapter = IncomeCategoryAdapter()
+    private val incomeCategories = mutableListOf<String>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddIncomeBinding.bind(view)
@@ -106,11 +107,12 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
             categoryVM.getAllIncomeCategories()
             categoryAdapter.clear()
             actCategory.setAdapter(categoryAdapter)
+            actCategory.setOnFocusChangeListener { _, _ ->
+                actCategory.showDropDown()
+            }
             actCategory.setOnItemClickListener { adapterView, _, i, _ ->
-                if (adapterView.getItemAtPosition(i)
-                        .toString() != view.context.getString(R.string.doNotSelected)
-                ) {
-                   // category = categoryVM.incomeCategory.value?.data!![i].name
+                if (adapterView.getItemAtPosition(i).toString() != view.context.getString(R.string.doNotSelected)) {
+                    category = incomeCategories[i]
                     if (category == context?.getString(R.string.course_pay)) {
                         tilCourse.visibility(true)
                         tilGroup.visibility(true)
@@ -132,7 +134,7 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                                 position = i
                                 tilGroup.visibility(true)
                                 groupAdapter.clear()
-                                if(size == 0){
+                                if(size == 0) {
                                     /*groupId = ""
                                     group = ""
                                     participant = ""
@@ -146,11 +148,13 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                                     if (adapterView.getItemAtPosition(i)
                                             .toString() != view.context.getString(R.string.doNotSelected)
                                     ) {
-                                        group = courseVM.courseList.value?.data!![position].groups[i].name
-                                        groupId = courseVM.courseList.value?.data!![position].groups[i].id
+                                        group =
+                                            courseVM.courseList.value?.data!![position].groups[i].name
+                                        groupId =
+                                            courseVM.courseList.value?.data!![position].groups[i].id
                                         tilParticipant.visibility(true)
                                         participantAdapter.clear()
-                                        if(pSize == 0){
+                                        if (pSize == 0) {
                                             actParticipant.setText(view.context.getString(R.string.doNotSelected))
                                         }
                                         groupInfoVM.getGroupParticipants(groupId)
@@ -266,8 +270,7 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                 })
 
             groupInfoVM.participantList.observe(
-                viewLifecycleOwner,
-                androidx.lifecycle.Observer {
+                viewLifecycleOwner, androidx.lifecycle.Observer {
                     when (it.status) {
                         ResourceState.SUCCESS -> {
                             val map = it.data!!.map { e -> e.student.name }
@@ -277,26 +280,38 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                         ResourceState.ERROR -> {
                             toastLN(it.message)
                         }
+                        ResourceState.LOADING -> {
+
+                        }
                     }
                 })
 
             categoryVM.incomeCategory.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 when (it.status) {
-//                    ResourceState.LOADING -> loading.visibility(true)
-//                    ResourceState.SUCCESS -> {
-//                        loading.visibility(false)
-//                        categoryAdapter.clear()
-//                        categoryAdapter.addAll(it.data!!.map { e -> e.name })
-//                    }
-//                    ResourceState.ERROR -> {
-//                        loading.visibility(false)
-//                        toastLN(it.message)
-//                    }
+                    RealtimeChangesResourceState.LOADING -> {
+                        loading.visibility(true)
+                    }
+                    RealtimeChangesResourceState.ADDED -> {
+                        loading.visibility(false)
+                        incomeCategories.add(it.data!!.name)
+                    }
+                    RealtimeChangesResourceState.MODIFIED -> {
+                        loading.visibility(false)
+                        adapter.onModified(it.data!!)
+                    }
+                    RealtimeChangesResourceState.REMOVED -> {
+                        loading.visibility(false)
+                        adapter.onRemoved(it.data!!)
+                    }
+                    RealtimeChangesResourceState.ERROR -> {
+                        loading.visibility(false)
+                        toastLN(it.message)
+                    }
                 }
+                categoryAdapter.addAll(incomeCategories)
             })
         }
     }
-
 
     fun isLoading(b: Boolean) {
         binding.apply {

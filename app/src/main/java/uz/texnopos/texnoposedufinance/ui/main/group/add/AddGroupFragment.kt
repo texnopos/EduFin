@@ -120,6 +120,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
                     val dialog = CalendarDialog(requireContext())
                     dialog.show()
                     dialog.binding.apply {
+                        cvCalendar.maxDate = System.nanoTime()
                         btnCancel.onClick {
                             dialog.dismiss()
                         }

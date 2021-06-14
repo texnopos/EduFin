@@ -17,14 +17,12 @@ class IncomeCategoryAdapter: BaseAdapter<IncomeCategory, IncomeCategoryAdapter.I
             }
         }
     }
-
     fun onAdded(data: IncomeCategory) {
         val list = models.toMutableList()
         list.add(data)
         models = list
         notifyItemInserted(list.lastIndex)
     }
-
     fun onModified(data: IncomeCategory) {
         val prev = models.find { it.id == data.id }!!
         val index = models.indexOf(prev)
@@ -33,7 +31,6 @@ class IncomeCategoryAdapter: BaseAdapter<IncomeCategory, IncomeCategoryAdapter.I
         models = list
         notifyItemChanged(index)
     }
-
     fun onRemoved(data: IncomeCategory) {
         val index = models.indexOf(data)
         val list = models.toMutableList()
@@ -41,7 +38,6 @@ class IncomeCategoryAdapter: BaseAdapter<IncomeCategory, IncomeCategoryAdapter.I
         models = list
         notifyItemRemoved(index)
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncomeCategoryVH {
         val itemView = parent.inflate(R.layout.item_category)
         val binding = ItemCategoryBinding.bind(itemView)

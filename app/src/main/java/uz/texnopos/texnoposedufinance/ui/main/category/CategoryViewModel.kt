@@ -23,7 +23,6 @@ class CategoryViewModel(private val helper: CategoryHelper) : ViewModel() {
         }
         )
     }
-
     private val _addExpenseCategory: MutableLiveData<Resource<ExpenseCategory>> = MutableLiveData()
     val addExpenseCategory: LiveData<Resource<ExpenseCategory>>
         get() = _addExpenseCategory
@@ -72,5 +71,4 @@ class CategoryViewModel(private val helper: CategoryHelper) : ViewModel() {
             }
         )
     }
-
 }
