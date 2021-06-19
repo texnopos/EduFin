@@ -4,9 +4,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -15,6 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.ext.android.bind
@@ -31,12 +34,19 @@ import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 
 class AdditionFragment: BottomSheetDialogFragment(){
+    private var savedViewInstance: View? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.bottom_sheet_add, container, false)
+        return if (savedInstanceState != null) {
+            savedViewInstance
+        } else {
+            savedViewInstance =
+                inflater.inflate(R.layout.bottom_sheet_add, container, false)
+            savedViewInstance
+        }
     }
 
     private lateinit var binding: BottomSheetAddBinding
@@ -44,7 +54,6 @@ class AdditionFragment: BottomSheetDialogFragment(){
     private lateinit var parentNavController: NavController
     private val viewModel: SignInViewModel by viewModel()
     private val mGoogleSignInClient: GoogleSignInClient by inject()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,7 +65,10 @@ class AdditionFragment: BottomSheetDialogFragment(){
                 R.id.nav_host
             )
         }
+
         binding.apply {
+            val bh = BottomSheetBehavior.from(view.rootView)
+            bh.peekHeight = BottomSheetBehavior.PEEK_HEIGHT_AUTO
             teacher.onClick {
                 dismiss()
                 val action = AdditionFragmentDirections.actionNavAdditionToTeacherFragment()

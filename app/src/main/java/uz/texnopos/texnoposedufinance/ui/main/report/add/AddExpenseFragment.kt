@@ -1,4 +1,4 @@
-package uz.texnopos.texnoposedufinance.ui.main.report.expense.add
+package uz.texnopos.texnoposedufinance.ui.main.report.add
 
 
 import android.os.Bundle
@@ -7,9 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
-import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
@@ -17,14 +15,15 @@ import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
-import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddExpenseBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
+import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherAdapter
+import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 import java.util.*
 
-class AddExpenseFragment: BaseFragment(R.layout.fragment_add_expense) {
+class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
     private lateinit var binding: FragmentAddExpenseBinding
     private lateinit var navController: NavController
     private var createdDate: Long = 0
@@ -33,20 +32,18 @@ class AddExpenseFragment: BaseFragment(R.layout.fragment_add_expense) {
     private var category: String = ""
     private val viewModel: ReportsViewModel by viewModel()
     private val ctViewModel: CategoryViewModel by viewModel()
+    private val tViewModel: TeacherViewModel by viewModel()
     private lateinit var actBinding: ActionBarAddBinding
     private val allCategory = mutableListOf<String>()
+    private val allEmployee = mutableListOf<String>()
+    private lateinit var categoryAdapter: ArrayAdapter<String>
+    private lateinit var employeeAdapter: ArrayAdapter<String>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddExpenseBinding.bind(view)
         actBinding = ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
 
-//        if (requireParentFragment().requireActivity() is MainActivity) {
-//            parentNavController = Navigation.findNavController(
-//                requireParentFragment().requireActivity() as
-//                        MainActivity, R.id.nav_host
-//            )
-//        }
         actBinding.apply {
             btnHome.onClick {
                 navController.popBackStack()
@@ -55,7 +52,8 @@ class AddExpenseFragment: BaseFragment(R.layout.fragment_add_expense) {
 
         }
         setUpObservers()
-        val categoryAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allCategory)
+        categoryAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allCategory)
+        employeeAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allEmployee)
         binding.apply {
             etTime.onClick {
                 val dialog = CalendarDialog(requireContext())
@@ -85,12 +83,60 @@ class AddExpenseFragment: BaseFragment(R.layout.fragment_add_expense) {
                 }
             }
             ctViewModel.getAllExpenseCategories()
+            categoryAdapter.clear()
+            actCategory.setAdapter(categoryAdapter)
+            actCategory.setOnItemClickListener { adapterView, _, i, _ ->
+                if (adapterView.getItemAtPosition(i)
+                        .toString() != view.context.getString(R.string.doNotSelected)
+                ) {
+                    category = adapterView.getItemAtPosition(i).toString()
+                    if (category == context?.getString(R.string.salary_x)) {
+                        tilEmployees.visibility(true)
+                        tilEmployees.isEnabled = true
+                        tViewModel.getAllTeachers()
+                        employeeAdapter.clear()
+                        actEmployees.setAdapter(employeeAdapter)
+
+                        actEmployees.setOnItemClickListener { adapterView, _, i, _ ->
+                            if(adapterView.getItemAtPosition(i)
+                                    .toString() != view.context.getString(R.string.doNotSelected)
+                            ) {
+
+                            }
+                            ctViewModel.expenseCategory.value?.data!![i].name
+                        }
+                    }
+                    btnSave.onClick {
+                        val amount = etAmount.text.toString()
+                        note = etNote.text.toString()
+                        if (amount.isNotEmpty() && category != context?.getString(R.string.doNotSelected) && category.isNotEmpty() && time != 0L) {
+                            viewModel.addExpense(
+                                amount = amount.toInt(),
+                                note = note,
+                                category = category,
+                                createdDate = createdDate,
+                                date = time
+                            )
+                        } else {
+                            if (amount.isEmpty()) etAmount.error =
+                                context?.getString(R.string.fillField)
+                            if (time == 0L) toastLNCenter(context?.getString(R.string.doNotSelectedTime))
+                            if (category == context?.getString(R.string.doNotSelected) && category.isEmpty())
+                                toastLNCenter(context?.getString(R.string.doNotSelectedCategory))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUpObservers() {
+        binding.apply {
             ctViewModel.expenseCategory.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> loading.visibility(true)
                     ResourceState.SUCCESS -> {
                         loading.visibility(false)
-                        categoryAdapter.clear()
                         categoryAdapter.addAll(it.data!!.map { e -> e.name })
                     }
                     ResourceState.ERROR -> {
@@ -99,42 +145,31 @@ class AddExpenseFragment: BaseFragment(R.layout.fragment_add_expense) {
                     }
                 }
             })
-            actCategory.setAdapter(categoryAdapter)
-            actCategory.setOnItemClickListener { adapterView, _, i, _ ->
-                category = if (adapterView.getItemAtPosition(i)
-                        .toString() != view.context.getString(R.string.doNotSelected)
-                ) {
-                    ctViewModel.expenseCategory.value?.data!![i].name
-                } else ""
-            }
-            btnSave.onClick {
-                val amount = etAmount.text.toString()
-                note = etNote.text.toString()
-                if(amount.isNotEmpty() && category != context?.getString(R.string.doNotSelected) && category.isNotEmpty() && time != 0L){
-                    viewModel.addExpense(amount = amount.toInt(), note = note, category = category, createdDate = createdDate, date = time)
+            tViewModel.teacherList.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.LOADING -> loading.visibility(true)
+                    ResourceState.SUCCESS -> {
+                        loading.visibility(false)
+                        employeeAdapter.addAll(it.data!!.map { e -> e.name })
+                    }
+                    ResourceState.ERROR -> {
+                        loading.visibility(false)
+                        toastLN(it.message)
+                    }
                 }
-                else{
-                    if(amount.isEmpty()) etAmount.error = context?.getString(R.string.fillField)
-                    if(time == 0L) toastLNCenter(context?.getString(R.string.doNotSelectedTime))
-                    if(category == context?.getString(R.string.doNotSelected) && category.isEmpty())
-                        toastLNCenter(context?.getString(R.string.doNotSelectedCategory))
-                }
-            }
-        }
-    }
-    private fun setUpObservers(){
-        binding.apply {
+            })
+
             viewModel.expense.observe(viewLifecycleOwner, Observer {
-                when(it.status){
-                    ResourceState.LOADING ->{
+                when (it.status) {
+                    ResourceState.LOADING -> {
                         isLoading(true)
                     }
-                    ResourceState.SUCCESS ->{
+                    ResourceState.SUCCESS -> {
                         isLoading(false)
                         toastLN(context?.getString(R.string.added_successfully))
                         navController.popBackStack()
                     }
-                    ResourceState.ERROR ->{
+                    ResourceState.ERROR -> {
                         toastLN(it.message)
                         isLoading(false)
                     }
@@ -142,17 +177,17 @@ class AddExpenseFragment: BaseFragment(R.layout.fragment_add_expense) {
             })
         }
     }
-    fun isLoading(b: Boolean){
+
+    fun isLoading(b: Boolean) {
         binding.apply {
-            if(b){
+            if (b) {
                 etAmount.enabled(!b)
                 loading.visibility(b)
                 etNote.enabled(!b)
                 etTime.enabled(!b)
                 actCategory.enabled(!b)
                 btnSave.enabled(!b)
-            }
-            else{
+            } else {
                 tilAmount.enabled(b)
                 loading.visibility(!b)
                 tilNote.enabled(b)

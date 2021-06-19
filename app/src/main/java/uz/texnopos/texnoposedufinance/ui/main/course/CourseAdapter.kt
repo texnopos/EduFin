@@ -72,10 +72,8 @@ class CourseAdapter : BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
                 cvGroups.visibility(false)
                 line.visibility(false)
                 tvCourseName.text = model.name
-                tvGroupCount.text =
-                    root.context.getString(R.string.group_count, model.groups.size.toString())
-                tvPupilsCount.text =
-                    root.context.getString(R.string.period, model.duration)
+                tvGroupCount.text = root.context.getString(R.string.group_count, model.groups.size.toString())
+                tvPupilsCount.text = root.context.getString(R.string.period, model.duration)
                 rlLayout.setBackgroundResource(R.drawable.shape_teachers)
 
                 rlLayout.onClick {

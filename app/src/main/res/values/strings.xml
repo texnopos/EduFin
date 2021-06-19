@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TexnoPOS EDU Finance</string>
+    <string name="app_name">EduFin</string>
     <string name="enter_your_email_address">Введите ваш адрес электронной почты</string>
     <string name="enter_your_password">Введите свой пароль</string>
     <string name="confirm_your_password">Подтвердите ваш пароль</string>
@@ -125,9 +125,10 @@
     <string name="categoryName">Названия категория</string>
     <string name="incomeCategoryName">Название категории дохода</string>
     <string name="expenseCategoryName">Название категории расходов</string>
-    <string name="rent">аренда</string>
-    <string name="salary_x">зарплата</string>
-    <string name="course_pay">взнос</string>
+    <string name="rent">Аренда</string>
+    <string name="salary_x">Зарплата</string>
+    <string name="course_pay">Взнос</string>
+    <string name="course_pay_min">взнос</string>
     <string name="categories_added">Категории успешно добавлены</string>
     <string name="open_app">Приложение успешно открылось</string>
     <string name="enterMoney">Введите сумму</string>
@@ -145,4 +146,10 @@
     <string name="toText">По %1$s</string>
     <string name="sort">Фильтр</string>
     <string name="selectOtherDate">Вы должны выбрать другую дату!</string>
+    <string name="add_salary">Добавить зарплату</string>
+    <string name="reportCategory">Категория: %1$s</string>
+    <string name="trans">%1$d Транзакций</string>
+    <string name="amount">%1$d Сум</string>
+    <string name="amountIncomes">+ %1$d Сум</string>
+    <string name="amountExpenses">- %1$d Сум</string>
 </resources>

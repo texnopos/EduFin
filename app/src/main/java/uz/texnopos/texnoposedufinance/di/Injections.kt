@@ -2,7 +2,6 @@ package uz.texnopos.texnoposedufinance.di
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
@@ -32,7 +31,6 @@ import uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoAdapter
 import uz.texnopos.texnoposedufinance.ui.main.info.InfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
-import uz.texnopos.texnoposedufinance.ui.main.report.income.IncomeViewModel
 import uz.texnopos.texnoposedufinance.ui.main.student.StudentAdapter
 import uz.texnopos.texnoposedufinance.ui.main.student.StudentsViewModel
 import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
@@ -90,7 +88,6 @@ val helperModule = module {
     single { GroupHelper(get(), get()) }
     single { NetworkHelper(get(), get()) }
     single { StudentHelper(get(), get()) }
-    single { IncomeHelper(get(), get()) }
     single { PaymentHelper(get(), get()) }
     single { InfoHelper(get(), get()) }
     single { CategoryHelper(get(), get()) }
@@ -108,10 +105,9 @@ val viewModelModule = module {
     viewModel { GroupInfoViewModel(get()) }
     viewModel { CreateStudentViewModel(get(), get()) }
     viewModel { StudentsViewModel(get(), get()) }
-    viewModel { IncomeViewModel(get()) }
     viewModel { InfoViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
-    viewModel { ReportsViewModel(get()) }
+    viewModel { ReportsViewModel(get(), get()) }
 }
 val adapterModule = module {
     single { CourseAdapter() }

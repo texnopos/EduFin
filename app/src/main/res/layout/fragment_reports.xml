@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/actionBar"
-        layout="@layout/action_bar"
+        layout="@layout/action_bar_report"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -40,6 +40,7 @@
         android:padding="@dimen/margin_middle"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_standard"
+        android:textStyle="italic"
         app:layout_constraintEnd_toStartOf="@id/to"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sort"
@@ -54,6 +55,7 @@
         android:padding="@dimen/margin_middle"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_standard"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/from"
         app:layout_constraintTop_toBottomOf="@id/sort"
@@ -106,19 +108,6 @@
                 tools:ignore="SpUsage" />
 
             <TextView
-                android:id="@+id/tvMinus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_middle"
-                android:paddingHorizontal="@dimen/margin_small"
-                android:text="@string/minus"
-                android:textColor="@color/red"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/icExpenses"
-                tools:ignore="SpUsage" />
-
-            <TextView
                 android:id="@+id/amountExpenses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,19 +115,7 @@
                 android:paddingHorizontal="@dimen/margin_small"
                 android:textColor="@color/red"
                 android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toEndOf="@id/tvMinus"
-                app:layout_constraintTop_toBottomOf="@id/icExpenses"
-                tools:ignore="SpUsage" />
-
-            <TextView
-                android:id="@+id/tvSwm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_middle"
-                android:text="@string/swm"
-                android:textColor="@color/red"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toEndOf="@id/amountExpenses"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/icExpenses"
                 tools:ignore="SpUsage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -173,77 +150,116 @@
                 tools:ignore="SpUsage" />
 
             <TextView
-                android:id="@+id/tvPlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_middle"
-                android:paddingHorizontal="@dimen/margin_small"
-                android:text="@string/plus"
-                android:textColor="@color/green"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/icIncomes"
-                tools:ignore="SpUsage" />
-
-            <TextView
                 android:id="@+id/amountIncomes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_middle"
                 android:textColor="@color/green"
                 android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toEndOf="@id/tvPlus"
-                app:layout_constraintTop_toBottomOf="@id/icIncomes"
-                tools:ignore="SpUsage" />
-
-            <TextView
-                android:id="@+id/tvIncSwm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_middle"
-                android:paddingHorizontal="@dimen/margin_small"
-                android:text="@string/swm"
-                android:textColor="@color/green"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toEndOf="@id/amountIncomes"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/icIncomes"
                 tools:ignore="SpUsage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/margin_middle"
-        android:layout_marginTop="@dimen/margin_middle"
-        app:cardCornerRadius="@dimen/margin_large"
+        android:layout_margin="@dimen/margin_middle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llReports"
-        android:layout_marginBottom="@dimen/margin_standard_middle">
+        app:layout_constraintTop_toBottomOf="@id/llReports">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <com.anychart.AnyChartView
-                android:id="@+id/anyChartView"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_standard"
-                />
-
-            <ProgressBar
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/margin_middle"
+                android:layout_marginVertical="@dimen/margin_middle"
+                app:cardCornerRadius="@dimen/margin_large"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/expenseAnyChartView"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvExpense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_standard"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/expenseAnyChartView" />
+
+                    <ProgressBar
+                        android:id="@+id/loading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/margin_middle"
+                android:layout_marginVertical="@dimen/margin_middle"
+                app:cardCornerRadius="@dimen/margin_large"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/incomeAnyChartView"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvIncome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_standard"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/incomeAnyChartView" />
+
+                    <ProgressBar
+                        android:id="@+id/incomeLoading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

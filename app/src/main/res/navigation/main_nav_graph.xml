@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/nav_report">
+    app:startDestination="@id/nav_report"
+    >
 
     <fragment
         android:id="@+id/nav_course"
@@ -71,7 +72,8 @@
         android:id="@+id/nav_teacher"
         android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"
         android:label="TeacherFragment"
-        tools:layout="@layout/fragment_teachers"/>
+        tools:layout="@layout/fragment_teachers"
+        />
     <fragment
         android:id="@+id/nav_student"
         android:name="uz.texnopos.texnoposedufinance.ui.main.student.StudentsFragment"

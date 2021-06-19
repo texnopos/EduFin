@@ -8,6 +8,7 @@ import retrofit2.http.Query
 import uz.texnopos.texnoposedufinance.data.model.*
 import uz.texnopos.texnoposedufinance.data.model.response.ParticipantResponse
 import uz.texnopos.texnoposedufinance.data.model.response.PostResponse
+import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
 
 interface ApiInterface {
     @GET("getAllCourses")
@@ -39,4 +40,11 @@ interface ApiInterface {
 
     @POST("checkContract")
     fun checkContract(@Body data: ContractRequest): Call<PostResponse>
+
+    @GET("report")
+    fun getReports(
+        @Query("orgId") orgId: String,
+        @Query("fromDate") fromDate: Long,
+        @Query("toDate") toDate: Long
+    ): Call<ReportResponse>
 }

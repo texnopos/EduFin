@@ -7,6 +7,7 @@ import retrofit2.Response
 import uz.texnopos.texnoposedufinance.data.model.*
 import uz.texnopos.texnoposedufinance.data.model.response.ParticipantResponse
 import uz.texnopos.texnoposedufinance.data.model.response.PostResponse
+import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
 
 class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) {
     private val orgId = auth.currentUser!!.uid
@@ -188,4 +189,29 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
             }
         })
     }
+
+    fun getReports(
+        fromDate: Long,
+        toDate: Long,
+        onSuccess: (ReportResponse) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
+        val call: Call<ReportResponse> = apiInterface.getReports(orgId, fromDate, toDate)
+        call.enqueue(object : Callback<ReportResponse> {
+            override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
+                onFailure.invoke(t.localizedMessage!!)
+            }
+
+            override fun onResponse(
+                call: Call<ReportResponse>,
+                response: Response<ReportResponse>
+            ) {
+                response.body().let {
+                    onSuccess.invoke(it!!)
+                }
+            }
+
+        })
+    }
+
 }

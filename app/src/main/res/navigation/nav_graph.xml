@@ -207,13 +207,13 @@
     </fragment>
     <fragment
         android:id="@+id/addIncomeFragment"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.report.income.add.AddIncomeFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.report.add.AddIncomeFragment"
         android:label="AddIncomeFragment"
         tools:layout="@layout/fragment_add_income"/>
 
     <fragment
         android:id="@+id/addExpenseFragment"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.report.expense.add.AddExpenseFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.report.add.AddExpenseFragment"
         android:label="AddExpenseFragment"
         tools:layout="@layout/fragment_add_expense"/>
 </navigation>

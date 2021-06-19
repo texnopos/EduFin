@@ -1,9 +1,8 @@
-package uz.texnopos.texnoposedufinance.ui.main.report.income.add
+package uz.texnopos.texnoposedufinance.ui.main.report.add
 
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
@@ -20,7 +19,6 @@ import uz.texnopos.texnoposedufinance.data.model.CoursePayments
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddIncomeBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
-import uz.texnopos.texnoposedufinance.ui.main.category.income.IncomeCategoryAdapter
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
@@ -57,8 +55,6 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
     private lateinit var groupAdapter: ArrayAdapter<String>
     private lateinit var participantAdapter: ArrayAdapter<String>
     private lateinit var actBinding: ActionBarAddBinding
-    private val adapter = IncomeCategoryAdapter()
-    private val incomeCategories = mutableListOf<String>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddIncomeBinding.bind(view)
@@ -111,9 +107,11 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                 actCategory.showDropDown()
             }
             actCategory.setOnItemClickListener { adapterView, _, i, _ ->
-                if (adapterView.getItemAtPosition(i).toString() != view.context.getString(R.string.doNotSelected)) {
-                    category = incomeCategories[i]
-                    if (category == context?.getString(R.string.course_pay)) {
+                if (adapterView.getItemAtPosition(i)
+                        .toString() != view.context.getString(R.string.doNotSelected)
+                ) {
+                    category = adapterView.getItemAtPosition(i).toString()
+                    if (category == context?.getString(R.string.course_pay) || category == context?.getString(R.string.course_pay_min)) {
                         tilCourse.visibility(true)
                         tilGroup.visibility(true)
                         tilParticipant.visibility(true)
@@ -123,7 +121,6 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                         courseVM.getAllCourses()
                         courseAdapter.clear()
                         actCourse.setAdapter(courseAdapter)
-
                         actCourse.setOnItemClickListener { adapterView, _, i, _ ->
                             if (adapterView.getItemAtPosition(i)
                                     .toString() != view.context.getString(R.string.doNotSelected)
@@ -133,40 +130,40 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                                 size = courseVM.courseList.value?.data!![i].groups.size
                                 position = i
                                 tilGroup.visibility(true)
-                                groupAdapter.clear()
-                                if(size == 0) {
-                                    /*groupId = ""
+                                if (size <= 0) {
+                                    tilGroup.isEnabled = false
+                                    tilParticipant.isEnabled = false
                                     group = ""
+                                    groupId = ""
                                     participant = ""
-                                    participantId = ""*/
-                                }
-                                actGroup.setAdapter(groupAdapter)
-                                courseVM.courseList.value?.data!![i].groups.forEach { i ->
-                                    groupAdapter.add(i.name)
-                                }
-                                actGroup.setOnItemClickListener { adapterView, _, i, _ ->
-                                    if (adapterView.getItemAtPosition(i)
-                                            .toString() != view.context.getString(R.string.doNotSelected)
-                                    ) {
-                                        group =
-                                            courseVM.courseList.value?.data!![position].groups[i].name
-                                        groupId =
-                                            courseVM.courseList.value?.data!![position].groups[i].id
-                                        tilParticipant.visibility(true)
-                                        participantAdapter.clear()
-                                        if (pSize == 0) {
-                                            actParticipant.setText(view.context.getString(R.string.doNotSelected))
-                                        }
-                                        groupInfoVM.getGroupParticipants(groupId)
-                                        actParticipant.setAdapter(participantAdapter)
-                                        actParticipant.setOnItemClickListener { adapterView, _, i, _ ->
-                                            if (adapterView.getItemAtPosition(i)
-                                                    .toString() != view.context.getString(R.string.doNotSelected)
-                                            ) {
-                                                participant =
-                                                    groupInfoVM.participantList.value?.data!![i].student.name
-                                                participantId =
-                                                    groupInfoVM.participantList.value?.data!![i].participant.id
+                                    participantId = ""
+                                } else {
+                                    tilGroup.isEnabled = true
+                                    tilParticipant.isEnabled = true
+                                    groupAdapter.clear()
+                                    actGroup.setAdapter(groupAdapter)
+                                    courseVM.courseList.value?.data!![i].groups.forEach { i ->
+                                        groupAdapter.add(i.name)
+                                    }
+                                    actGroup.setOnItemClickListener { adapterView, _, i, _ ->
+                                        if (adapterView.getItemAtPosition(i)
+                                                .toString() != view.context.getString(R.string.doNotSelected)
+                                        ) {
+                                            group = courseVM.courseList.value?.data!![position].groups[i].name
+                                            groupId = courseVM.courseList.value?.data!![position].groups[i].id
+                                            tilParticipant.visibility(true)
+                                            participantAdapter.clear()
+                                            groupInfoVM.getGroupParticipants(groupId)
+                                            actParticipant.setAdapter(participantAdapter)
+                                            actParticipant.setOnItemClickListener { adapterView, _, i, _ ->
+                                                if (adapterView.getItemAtPosition(i)
+                                                        .toString() != view.context.getString(R.string.doNotSelected)
+                                                ) {
+                                                    participant =
+                                                        groupInfoVM.participantList.value?.data!![i].student.name
+                                                    participantId =
+                                                        groupInfoVM.participantList.value?.data!![i].participant.id
+                                                }
                                             }
                                         }
                                     }
@@ -293,22 +290,15 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                     }
                     RealtimeChangesResourceState.ADDED -> {
                         loading.visibility(false)
-                        incomeCategories.add(it.data!!.name)
-                    }
-                    RealtimeChangesResourceState.MODIFIED -> {
-                        loading.visibility(false)
-                        adapter.onModified(it.data!!)
-                    }
-                    RealtimeChangesResourceState.REMOVED -> {
-                        loading.visibility(false)
-                        adapter.onRemoved(it.data!!)
+                        categoryAdapter.add(it.data!!.name)
                     }
                     RealtimeChangesResourceState.ERROR -> {
                         loading.visibility(false)
                         toastLN(it.message)
                     }
+                    else -> {
+                    }
                 }
-                categoryAdapter.addAll(incomeCategories)
             })
         }
     }
