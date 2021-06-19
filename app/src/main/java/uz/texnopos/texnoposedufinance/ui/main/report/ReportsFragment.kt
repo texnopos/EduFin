@@ -3,23 +3,19 @@ package uz.texnopos.texnoposedufinance.ui.main.report
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
-import com.anychart.charts.Pie
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
-import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.data.AllReports
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
-import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.ActionBarReportBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentReportsBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
+import uz.texnopos.texnoposedufinance.ui.main.report.income.IncomeFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,10 +26,7 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
     var toLong = 0L
     var fromLong = 0L
     private val viewModel: ReportsViewModel by viewModel()
-    lateinit var pie: Pie
-    lateinit var pie2: Pie
-    private val incomeAdapter = ReportsAdapter()
-    private val expenseAdapter = ReportsAdapter()
+    private lateinit var adapter: ViewPagerAdapter
     var allIncome = 0
     var allExpense = 0
 
@@ -50,30 +43,24 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
         fromLong = toLong - day.toInt() * 3600 * 1000 * 24
         binding = FragmentReportsBinding.bind(view)
         actBinding = ActionBarReportBinding.bind(view)
+        adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle, fromLong, toLong, this)
         actBinding.apply {
             tvTitle.text = context?.getString(R.string.reports)
-            tvAmount.text = context?.getString(R.string.amount, allIncome - allExpense)
         }
-        pie = AnyChart.pie()
-        pie2 = AnyChart.pie()
-        viewModel.getReports(fromLong, toLong)
-        setUpObserversExpense()
-
         binding.apply {
-            amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
-            amountExpenses.text = context?.getString(R.string.amountExpenses, allExpense)
             to.text = context?.getString(R.string.toText, toString)
             from.text = context?.getString(R.string.fromText, fromString)
-            rcvExpense.adapter = expenseAdapter
-            rcvIncome.adapter = incomeAdapter
             val cal = Calendar.getInstance()
             currentDate = Calendar.getInstance().timeInMillis
             if ((requireParentFragment().requireParentFragment() as MainFragment).temp == 0) {
                 onExpense()
+                //amountExpenses.text = context?.getString(R.string.amountExpenses, allExpense)
             }
             if ((requireParentFragment().requireParentFragment() as MainFragment).temp == 1) {
                 onIncome()
+                //amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
             }
+            //actBinding.tvAmount.text = context?.getString(R.string.amount, allIncome - allExpense)
             from.onClick {
                 val dialog = CalendarDialog(requireContext())
                 dialog.show()
@@ -128,93 +115,22 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
                     }
                 }
             }
-
-            clExpense.onClick {
-                (requireParentFragment().requireParentFragment() as MainFragment).temp = 0
-                onExpense()
-            }
-            clIncome.onClick {
-                (requireParentFragment().requireParentFragment() as MainFragment).temp = 1
-                onIncome()
-            }
-        }
-    }
-
-    private fun setUpObserversExpense() {
-        val expenseList = mutableListOf<MyResponse>()
-        val eList: MutableList<DataEntry> = ArrayList()
-        val expenses = mutableListOf<AllReports>()
-
-        val incomeList = mutableListOf<MyResponse>()
-        val iList: MutableList<DataEntry> = ArrayList()
-        val incomes = mutableListOf<AllReports>()
-        binding.apply {
-            viewModel.report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                when (it.status) {
-                    ResourceState.LOADING -> {
-
+            vpReports.adapter = adapter
+            vpReports.setPageTransformer { _, _ ->
+                when (vpReports.currentItem) {
+                    0 -> {
+                        (requireParentFragment().requireParentFragment() as MainFragment).temp = 0
+                        onExpense()
                     }
-                    ResourceState.SUCCESS -> {
-                        it.data!!.expenseCategories.forEach { e ->
-                            expenseList.add(e)
-                        }
-                        expenseList.forEach { e ->
-                            var sum = 0
-                            val category = e.name
-                            for (j in e.expenses) {
-                                sum += j.amount
-                            }
-                            eList.add(ValueDataEntry(category, sum))
-                            expenses.add(
-                                AllReports(
-                                    category = category,
-                                    amount = sum,
-                                    trans = e.expenses.size
-                                )
-                            )
-                            allExpense += sum
-                        }
-                        expenseAdapter.models = expenses
-                        pie.data(eList)
-                        pie.title(view?.context!!.getString(R.string.s_expenses))
-                        binding.expenseAnyChartView.setChart(pie)
-
-                        it.data.incomeCategories.forEach { i ->
-                            incomeList.add(i)
-                        }
-                        incomeList.forEach { i ->
-                            var sum = 0
-                            val category = i.name
-                            for (j in i.incomes) {
-                                sum += j.amount
-                            }
-                            iList.add(ValueDataEntry(category, sum))
-                            incomes.add(
-                                AllReports(
-                                    category = category,
-                                    amount = sum,
-                                    trans = i.incomes.size
-                                )
-                            )
-                            allIncome += sum
-                        }
-                        incomeAdapter.models = incomes
-                        pie2.data(iList)
-                        pie2.title(view?.context!!.getString(R.string.s_incomes))
-                        binding.incomeAnyChartView.setChart(pie2)
-                        amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
-                        amountExpenses.text = context?.getString(R.string.amountExpenses, allExpense)
-                        actBinding.tvAmount.text = context?.getString(R.string.amount, allIncome - allExpense)
-                    }
-                    ResourceState.ERROR -> {
-                        toastLN(it.message)
+                    else -> {
+                        (requireParentFragment().requireParentFragment() as MainFragment).temp = 1
+                        onIncome()
                     }
                 }
-
-            })
+            }
+            amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
         }
     }
-
 
     private fun onIncome() {
         binding.apply {
@@ -222,8 +138,6 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
             icIncomes.setImageResource(R.drawable.ic_incomes_selected)
             clIncome.setBackgroundResource(R.drawable.shape_green)
             clExpense.setBackgroundResource(R.drawable.shape_form)
-            cardView2.visibility(true)
-            cardView.visibility(false)
         }
     }
 
@@ -233,8 +147,6 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
             icIncomes.setImageResource(R.drawable.ic_incomes)
             clExpense.setBackgroundResource(R.drawable.shape_red)
             clIncome.setBackgroundResource(R.drawable.shape_form)
-            cardView.visibility(true)
-            cardView2.visibility(false)
         }
     }
 }

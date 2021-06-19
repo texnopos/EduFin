@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/nav_report"
-    >
+    app:startDestination="@id/nav_addition">
 
     <fragment
         android:id="@+id/nav_course"
@@ -37,11 +36,11 @@
             android:name="course"
             app:argType="string" />
     </fragment>
-    <dialog
+    <fragment
         android:id="@+id/nav_addition"
         android:name="uz.texnopos.texnoposedufinance.ui.main.addition.AdditionFragment"
         android:label="AdditionFragment"
-        tools:layout="@layout/bottom_sheet_add">
+        tools:layout="@layout/fragment_additions">
         <action
             android:id="@+id/action_nav_addition_to_teacherFragment"
             app:destination="@id/nav_teacher"
@@ -67,7 +66,7 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true"/>
-    </dialog>
+    </fragment>
     <fragment
         android:id="@+id/nav_teacher"
         android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"

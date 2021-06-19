@@ -1,6 +1,7 @@
 package uz.texnopos.texnoposedufinance.ui.main.report.add
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -21,6 +22,7 @@ import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherAdapter
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
@@ -38,12 +40,13 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
     private val allEmployee = mutableListOf<String>()
     private lateinit var categoryAdapter: ArrayAdapter<String>
     private lateinit var employeeAdapter: ArrayAdapter<String>
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddExpenseBinding.bind(view)
         actBinding = ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
-
+        val sdf = SimpleDateFormat("dd.MM.yyyy")
         actBinding.apply {
             btnHome.onClick {
                 navController.popBackStack()
@@ -55,10 +58,13 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
         categoryAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allCategory)
         employeeAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allEmployee)
         binding.apply {
+            val cl = Calendar.getInstance()
+            createdDate = cl.timeInMillis
+            time = cl.timeInMillis
+            etTime.setText(sdf.format(cl.time).toString())
             etTime.onClick {
                 val dialog = CalendarDialog(requireContext())
                 dialog.show()
-                createdDate = Calendar.getInstance().timeInMillis
                 dialog.binding.apply {
                     btnYes.onClick {
                         val y = cvCalendar.year
@@ -69,11 +75,10 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
                         var dStr = d.toString()
                         if (dStr.length != 2) dStr = "0$dStr"
                         if (mStr.length != 2) mStr = "0$mStr"
-                        val cal = Calendar.getInstance()
-                        cal.set(Calendar.DAY_OF_MONTH, d)
-                        cal.set(Calendar.MONTH, m)
-                        cal.set(Calendar.YEAR, y)
-                        time = cal.timeInMillis
+                        cl.set(Calendar.DAY_OF_MONTH, d)
+                        cl.set(Calendar.MONTH, m)
+                        cl.set(Calendar.YEAR, y)
+                        time = cl.timeInMillis
                         etTime.setText("$dStr.$mStr.$yStr")
                         dialog.dismiss()
                     }

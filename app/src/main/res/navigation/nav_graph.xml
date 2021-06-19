@@ -95,6 +95,9 @@
         <action
             android:id="@+id/action_mainFragment_to_addExpenseFragment"
             app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_salaryFragment"
+            app:destination="@id/salaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -216,4 +219,9 @@
         android:name="uz.texnopos.texnoposedufinance.ui.main.report.add.AddExpenseFragment"
         android:label="AddExpenseFragment"
         tools:layout="@layout/fragment_add_expense"/>
+    <fragment
+        android:id="@+id/salaryFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.salary.SalaryFragment"
+        android:label="SalaryFragment"
+        tools:layout="@layout/fragment_salary"/>
 </navigation>

@@ -23,6 +23,7 @@ import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
@@ -65,7 +66,7 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
         courseAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allCourse)
         participantAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allParticipant)
         groupAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allGroup)
-
+        val sdf = SimpleDateFormat("dd.MM.yyyy")
         actBinding.apply {
             btnHome.onClick {
                 navController.popBackStack()
@@ -73,10 +74,13 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
             actionBarTitle.text = context?.getString(R.string.addIncome)
         }
         binding.apply {
+            val cl = Calendar.getInstance()
+            createdDate = cl.timeInMillis
+            time = cl.timeInMillis
+            etTime.setText(sdf.format(cl.time).toString())
             etTime.onClick {
                 val dialog = CalendarDialog(requireContext())
                 dialog.show()
-                createdDate = Calendar.getInstance().timeInMillis
                 dialog.binding.apply {
                     btnYes.onClick {
                         val y = cvCalendar.year

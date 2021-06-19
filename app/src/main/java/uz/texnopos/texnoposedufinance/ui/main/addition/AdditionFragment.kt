@@ -1,55 +1,25 @@
 package uz.texnopos.texnoposedufinance.ui.main.addition
 
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.viewbinding.ViewBinding
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
-import uz.texnopos.texnoposedufinance.databinding.BottomSheetAddBinding
-import uz.texnopos.texnoposedufinance.databinding.DialogCalendarBinding
-import uz.texnopos.texnoposedufinance.databinding.FragmentAdditionBinding
+import uz.texnopos.texnoposedufinance.databinding.*
 import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 
-class AdditionFragment: BottomSheetDialogFragment(){
-    private var savedViewInstance: View? = null
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return if (savedInstanceState != null) {
-            savedViewInstance
-        } else {
-            savedViewInstance =
-                inflater.inflate(R.layout.bottom_sheet_add, container, false)
-            savedViewInstance
-        }
-    }
+class AdditionFragment: BaseFragment(R.layout.fragment_additions){
 
-    private lateinit var binding: BottomSheetAddBinding
+    private lateinit var binding: FragmentAdditionsBinding
+    private lateinit var actBinding: ActionBarBinding
     private lateinit var navController: NavController
     private lateinit var parentNavController: NavController
     private val viewModel: SignInViewModel by viewModel()
@@ -57,37 +27,38 @@ class AdditionFragment: BottomSheetDialogFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = BottomSheetAddBinding.bind(view)
-        navController = findNavController(requireActivity(), R.id.main_nav_host)
+        binding = FragmentAdditionsBinding.bind(view)
+        navController = Navigation.findNavController(view)
+        actBinding = ActionBarBinding.bind(view)
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(
                 requireParentFragment().requireActivity() as MainActivity,
                 R.id.nav_host
             )
         }
-
+        actBinding.apply {
+            tvTitle.text = context?.getString(R.string.addition)
+        }
         binding.apply {
-            val bh = BottomSheetBehavior.from(view.rootView)
-            bh.peekHeight = BottomSheetBehavior.PEEK_HEIGHT_AUTO
             teacher.onClick {
-                dismiss()
                 val action = AdditionFragmentDirections.actionNavAdditionToTeacherFragment()
                 navController.navigate(action)
+                navController.popBackStack()
             }
             student.onClick {
-                dismiss()
                 val action = AdditionFragmentDirections.actionNavAdditionToStudentsFragment()
                 navController.navigate(action)
+                navController.popBackStack()
             }
             info.onClick {
-                dismiss()
                 val action = AdditionFragmentDirections.actionNavAdditionToInfoFragment()
                 navController.navigate(action)
+                navController.popBackStack()
             }
             category.onClick {
-                dismiss()
                 val action = AdditionFragmentDirections.actionNavAdditionToCategoryFragment()
                 navController.navigate(action)
+                navController.popBackStack()
             }
             signOut.onClick {
                 val dialog = AlertDialog.Builder(requireContext())
@@ -105,6 +76,10 @@ class AdditionFragment: BottomSheetDialogFragment(){
                     d.dismiss()
                 }
                 dialog.show()
+            }
+            salary.onClick {
+                val action = MainFragmentDirections.actionMainFragmentToSalaryFragment()
+                parentNavController.navigate(action)
             }
         }
     }
