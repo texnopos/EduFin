@@ -30,7 +30,7 @@ import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoAdapter
 import uz.texnopos.texnoposedufinance.ui.main.info.InfoViewModel
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
+import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 import uz.texnopos.texnoposedufinance.ui.main.student.StudentAdapter
 import uz.texnopos.texnoposedufinance.ui.main.student.StudentsViewModel
 import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
@@ -107,7 +107,7 @@ val viewModelModule = module {
     viewModel { StudentsViewModel(get(), get()) }
     viewModel { InfoViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
-    viewModel { ReportsViewModel(get(), get()) }
+    viewModel { ReportViewModel(get(), get()) }
 }
 val adapterModule = module {
     single { CourseAdapter() }

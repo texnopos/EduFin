@@ -1,9 +1,9 @@
 package uz.texnopos.texnoposedufinance.ui.main.report.expense
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.lifecycle.MutableLiveData
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
@@ -11,27 +11,28 @@ import com.anychart.charts.Pie
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.Resource
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.AllReports
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
+import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
 import uz.texnopos.texnoposedufinance.databinding.ItemExpenseBinding
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportsAdapter
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsFragment
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
+import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 
-class ExpenseFragment(private val fromDate: Long, private val toDate: Long, private val fr: ReportsFragment): BaseFragment(R.layout.item_expense){
+class ExpenseFragment: BaseFragment(R.layout.item_expense){
     private val expenseAdapter = ReportsAdapter()
     private lateinit var pie: Pie
-    private val viewModel: ReportsViewModel by viewModel()
+    private val viewModel: ReportViewModel by viewModel()
     lateinit var binding: ItemExpenseBinding
     var allExpense = 0
+    var report: MutableLiveData<Resource<ReportResponse>> = MutableLiveData()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pie = AnyChart.pie()
         super.onViewCreated(view, savedInstanceState)
         binding = ItemExpenseBinding.bind(view)
         setUpObservers()
-        viewModel.getReports(fromDate, toDate)
         binding.apply {
             rcvExpense.adapter = expenseAdapter
         }
@@ -41,10 +42,10 @@ class ExpenseFragment(private val fromDate: Long, private val toDate: Long, priv
         val eList: MutableList<DataEntry> = ArrayList()
         val expenses = mutableListOf<AllReports>()
         binding.apply {
-            viewModel.report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            report.observe(viewLifecycleOwner,  {
                 when (it.status) {
                     ResourceState.LOADING -> {
-                        loading.visibility(true)
+                        loading.isVisible = true
                     }
                     ResourceState.SUCCESS -> {
                         loading.visibility(false)
@@ -71,7 +72,6 @@ class ExpenseFragment(private val fromDate: Long, private val toDate: Long, priv
                         pie.data(eList)
                         pie.title(view?.context!!.getString(R.string.s_expenses))
                         expenseAnyChartView.setChart(pie)
-                        fr.allExpense = allExpense
                         amountExpenses.text = context?.getString(R.string.amountExpenses, allExpense)
                     }
                     ResourceState.ERROR -> {

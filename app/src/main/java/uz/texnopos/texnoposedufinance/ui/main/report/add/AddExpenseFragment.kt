@@ -22,8 +22,7 @@ import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddExpenseBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
-import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherAdapter
+import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,7 +34,7 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
     private var time: Long = 0
     private var note = ""
     private var category: String = ""
-    private val viewModel: ReportsViewModel by viewModel()
+    private val viewModel: ReportViewModel by viewModel()
     private val ctViewModel: CategoryViewModel by viewModel()
     private val tViewModel: TeacherViewModel by viewModel()
     private lateinit var actBinding: ActionBarAddBinding
@@ -106,13 +105,13 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
                         tViewModel.getAllTeachers()
                         employeeAdapter.clear()
                         actEmployees.setAdapter(employeeAdapter)
-                        actEmployees.setOnItemClickListener { adapterView, _, i, _ ->
-                            if(adapterView.getItemAtPosition(i)
+                        actEmployees.setOnItemClickListener { adapterView, _, index, _ ->
+                            if(adapterView.getItemAtPosition(index)
                                     .toString() != view.context.getString(R.string.doNotSelected)
                             ) {
-                                ctViewModel.expenseCategory.value?.data!![i].name
-                                employeeId = ctViewModel.expenseCategory.value?.data!![i].id
+                               employeeId = tViewModel.teacherList.value!!.data!![index].id
                             }
+                            ctViewModel.expenseCategory.value?.data!![i].name
                         }
                     }
                     btnSave.onClick {

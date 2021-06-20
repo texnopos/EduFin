@@ -11,7 +11,7 @@ import uz.texnopos.texnoposedufinance.data.model.response.IncomeRequest
 import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
 import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 
-class ReportsViewModel(private val helper: ReportHelper, private val nHelper: NetworkHelper): ViewModel() {
+class ReportViewModel(private val helper: ReportHelper, private val nHelper: NetworkHelper): ViewModel() {
     private val _income: MutableLiveData<Resource<Report>> = MutableLiveData()
         val income: LiveData<Resource<Report>>
         get() = _income
