@@ -43,49 +43,32 @@
         tools:layout="@layout/fragment_additions">
         <action
             android:id="@+id/action_nav_addition_to_teacherFragment"
-            app:destination="@id/nav_teacher"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true"
-            />
+            app:destination="@id/nav_teacher" />
         <action
-            android:id="@+id/action_nav_addition_to_StudentsFragment"
-            app:destination="@id/nav_student"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_nav_addition_to_infoFragment"
-            app:destination="@id/nav_info"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true"/>
+            android:id="@+id/action_nav_addition_to_studentsFragment"
+            app:destination="@id/nav_student" />
         <action
             android:id="@+id/action_nav_addition_to_categoryFragment"
-            app:destination="@id/nav_category"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/nav_category" />
+        <action
+            android:id="@+id/action_nav_addition_to_infoFragment"
+            app:destination="@id/nav_info" />
     </fragment>
     <fragment
         android:id="@+id/nav_teacher"
         android:name="uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherFragment"
         android:label="TeacherFragment"
-        tools:layout="@layout/fragment_teachers"
-        />
+        tools:layout="@layout/fragment_teachers"/>
     <fragment
         android:id="@+id/nav_student"
         android:name="uz.texnopos.texnoposedufinance.ui.main.student.StudentsFragment"
-        android:label="StudentsFragment"
-        tools:layout="@layout/fragment_students"/>
-    <fragment
-        android:id="@+id/nav_info"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.info.InfoFragment"
-        android:label="InfoFragment"
-        tools:layout="@layout/fragment_info"/>
+        android:label="StudentsFragment" />
     <fragment
         android:id="@+id/nav_category"
         android:name="uz.texnopos.texnoposedufinance.ui.main.category.CategoryFragment"
-        android:label="CategoryFragment"
-        tools:layout="@layout/fragment_category"/>
+        android:label="CategoryFragment" />
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.info.InfoFragment"
+        android:label="InfoFragment" />
 </navigation>

@@ -150,6 +150,7 @@
     <string name="reportCategory">Категория: %1$s</string>
     <string name="trans">%1$d Транзакций</string>
     <string name="amount">%1$d Сум</string>
-    <string name="amountIncomes">+ %1$d Сум</string>
-    <string name="amountExpenses">- %1$d Сум</string>
+    <string name="amountIncomes">Все доходы: %1$d Сум</string>
+    <string name="amountExpenses">Все расходы: %1$d Сум</string>
+    <string name="daySalary">Когда дано?</string>
 </resources>

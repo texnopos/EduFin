@@ -2,7 +2,9 @@ package uz.texnopos.texnoposedufinance.ui.main.report
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -25,7 +27,6 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
     var currentDate = 0L
     var toLong = 0L
     var fromLong = 0L
-    private val viewModel: ReportsViewModel by viewModel()
     private lateinit var adapter: ViewPagerAdapter
     var allIncome = 0
     var allExpense = 0
@@ -43,7 +44,13 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
         fromLong = toLong - day.toInt() * 3600 * 1000 * 24
         binding = FragmentReportsBinding.bind(view)
         actBinding = ActionBarReportBinding.bind(view)
-        adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle, fromLong, toLong, this)
+        adapter = ViewPagerAdapter(
+            requireActivity().supportFragmentManager,
+            lifecycle,
+            fromLong,
+            toLong,
+            this
+        )
         actBinding.apply {
             tvTitle.text = context?.getString(R.string.reports)
         }
@@ -54,13 +61,10 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
             currentDate = Calendar.getInstance().timeInMillis
             if ((requireParentFragment().requireParentFragment() as MainFragment).temp == 0) {
                 onExpense()
-                //amountExpenses.text = context?.getString(R.string.amountExpenses, allExpense)
             }
             if ((requireParentFragment().requireParentFragment() as MainFragment).temp == 1) {
                 onIncome()
-                //amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
             }
-            //actBinding.tvAmount.text = context?.getString(R.string.amount, allIncome - allExpense)
             from.onClick {
                 val dialog = CalendarDialog(requireContext())
                 dialog.show()
@@ -128,7 +132,11 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
                     }
                 }
             }
-            amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
+            var currentAmount = 0
+            if (allExpense != 0 && allIncome != 0) {
+                currentAmount = allIncome - allExpense
+                actBinding.tvAmount.text = context?.getString(R.string.amount, currentAmount)
+            }
         }
     }
 

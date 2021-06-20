@@ -107,18 +107,6 @@
                 app:layout_constraintStart_toEndOf="@id/icExpenses"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpUsage" />
-
-            <TextView
-                android:id="@+id/amountExpenses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_middle"
-                android:paddingHorizontal="@dimen/margin_small"
-                android:textColor="@color/red"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/icExpenses"
-                tools:ignore="SpUsage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -148,17 +136,6 @@
                 android:textSize="@dimen/text_size"
                 app:layout_constraintStart_toEndOf="@id/icIncomes"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="SpUsage" />
-
-            <TextView
-                android:id="@+id/amountIncomes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_middle"
-                android:textColor="@color/green"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/icIncomes"
                 tools:ignore="SpUsage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

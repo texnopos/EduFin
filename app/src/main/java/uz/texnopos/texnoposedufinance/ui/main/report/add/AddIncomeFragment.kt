@@ -1,5 +1,6 @@
 package uz.texnopos.texnoposedufinance.ui.main.report.add
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -16,6 +17,7 @@ import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.CoursePayments
+import uz.texnopos.texnoposedufinance.data.model.response.IncomeRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddIncomeBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
@@ -56,6 +58,8 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
     private lateinit var groupAdapter: ArrayAdapter<String>
     private lateinit var participantAdapter: ArrayAdapter<String>
     private lateinit var actBinding: ActionBarAddBinding
+
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddIncomeBinding.bind(view)
@@ -115,7 +119,10 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                         .toString() != view.context.getString(R.string.doNotSelected)
                 ) {
                     category = adapterView.getItemAtPosition(i).toString()
-                    if (category == context?.getString(R.string.course_pay) || category == context?.getString(R.string.course_pay_min)) {
+                    if (category == context?.getString(R.string.course_pay) || category == context?.getString(
+                            R.string.course_pay_min
+                        )
+                    ) {
                         tilCourse.visibility(true)
                         tilGroup.visibility(true)
                         tilParticipant.visibility(true)
@@ -153,8 +160,10 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                                         if (adapterView.getItemAtPosition(i)
                                                 .toString() != view.context.getString(R.string.doNotSelected)
                                         ) {
-                                            group = courseVM.courseList.value?.data!![position].groups[i].name
-                                            groupId = courseVM.courseList.value?.data!![position].groups[i].id
+                                            group =
+                                                courseVM.courseList.value?.data!![position].groups[i].name
+                                            groupId =
+                                                courseVM.courseList.value?.data!![position].groups[i].id
                                             tilParticipant.visibility(true)
                                             participantAdapter.clear()
                                             groupInfoVM.getGroupParticipants(groupId)
@@ -184,17 +193,66 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
             btnSave.onClick {
                 val amount = etAmount.text.toString()
                 note = etNote.text.toString()
-                if (amount.isNotEmpty() && category != context?.getString(R.string.doNotSelected) && category.isNotEmpty() &&
-                    time != 0L && courseId.isNullOrEmpty() && groupId.isNullOrEmpty() && participantId.isNullOrEmpty()
-                ) {
-                    viewModel.addIncome(
-                        amount = amount.toInt(),
-                        note = note,
-                        category = category,
-                        createdDate = createdDate,
-                        date = time
-                    )
-                } else if (amount.isNotEmpty() && category != context?.getString(R.string.doNotSelected) && category.isNotEmpty() &&
+                if (category == "Взнос" || category == "взнос") {
+                    if (amount.isNotEmpty() && category != context?.getString(R.string.doNotSelected) && category.isNotEmpty() &&
+                        time != 0L && courseId.isNotEmpty() && groupId.isNotEmpty() && participantId.isNotEmpty()
+                    ) {
+                        val id = UUID.randomUUID().toString()
+                        viewModel.addIncome(
+                            IncomeRequest(
+                                amount = amount.toInt(),
+                                category = category,
+                                date = time,
+                                createdDate = createdDate,
+                                id = id,
+                                note = note,
+                                courseId = courseId,
+                                groupId = groupId,
+                                participantId = participantId,
+                                orgId = auth.currentUser!!.uid
+                            )
+                        )
+                    } else {
+                        if (amount.isEmpty()) etAmount.error =
+                            context?.getString(R.string.fillField)
+                        if (time == 0L) toastLNCenter(context?.getString(R.string.doNotSelectedTime))
+                        if (category == context?.getString(R.string.doNotSelected) && category.isEmpty())
+                            toastLNCenter(context?.getString(R.string.doNotSelectedCategory))
+                        if (participant == context?.getString(R.string.doNotSelected) && participant.isEmpty())
+                            toastLNCenter(context?.getString(R.string.doNotSelectedCategory))
+                        if (course == context?.getString(R.string.doNotSelected) && course.isEmpty())
+                            toastLNCenter(context?.getString(R.string.doNotSelectedCategory))
+                        if (group == context?.getString(R.string.doNotSelected) && group.isEmpty())
+                            toastLNCenter(context?.getString(R.string.doNotSelectedCategory))
+
+                    }
+                } else {
+                    if (amount.isNotEmpty() && category != context?.getString(R.string.doNotSelected) && category.isNotEmpty() && time != 0L
+                    ) {
+                        val id = UUID.randomUUID().toString()
+                        viewModel.addIncome(
+                            IncomeRequest(
+                                amount = amount.toInt(),
+                                category = category,
+                                date = time,
+                                createdDate = createdDate,
+                                id = id,
+                                note = note,
+                                courseId = "",
+                                groupId = "",
+                                participantId = "",
+                                orgId = auth.currentUser!!.uid
+                            )
+                        )
+                    } else {
+                        if (amount.isEmpty()) etAmount.error =
+                            context?.getString(R.string.fillField)
+                        if (time == 0L) toastLNCenter(context?.getString(R.string.doNotSelectedTime))
+                        if (category == context?.getString(R.string.doNotSelected) && category.isEmpty())
+                            toastLNCenter(context?.getString(R.string.doNotSelectedCategory))
+                    }
+                }
+                /*else if (amount.isNotEmpty() && category != context?.getString(R.string.doNotSelected) && category.isNotEmpty() &&
                     time != 0L && courseId.isNotEmpty() && groupId.isNotEmpty() && participantId.isNotEmpty()
                 ) {
                     val id = UUID.randomUUID().toString()
@@ -211,12 +269,7 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                             category = category
                         )
                     )
-                } else {
-                    if (amount.isEmpty()) etAmount.error = context?.getString(R.string.fillField)
-                    if (time == 0L) toastLNCenter(context?.getString(R.string.doNotSelectedTime))
-                    if (category == context?.getString(R.string.doNotSelected) && category.isEmpty())
-                        toastLNCenter(context?.getString(R.string.doNotSelectedCategory))
-                }
+                } */
             }
         }
     }

@@ -43,22 +43,18 @@ class AdditionFragment: BaseFragment(R.layout.fragment_additions){
             teacher.onClick {
                 val action = AdditionFragmentDirections.actionNavAdditionToTeacherFragment()
                 navController.navigate(action)
-                navController.popBackStack()
             }
             student.onClick {
                 val action = AdditionFragmentDirections.actionNavAdditionToStudentsFragment()
                 navController.navigate(action)
-                navController.popBackStack()
             }
             info.onClick {
                 val action = AdditionFragmentDirections.actionNavAdditionToInfoFragment()
                 navController.navigate(action)
-                navController.popBackStack()
             }
             category.onClick {
                 val action = AdditionFragmentDirections.actionNavAdditionToCategoryFragment()
                 navController.navigate(action)
-                navController.popBackStack()
             }
             signOut.onClick {
                 val dialog = AlertDialog.Builder(requireContext())
@@ -83,4 +79,5 @@ class AdditionFragment: BaseFragment(R.layout.fragment_additions){
             }
         }
     }
+
 }

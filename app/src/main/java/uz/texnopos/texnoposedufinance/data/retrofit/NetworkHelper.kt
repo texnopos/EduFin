@@ -5,9 +5,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import uz.texnopos.texnoposedufinance.data.model.*
-import uz.texnopos.texnoposedufinance.data.model.response.ParticipantResponse
-import uz.texnopos.texnoposedufinance.data.model.response.PostResponse
-import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
+import uz.texnopos.texnoposedufinance.data.model.response.*
 
 class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) {
     private val orgId = auth.currentUser!!.uid
@@ -214,4 +212,42 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
         })
     }
 
+    fun addExpense(data: ExpenseRequest,
+                   onSuccess: (ExpenseRequest) -> Unit,
+                   onFailure: (msg: String) -> Unit){
+        val call: Call<ExpenseRequest> = apiInterface.addExpense(data)
+        call.enqueue(object: Callback<ExpenseRequest>{
+            override fun onFailure(call: Call<ExpenseRequest>, t: Throwable) {
+                onFailure.invoke(t.localizedMessage!!)
+            }
+
+            override fun onResponse(
+                call: Call<ExpenseRequest>,
+                response: Response<ExpenseRequest>
+            ) {
+                response.body().let {
+                    onSuccess.invoke(it!!)
+                }
+            }
+        })
+    }
+
+    fun addIncome(data: IncomeRequest,
+                   onSuccess: (IncomeRequest) -> Unit,
+                   onFailure: (msg: String) -> Unit){
+        val call: Call<IncomeRequest> = apiInterface.addIncome(data)
+        call.enqueue(object: Callback<IncomeRequest>{
+            override fun onFailure(call: Call<IncomeRequest>, t: Throwable) {
+                onFailure.invoke(t.localizedMessage!!)
+            }
+            override fun onResponse(
+                call: Call<IncomeRequest>,
+                response: Response<IncomeRequest>
+            ) {
+                response.body().let {
+                    onSuccess.invoke(it!!)
+                }
+            }
+        })
+    }
 }

@@ -92,10 +92,7 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
         setUpObserversCoursePayment()
         adapter.setOnStudentItemClickListener { pId ->
             participantId = pId
-            dialog =
-                PaymentDialog(
-                    requireContext()
-                )
+            dialog = PaymentDialog(requireContext())
             dialog.show()
             val cal = Calendar.getInstance()
             created = cal.timeInMillis

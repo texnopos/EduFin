@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
@@ -15,6 +17,7 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
+import uz.texnopos.texnoposedufinance.data.model.response.ExpenseRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddExpenseBinding
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
@@ -40,6 +43,8 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
     private val allEmployee = mutableListOf<String>()
     private lateinit var categoryAdapter: ArrayAdapter<String>
     private lateinit var employeeAdapter: ArrayAdapter<String>
+    var employeeId = ""
+    val auth: FirebaseAuth by inject()
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -101,26 +106,23 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
                         tViewModel.getAllTeachers()
                         employeeAdapter.clear()
                         actEmployees.setAdapter(employeeAdapter)
-
                         actEmployees.setOnItemClickListener { adapterView, _, i, _ ->
                             if(adapterView.getItemAtPosition(i)
                                     .toString() != view.context.getString(R.string.doNotSelected)
                             ) {
-
+                                ctViewModel.expenseCategory.value?.data!![i].name
+                                employeeId = ctViewModel.expenseCategory.value?.data!![i].id
                             }
-                            ctViewModel.expenseCategory.value?.data!![i].name
                         }
                     }
                     btnSave.onClick {
                         val amount = etAmount.text.toString()
+                        val id = UUID.randomUUID().toString()
                         note = etNote.text.toString()
                         if (amount.isNotEmpty() && category != context?.getString(R.string.doNotSelected) && category.isNotEmpty() && time != 0L) {
                             viewModel.addExpense(
-                                amount = amount.toInt(),
-                                note = note,
-                                category = category,
-                                createdDate = createdDate,
-                                date = time
+                                ExpenseRequest(amount = amount.toInt(), category = category,
+                                date = time, createdDate = createdDate, id = id, employeeId = employeeId, note = note, orgId = auth.currentUser!!.uid)
                             )
                         } else {
                             if (amount.isEmpty()) etAmount.error =
@@ -163,7 +165,6 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
                     }
                 }
             })
-
             viewModel.expense.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {

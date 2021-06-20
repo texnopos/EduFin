@@ -221,7 +221,7 @@
         tools:layout="@layout/fragment_add_expense"/>
     <fragment
         android:id="@+id/salaryFragment"
-        android:name="uz.texnopos.texnoposedufinance.ui.salary.SalaryFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.salary.SalaryFragment"
         android:label="SalaryFragment"
         tools:layout="@layout/fragment_salary"/>
 </navigation>

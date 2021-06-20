@@ -6,9 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 import uz.texnopos.texnoposedufinance.data.model.*
-import uz.texnopos.texnoposedufinance.data.model.response.ParticipantResponse
-import uz.texnopos.texnoposedufinance.data.model.response.PostResponse
-import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
+import uz.texnopos.texnoposedufinance.data.model.response.*
 
 interface ApiInterface {
     @GET("getAllCourses")
@@ -47,4 +45,10 @@ interface ApiInterface {
         @Query("fromDate") fromDate: Long,
         @Query("toDate") toDate: Long
     ): Call<ReportResponse>
+
+    @POST("addExpense")
+    fun addExpense(@Body data: ExpenseRequest): Call<ExpenseRequest>
+
+    @POST("addIncome")
+    fun addIncome(@Body data: IncomeRequest): Call<IncomeRequest>
 }

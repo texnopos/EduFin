@@ -30,11 +30,11 @@ class ExpenseFragment(private val fromDate: Long, private val toDate: Long, priv
         pie = AnyChart.pie()
         super.onViewCreated(view, savedInstanceState)
         binding = ItemExpenseBinding.bind(view)
+        setUpObservers()
+        viewModel.getReports(fromDate, toDate)
         binding.apply {
             rcvExpense.adapter = expenseAdapter
         }
-        setUpObservers()
-        viewModel.getReports(fromDate, toDate)
     }
     private fun setUpObservers() {
         val expenseList = mutableListOf<MyResponse>()
@@ -72,6 +72,7 @@ class ExpenseFragment(private val fromDate: Long, private val toDate: Long, priv
                         pie.title(view?.context!!.getString(R.string.s_expenses))
                         expenseAnyChartView.setChart(pie)
                         fr.allExpense = allExpense
+                        amountExpenses.text = context?.getString(R.string.amountExpenses, allExpense)
                     }
                     ResourceState.ERROR -> {
                         loading.visibility(false)

@@ -22,8 +22,7 @@ import java.util.*
 class IncomeFragment(
     private val fromDate: Long,
     private val toDate: Long,
-    val fr: ReportsFragment
-) : BaseFragment(R.layout.item_income) {
+    private val fr: ReportsFragment) : BaseFragment(R.layout.item_income) {
     lateinit var binding: ItemIncomeBinding
     private lateinit var pie: Pie
     private val incomeAdapter = ReportsAdapter()
@@ -33,11 +32,11 @@ class IncomeFragment(
         super.onViewCreated(view, savedInstanceState)
         binding = ItemIncomeBinding.bind(view)
         pie = AnyChart.pie()
+        setUpObservers()
+        viewModel.getReports(fromDate, toDate)
         binding.apply {
             rcvIncome.adapter = incomeAdapter
         }
-        setUpObservers()
-        viewModel.getReports(fromDate, toDate)
     }
 
     private fun setUpObservers() {
@@ -76,13 +75,13 @@ class IncomeFragment(
                         pie.title(view?.context!!.getString(R.string.s_incomes))
                         incomeAnyChartView.setChart(pie)
                         fr.allIncome = allIncome
+                        amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
                     }
                     ResourceState.ERROR -> {
                         incomeLoading.visibility(false)
                         toastLN(it.message)
                     }
                 }
-
             })
         }
     }
