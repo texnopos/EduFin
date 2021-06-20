@@ -16,7 +16,6 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.data.model.CoursePayments
 import uz.texnopos.texnoposedufinance.data.model.response.IncomeRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddIncomeBinding
@@ -24,7 +23,7 @@ import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
+import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +34,7 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
     private var time: Long = 0
     private var note = ""
     private var category: String = ""
-    private val viewModel: ReportsViewModel by viewModel()
+    private val viewModel: ReportViewModel by viewModel()
     private val categoryVM: CategoryViewModel by viewModel()
     private val courseVM: CourseViewModel by viewModel()
     private val groupInfoVM: GroupInfoViewModel by viewModel()

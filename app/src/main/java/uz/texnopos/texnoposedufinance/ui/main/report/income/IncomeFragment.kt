@@ -2,6 +2,7 @@ package uz.texnopos.texnoposedufinance.ui.main.report.income
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
@@ -9,31 +10,29 @@ import com.anychart.charts.Pie
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.Resource
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.AllReports
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
+import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
 import uz.texnopos.texnoposedufinance.databinding.ItemIncomeBinding
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportsAdapter
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsFragment
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsViewModel
+import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 import java.util.*
 
-class IncomeFragment(
-    private val fromDate: Long,
-    private val toDate: Long,
-    private val fr: ReportsFragment) : BaseFragment(R.layout.item_income) {
+class IncomeFragment : BaseFragment(R.layout.item_income) {
     lateinit var binding: ItemIncomeBinding
     private lateinit var pie: Pie
     private val incomeAdapter = ReportsAdapter()
-    private val viewModel: ReportsViewModel by viewModel()
+    private val viewModel: ReportViewModel by viewModel()
     var allIncome = 0
+    var report: MutableLiveData<Resource<ReportResponse>> = MutableLiveData()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = ItemIncomeBinding.bind(view)
         pie = AnyChart.pie()
         setUpObservers()
-        viewModel.getReports(fromDate, toDate)
         binding.apply {
             rcvIncome.adapter = incomeAdapter
         }
@@ -44,7 +43,7 @@ class IncomeFragment(
         val iList: MutableList<DataEntry> = ArrayList()
         val incomes = mutableListOf<AllReports>()
         binding.apply {
-            viewModel.report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {
                         incomeLoading.visibility(true)
@@ -74,7 +73,6 @@ class IncomeFragment(
                         pie.data(iList)
                         pie.title(view?.context!!.getString(R.string.s_incomes))
                         incomeAnyChartView.setChart(pie)
-                        fr.allIncome = allIncome
                         amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
                     }
                     ResourceState.ERROR -> {

@@ -2,32 +2,26 @@ package uz.texnopos.texnoposedufinance.ui.main.report
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.anychart.chart.common.dataentry.DataEntry
-import com.anychart.chart.common.dataentry.ValueDataEntry
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
-import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
-import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
 import uz.texnopos.texnoposedufinance.databinding.ActionBarReportBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentReportsBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
-import uz.texnopos.texnoposedufinance.ui.main.report.income.IncomeFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
+class ReportFragment : BaseFragment(R.layout.fragment_reports) {
     private lateinit var binding: FragmentReportsBinding
     private lateinit var actBinding: ActionBarReportBinding
+    private val viewModel: ReportViewModel by viewModel()
+    private lateinit var adapter: ViewPagerAdapter
     var currentDate = 0L
     var toLong = 0L
     var fromLong = 0L
-    private lateinit var adapter: ViewPagerAdapter
     var allIncome = 0
     var allExpense = 0
 
@@ -42,15 +36,19 @@ class ReportsFragment : BaseFragment(R.layout.fragment_reports) {
         val day = toString.substring(0, 2)
         toLong = calendar.timeInMillis
         fromLong = toLong - day.toInt() * 3600 * 1000 * 24
-        binding = FragmentReportsBinding.bind(view)
-        actBinding = ActionBarReportBinding.bind(view)
         adapter = ViewPagerAdapter(
             requireActivity().supportFragmentManager,
-            lifecycle,
-            fromLong,
-            toLong,
-            this
+            lifecycle
         )
+        if (viewModel.report.value == null) {
+            viewModel.getReports(fromLong, toLong)
+        }
+        viewModel.report.observe(viewLifecycleOwner, {
+            adapter.setReport(it)
+        })
+        binding = FragmentReportsBinding.bind(view)
+        actBinding = ActionBarReportBinding.bind(view)
+
         actBinding.apply {
             tvTitle.text = context?.getString(R.string.reports)
         }
