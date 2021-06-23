@@ -6,7 +6,9 @@ import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
+import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
 import uz.texnopos.texnoposedufinance.databinding.ActionBarReportBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentReportsBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
@@ -40,14 +42,12 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
             requireActivity().supportFragmentManager,
             lifecycle
         )
+        binding = FragmentReportsBinding.bind(view)
+        actBinding = ActionBarReportBinding.bind(view)
+        setUpObservers()
         if (viewModel.report.value == null) {
             viewModel.getReports(fromLong, toLong)
         }
-        viewModel.report.observe(viewLifecycleOwner, {
-            adapter.setReport(it)
-        })
-        binding = FragmentReportsBinding.bind(view)
-        actBinding = ActionBarReportBinding.bind(view)
 
         actBinding.apply {
             tvTitle.text = context?.getString(R.string.reports)
@@ -130,10 +130,15 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                     }
                 }
             }
-            var currentAmount = 0
-            if (allExpense != 0 && allIncome != 0) {
-                currentAmount = allIncome - allExpense
-                actBinding.tvAmount.text = context?.getString(R.string.amount, currentAmount)
+            clExpense.onClick {
+                (requireParentFragment().requireParentFragment() as MainFragment).temp = 0
+                onExpense()
+                vpReports.currentItem = 0
+            }
+            clIncome.onClick {
+                (requireParentFragment().requireParentFragment() as MainFragment).temp = 1
+                onIncome()
+                vpReports.currentItem = 1
             }
         }
     }
@@ -153,6 +158,44 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
             icIncomes.setImageResource(R.drawable.ic_incomes)
             clExpense.setBackgroundResource(R.drawable.shape_red)
             clIncome.setBackgroundResource(R.drawable.shape_form)
+        }
+    }
+
+    private fun setUpObservers() {
+        binding.apply {
+            viewModel.report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                adapter.setReport(it)
+                when (it.status) {
+                    ResourceState.SUCCESS -> {
+                        val incomeList = mutableListOf<MyResponse>()
+                        val expenseList = mutableListOf<MyResponse>()
+                        it.data!!.incomeCategories.forEach { i ->
+                            incomeList.add(i)
+                        }
+                        incomeList.forEach { i ->
+                            var sum = 0
+                            for (j in i.incomes) {
+                                sum += j.amount
+                            }
+                            allIncome += sum
+                        }
+                        tvIncomeAmount.text = context?.getString(R.string.amountIncomes, allIncome)
+
+                        it.data.expenseCategories.forEach { e ->
+                            expenseList.add(e)
+                        }
+                        expenseList.forEach { e ->
+                            var sum = 0
+                            for (j in e.expenses) {
+                                sum += j.amount
+                            }
+                            allExpense += sum
+                        }
+                        tvExpenseAmount.text = context?.getString(R.string.amountExpenses, allExpense)
+                        actBinding.tvAmount.text = context?.getString(R.string.amount, allIncome - allExpense)
+                    }
+                }
+            })
         }
     }
 }

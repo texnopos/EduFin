@@ -26,6 +26,7 @@ class AddInfoFragment : BaseFragment(R.layout.fragment_add_info) {
         actBinding = ActionBarAddBinding.bind(view)
         navController = Navigation.findNavController(view)
         setUpObservers()
+        viewModel.getOrgData()
         binding.apply {
             btnSave.onClick {
                 val name = etOrganization.text.toString()
@@ -49,11 +50,6 @@ class AddInfoFragment : BaseFragment(R.layout.fragment_add_info) {
                     phone = phone, bank = bank, score = score, director = director
                 )
                 isLoading(true)
-                /*if(name.isNotEmpty() && address.isNotEmpty() && inn.isNotEmpty() && mfo.isNotEmpty() &&
-                    phone.isNotEmpty() && score.isNotEmpty() && director.isNotEmpty() && bank.isNotEmpty()){
-                    viewModel.updateOrgData(name = name, address = address, inn = inn, mfo = mfo,
-                        phone = phone, bank = bank, score = score, director = director)
-                }*/
             }
         }
         actBinding.apply {
@@ -76,6 +72,26 @@ class AddInfoFragment : BaseFragment(R.layout.fragment_add_info) {
                     ResourceState.ERROR -> {
                         isLoading(false)
                         toastLN(it.message)
+                    }
+                }
+            })
+            viewModel.org.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.LOADING -> isLoading(true)
+                    ResourceState.SUCCESS -> {
+                        etBank.setText(it.data!!.bank)
+                        etDirector.setText(it.data.director)
+                        etScore.setText(it.data.score)
+                        etPhone.setText(it.data.phone)
+                        etMfo.setText(it.data.mfo)
+                        etOrganization.setText(it.data.name)
+                        etInn.setText(it.data.inn)
+                        etAddress.setText(it.data.address)
+                        isLoading(false)
+                    }
+                    ResourceState.ERROR -> {
+                        toastLN(it.message)
+                        isLoading(false)
                     }
                 }
             })

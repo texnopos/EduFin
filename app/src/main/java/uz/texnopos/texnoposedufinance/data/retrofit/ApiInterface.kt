@@ -51,4 +51,11 @@ interface ApiInterface {
 
     @POST("addIncome")
     fun addIncome(@Body data: IncomeRequest): Call<IncomeRequest>
+
+    @GET("salary")
+    fun getSalary(
+        @Query("orgId") orgId: String,
+        @Query("fromDate") fromDate: Long,
+        @Query("toDate") toDate: Long
+    ): Call<SalaryResponse>
 }

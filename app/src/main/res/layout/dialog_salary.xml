@@ -37,6 +37,22 @@
         app:layout_constraintTop_toBottomOf="@id/tvPayment"
         tools:ignore="SpUsage" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_standard"
+        android:layout_marginHorizontal="@dimen/margin_middle"
+        android:hint="@string/note"
+        android:inputType="text"
+        android:padding="@dimen/margin_standard"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_standard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPayment"
+        tools:ignore="SpUsage" />
+
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
@@ -48,7 +64,7 @@
         android:textSize="@dimen/text_size_standard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPayment"
+        app:layout_constraintTop_toBottomOf="@id/etNote"
         tools:ignore="SpUsage" />
 
     <DatePicker
@@ -92,4 +108,14 @@
         app:layout_constraintTop_toBottomOf="@id/dpDate"
         tools:ignore="SpUsage"
         android:textStyle="bold"/>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

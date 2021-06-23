@@ -147,10 +147,16 @@
     <string name="sort">Фильтр</string>
     <string name="selectOtherDate">Вы должны выбрать другую дату!</string>
     <string name="add_salary">Добавить зарплату</string>
-    <string name="reportCategory">Категория: %1$s</string>
+    <string name="reportCategory">%1$s</string>
     <string name="trans">%1$d Транзакций</string>
     <string name="amount">%1$d Сум</string>
-    <string name="amountIncomes">Все доходы: %1$d Сум</string>
-    <string name="amountExpenses">Все расходы: %1$d Сум</string>
+    <string name="amountIncomes">+ %1$d Сум</string>
+    <string name="amountExpenses">- %1$d Сум</string>
     <string name="daySalary">Когда дано?</string>
+    <string name="our_address">Наш аддресс</string>
+    <string name="studentName">ФИО: %1$s</string>
+    <string name="studentAddress">Адрес: %1$s</string>
+    <string name="studentPassport">Пасспорт: %1$s</string>
+    <string name="studentRemainder">Остаток: %1$d</string>
+    <string name="studentContract">Договор: %1$d</string>
 </resources>

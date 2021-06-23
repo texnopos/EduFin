@@ -21,7 +21,13 @@
             android:layout_marginHorizontal="@dimen/margin_standard"
             android:layout_marginTop="@dimen/margin_standard"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_standard" />
+            android:textSize="@dimen/text_size_standard"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/tvGroupCount"
@@ -30,7 +36,13 @@
             android:layout_below="@id/tvCourseName"
             android:layout_marginStart="@dimen/margin_standard"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/tvPupilsCount"
@@ -41,7 +53,13 @@
             android:layout_marginBottom="@dimen/margin_standard"
             android:layout_toEndOf="@id/tvGroupCount"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
     </RelativeLayout>
     <View
         android:id="@+id/line"
@@ -76,6 +94,12 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_standard"
-        android:padding="@dimen/margin_standard_middle"/>
+        android:padding="@dimen/margin_standard_middle"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

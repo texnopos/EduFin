@@ -44,7 +44,13 @@
         android:textSize="@dimen/text_size_standard"
         android:textColor="@color/black"
         tools:ignore="SpUsage"
-        app:layout_constraintVertical_bias="0.6"/>
+        app:layout_constraintVertical_bias="0.6"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
     <ProgressBar
         android:id="@+id/loading"

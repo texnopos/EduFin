@@ -49,10 +49,10 @@ class GroupInfoAdapter : BaseAdapter<ParticipantResponse, GroupInfoAdapter.Group
         fun populateModel(model: ParticipantResponse) {
             binding.apply {
                 model.apply {
-                    tvName.text = student.name
-                    tvAddress.text = student.address
-                    tvContactNum.text = participant.contract.toString()
-                    tvPassport.text = student.passport
+                    tvName.text = root.context?.getString(R.string.studentName, student.name)
+                    tvAddress.text = root.context?.getString(R.string.studentAddress, student.address)
+                    tvContactNum.text = root.context?.getString(R.string.studentContract, participant.contract)
+                    tvPassport.text = root.context?.getString(R.string.studentPassport, student.passport)
                     setPeriodVisible(periodCount)
                     var paymentAmount = payments.map { it.amount }.sum()
                     val remainder = paymentAmount - coursePrice * periodCount
@@ -67,7 +67,7 @@ class GroupInfoAdapter : BaseAdapter<ParticipantResponse, GroupInfoAdapter.Group
                             tvRemainder.visibility(true)
                         }
                     }
-                    tvRemainder.text = remainder.toString()
+                    tvRemainder.text = root.context?.getString(R.string.studentRemainder, remainder)
                     periodViewList.forEach {
                         it.setImageResource(R.drawable.red_round)
                     }

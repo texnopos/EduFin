@@ -25,7 +25,6 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
     lateinit var binding: ItemIncomeBinding
     private lateinit var pie: Pie
     private val incomeAdapter = ReportsAdapter()
-    private val viewModel: ReportViewModel by viewModel()
     var allIncome = 0
     var report: MutableLiveData<Resource<ReportResponse>> = MutableLiveData()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,9 +38,6 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
     }
 
     private fun setUpObservers() {
-        val incomeList = mutableListOf<MyResponse>()
-        val iList: MutableList<DataEntry> = ArrayList()
-        val incomes = mutableListOf<AllReports>()
         binding.apply {
             report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 when (it.status) {
@@ -49,6 +45,9 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
                         incomeLoading.visibility(true)
                     }
                     ResourceState.SUCCESS -> {
+                        val incomeList = mutableListOf<MyResponse>()
+                        val iList: MutableList<DataEntry> = ArrayList()
+                        val incomes = mutableListOf<AllReports>()
                         incomeLoading.visibility(false)
                         it.data!!.incomeCategories.forEach { i ->
                             incomeList.add(i)
@@ -73,7 +72,6 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
                         pie.data(iList)
                         pie.title(view?.context!!.getString(R.string.s_incomes))
                         incomeAnyChartView.setChart(pie)
-                        amountIncomes.text = context?.getString(R.string.amountIncomes, allIncome)
                     }
                     ResourceState.ERROR -> {
                         incomeLoading.visibility(false)

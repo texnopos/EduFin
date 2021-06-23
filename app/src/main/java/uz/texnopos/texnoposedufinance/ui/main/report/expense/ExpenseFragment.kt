@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
@@ -24,7 +25,6 @@ import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 class ExpenseFragment: BaseFragment(R.layout.item_expense){
     private val expenseAdapter = ReportsAdapter()
     private lateinit var pie: Pie
-    private val viewModel: ReportViewModel by viewModel()
     lateinit var binding: ItemExpenseBinding
     var allExpense = 0
     var report: MutableLiveData<Resource<ReportResponse>> = MutableLiveData()
@@ -38,16 +38,16 @@ class ExpenseFragment: BaseFragment(R.layout.item_expense){
         }
     }
     private fun setUpObservers() {
-        val expenseList = mutableListOf<MyResponse>()
-        val eList: MutableList<DataEntry> = ArrayList()
-        val expenses = mutableListOf<AllReports>()
         binding.apply {
-            report.observe(viewLifecycleOwner,  {
+            report.observe(viewLifecycleOwner, Observer{
                 when (it.status) {
                     ResourceState.LOADING -> {
                         loading.isVisible = true
                     }
                     ResourceState.SUCCESS -> {
+                        val expenseList = mutableListOf<MyResponse>()
+                        val expenses = mutableListOf<AllReports>()
+                        val eList: MutableList<DataEntry> = ArrayList()
                         loading.visibility(false)
                         it.data!!.expenseCategories.forEach { e ->
                             expenseList.add(e)
@@ -72,14 +72,12 @@ class ExpenseFragment: BaseFragment(R.layout.item_expense){
                         pie.data(eList)
                         pie.title(view?.context!!.getString(R.string.s_expenses))
                         expenseAnyChartView.setChart(pie)
-                        amountExpenses.text = context?.getString(R.string.amountExpenses, allExpense)
                     }
                     ResourceState.ERROR -> {
                         loading.visibility(false)
                         toastLN(it.message)
                     }
                 }
-
             })
         }
     }

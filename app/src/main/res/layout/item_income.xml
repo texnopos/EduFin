@@ -28,19 +28,6 @@
                     android:layout_height="400dp"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/amountIncomes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_standard"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/middle_text_size"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/incomeAnyChartView"
-                    tools:ignore="SpUsage"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:padding="@dimen/margin_middle"/>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvIncome"
                     android:layout_width="match_parent"
@@ -49,7 +36,7 @@
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/amountIncomes" />
+                    app:layout_constraintTop_toBottomOf="@id/incomeAnyChartView" />
 
                 <ProgressBar
                     android:id="@+id/incomeLoading"

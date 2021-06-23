@@ -153,7 +153,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/setting"
+                android:id="@+id/salary"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/margin_standard"
@@ -168,13 +168,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:layout_marginBottom="@dimen/margin_standard"
-                    android:src="@drawable/ic_settings" />
+                    android:src="@drawable/ic_salary" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/settings"
+                    android:text="@string/salary"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size"
                     tools:ignore="SpUsage" />
@@ -217,10 +217,11 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="3"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone">
 
             <LinearLayout
-                android:id="@+id/salary"
+                android:id="@+id/setting"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="@dimen/margin_standard"

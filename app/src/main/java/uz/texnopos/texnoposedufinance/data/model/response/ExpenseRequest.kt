@@ -1,5 +1,4 @@
 package uz.texnopos.texnoposedufinance.data.model.response
-
 data class ExpenseRequest(
     var amount: Int = 0,
     var category: String = "",

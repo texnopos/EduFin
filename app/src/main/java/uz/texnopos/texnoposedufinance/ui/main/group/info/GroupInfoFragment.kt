@@ -22,10 +22,12 @@ import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.CoursePayments
 import uz.texnopos.texnoposedufinance.data.model.Group
+import uz.texnopos.texnoposedufinance.data.model.response.IncomeRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentGroupInfoBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
+import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 import java.util.*
 
 class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
@@ -33,18 +35,20 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
     private lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
     private val viewModel: GroupInfoViewModel by viewModel()
+    private val rViewModel: ReportViewModel by viewModel()
     private val safeArgs: GroupInfoFragmentArgs by navArgs()
     lateinit var groupStr: String
     lateinit var courseStr: String
     private val adapter: GroupInfoAdapter by inject()
     lateinit var group: Group
     lateinit var course: Course
-    lateinit var dialog: PaymentDialog
+    lateinit var pDialog: PaymentDialog
     var date: Long = 0L
     var created: Long = 0L
     var amount = 0
     lateinit var participantId: String
     val auth: FirebaseAuth by inject()
+    var note = ""
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,20 +70,20 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
         adapter.coursePrice = course.price
 
         adapter.callStudentClicked { n, n1 ->
-            val dialog = AlertDialog.Builder(requireContext())
-            dialog.setTitle(context?.getString(R.string.callStudent))
-            dialog.setMessage(context?.getString(R.string.selectPhone))
-            dialog.setNegativeButton(context?.getString(R.string.phone2)) { d, _ ->
+            val aDialog = AlertDialog.Builder(requireContext())
+            aDialog.setTitle(context?.getString(R.string.callStudent))
+            aDialog.setMessage(context?.getString(R.string.selectPhone))
+            aDialog.setNegativeButton(context?.getString(R.string.phone2)) { d, _ ->
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(n1)))
                 requireActivity().startActivity(intent)
                 d.dismiss()
             }
-            dialog.setPositiveButton(context?.getString(R.string.phone1)) { d, _ ->
+            aDialog.setPositiveButton(context?.getString(R.string.phone1)) { d, _ ->
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(n)))
                 requireActivity().startActivity(intent)
                 d.dismiss()
             }
-            dialog.show()
+            aDialog.show()
         }
 
         actBinding.apply {
@@ -89,26 +93,42 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
             }
         }
         viewModel.getGroupParticipants(group.id)
-        setUpObserversCoursePayment()
         adapter.setOnStudentItemClickListener { pId ->
             participantId = pId
-            dialog = PaymentDialog(requireContext())
-            dialog.show()
+            pDialog = PaymentDialog(requireContext())
+            pDialog.show()
             val cal = Calendar.getInstance()
             created = cal.timeInMillis
-            dialog.binding.btnYes.onClick {
-                val d = dialog.binding.dpDate.dayOfMonth
-                val m = dialog.binding.dpDate.month
-                val y = dialog.binding.dpDate.year
-                cal.set(Calendar.DAY_OF_MONTH, d)
-                cal.set(Calendar.MONTH, m)
-                cal.set(Calendar.YEAR, y)
-                date = cal.timeInMillis
-                if (dialog.binding.etPayment.text.toString().isNotEmpty()) {
-                    amount = dialog.binding.etPayment.text.toString().toInt()
-                    val id = UUID.randomUUID().toString()
-                    if (amount > 0) {
-                        viewModel.coursePayment(
+            pDialog.binding.apply {
+                btnYes.onClick {
+                    val d = dpDate.dayOfMonth
+                    val m = dpDate.month
+                    val y = dpDate.year
+                    cal.set(Calendar.DAY_OF_MONTH, d)
+                    cal.set(Calendar.MONTH, m)
+                    cal.set(Calendar.YEAR, y)
+                    date = cal.timeInMillis
+                    note = etNote.text.toString()
+                    if (etPayment.text.toString().isNotEmpty()) {
+                        amount = etPayment.text.toString().toInt()
+                        val id = UUID.randomUUID().toString()
+                        setUpObserversDialog()
+                        if (amount > 0) {
+                            rViewModel.addIncome(
+                                IncomeRequest(
+                                    amount = amount,
+                                    category = context?.getString(R.string.course_pay)!!,
+                                    id = id,
+                                    date = date,
+                                    createdDate = created,
+                                    participantId = participantId,
+                                    groupId = group.id,
+                                    courseId = course.id,
+                                    orgId = auth.currentUser!!.uid,
+                                    note = note
+                                )
+                            )
+                            /*viewModel.coursePayment(
                             CoursePayments(
                                 id = id,
                                 amount = amount,
@@ -120,14 +140,15 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
                                 orgId = auth.currentUser!!.uid,
                                 category = context?.getString(R.string.course_pay)!!
                             )
-                        )
-                    } else dialog.dismiss()
-                } else {
-                    dialog.binding.etPayment.error = context?.getString(R.string.fillField)
+                        )*/
+                        } else pDialog.dismiss()
+                    } else {
+                        etPayment.error = context?.getString(R.string.fillField)
+                    }
                 }
-            }
-            dialog.binding.btnCancel.onClick {
-                dialog.dismiss()
+                btnCancel.onClick {
+                    pDialog.dismiss()
+                }
             }
         }
         binding.apply {
@@ -142,43 +163,38 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
         }
     }
 
-    private fun setUpObserversCoursePayment() {
-        binding.apply {
-            viewModel.coursePayment.observe(viewLifecycleOwner, Observer {
+    private fun isLoadingDialog(b: Boolean) {
+        pDialog.binding.apply {
+            btnYes.isEnabled = !b
+            btnCancel.isEnabled = !b
+            dpDate.isEnabled = !b
+            etPayment.isEnabled = !b
+            loading.visibility(b)
+            etNote.isEnabled = !b
+        }
+    }
+
+    private fun setUpObserversDialog(){
+        pDialog.binding.apply {
+            rViewModel.income.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {
                         isLoadingDialog(true)
-                        srlStudents.isRefreshing = false
                     }
                     ResourceState.SUCCESS -> {
-                        dialog.dismiss()
+                        pDialog.dismiss()
                         isLoadingDialog(false)
-                        srlStudents.isRefreshing = false
                         viewModel.getGroupParticipants(group.id)
                         toastLN(context?.getString(R.string.added_successfully))
                     }
                     ResourceState.ERROR -> {
                         isLoadingDialog(false)
-                        loading.visibility(false)
-                        srlStudents.isRefreshing = false
                         toastLN(it.message)
                     }
                 }
-            }
-            )
+            })
         }
     }
-
-    private fun isLoadingDialog(b: Boolean) {
-        dialog.binding.apply {
-            btnYes.isEnabled = !b
-            btnCancel.isEnabled = !b
-            dpDate.isEnabled = !b
-            etPayment.isEnabled = !b
-        }
-        binding.loading.visibility(b)
-    }
-
     private fun setUpObservers() {
         binding.apply {
             viewModel.participantList.observe(viewLifecycleOwner, Observer {

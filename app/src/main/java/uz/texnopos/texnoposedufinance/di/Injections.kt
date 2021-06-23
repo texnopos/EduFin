@@ -63,9 +63,9 @@ val networkModule = module {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
             .retryOnConnectionFailure(false)
             .build()
 
@@ -88,7 +88,6 @@ val helperModule = module {
     single { GroupHelper(get(), get()) }
     single { NetworkHelper(get(), get()) }
     single { StudentHelper(get(), get()) }
-    single { PaymentHelper(get(), get()) }
     single { InfoHelper(get(), get()) }
     single { CategoryHelper(get(), get()) }
     single { ReportHelper(get(), get()) }

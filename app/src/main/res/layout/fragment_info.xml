@@ -47,7 +47,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescName"
@@ -57,7 +63,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="@string/organization"/>
+                        android:text="@string/organization"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvAddress"
@@ -67,7 +79,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescAddress"
@@ -77,7 +95,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="Наш аддресс"/>
+                        android:text="@string/our_address"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvPhone"
@@ -87,7 +111,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescPhone"
@@ -97,7 +127,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="@string/phone_"/>
+                        android:text="@string/phone_"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvScore"
                         android:layout_width="match_parent"
@@ -106,7 +142,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescScore"
@@ -116,7 +158,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="@string/score"/>
+                        android:text="@string/score"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvMfo"
                         android:layout_width="match_parent"
@@ -125,7 +173,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescMfo"
@@ -135,7 +189,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="@string/mfo"/>
+                        android:text="@string/mfo"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvInn"
                         android:layout_width="match_parent"
@@ -144,7 +204,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescInn"
@@ -154,7 +220,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="@string/inn"/>
+                        android:text="@string/inn"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvBank"
                         android:layout_width="match_parent"
@@ -163,7 +235,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescBank"
@@ -173,7 +251,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="@string/bank"/>
+                        android:text="@string/bank"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDirector"
                         android:layout_width="match_parent"
@@ -182,7 +266,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescDirector"
@@ -192,7 +282,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="@string/director"/>
+                        android:text="@string/director"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvEmail"
                         android:layout_width="match_parent"
@@ -201,7 +297,13 @@
                         android:layout_marginTop="@dimen/margin_standard"
                         android:textColor="@color/black"
                         android:textSize="@dimen/title_text_size"
-                        tools:ignore="SpUsage" />
+                        tools:ignore="SpUsage"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDescEmail"
@@ -211,7 +313,13 @@
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:textSize="@dimen/small_text_size"
                         tools:ignore="SpUsage"
-                        android:text="@string/email"/>
+                        android:text="@string/email"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"/>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

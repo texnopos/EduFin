@@ -1,199 +1,267 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clStudentItem"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clStudentItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/groupInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_middle"
         android:layout_marginVertical="@dimen/margin_middle"
+        android:layout_marginBottom="@dimen/margin_middle"
         app:cardCornerRadius="@dimen/margin_standard"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/margin_middle">
-        <RelativeLayout
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/purple_700">
+
             <TextView
                 android:id="@+id/tvContactNum"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textSize="@dimen/text_size_standard"
-                android:textColor="@color/black"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:layout_marginStart="@dimen/margin_middle"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_standard"
+                app:layout_constraintEnd_toStartOf="@id/line"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpUsage" />
+
             <TextView
                 android:id="@+id/tvName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_middle"
+                android:layout_marginHorizontal="@dimen/margin_middle"
                 android:layout_marginTop="@dimen/margin_middle"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_standard"
-                android:layout_below="@id/tvContactNum"
-                android:layout_alignParentStart="true"
+                app:layout_constraintEnd_toStartOf="@id/line"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvContactNum"
                 tools:ignore="SpUsage" />
+
             <TextView
                 android:id="@+id/tvPassport"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_middle"
+                android:layout_marginHorizontal="@dimen/margin_middle"
                 android:layout_marginTop="@dimen/margin_middle"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_standard"
-                android:layout_below="@id/tvName"
-                android:layout_alignParentStart="true"
+                app:layout_constraintEnd_toStartOf="@id/line"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
                 tools:ignore="SpUsage" />
+
             <TextView
                 android:id="@+id/tvAddress"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_middle"
+                android:layout_below="@id/tvPassport"
+                android:layout_marginHorizontal="@dimen/margin_middle"
                 android:layout_marginTop="@dimen/margin_middle"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_standard"
-                android:layout_below="@id/tvPassport"
-                android:layout_alignParentStart="true"
+                app:layout_constraintEnd_toStartOf="@id/line"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPassport"
                 tools:ignore="SpUsage" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btnCall"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:padding="8dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                app:srcCompat="@drawable/ic_call"/>
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginEnd="@dimen/margin_standard"
+                android:padding="@dimen/margin_middle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/line"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_call" />
 
             <LinearLayout
                 android:id="@+id/llPayment"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_below="@id/tvAddress"
-                android:weightSum="13"
-                android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/btnCall"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="13"
+                app:layout_constraintEnd_toStartOf="@id/line"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAddress">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_middle"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
                     android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period7"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period8"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period9"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period10"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period11"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_weight="1"
                     android:paddingVertical="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/period12"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/margin_small"
-                    android:paddingVertical="@dimen/margin_middle"
                     android:layout_marginEnd="@dimen/margin_middle"
-                    android:visibility="gone"/>
+                    android:layout_weight="1"
+                    android:paddingVertical="@dimen/margin_middle"
+                    android:visibility="gone" />
             </LinearLayout>
-            <androidx.appcompat.widget.AppCompatTextView
+
+            <TextView
                 android:id="@+id/tvRemainder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llPayment"
+                android:layout_marginHorizontal="@dimen/margin_middle"
+                android:layout_marginVertical="@dimen/margin_middle"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/text_size_standard"
+                app:layout_constraintEnd_toStartOf="@id/line"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llPayment"
+                tools:ignore="SpUsage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_goneMarginBottom="@dimen/margin_middle"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_middle"
-                android:textSize="@dimen/text_size_standard"
-                android:layout_below="@id/llPayment"
-                android:layout_alignParentStart="true"
-                tools:ignore="SpUsage"
-                android:layout_marginBottom="@dimen/margin_middle"
-                android:textColor="@color/purple_500"/>
-        </RelativeLayout>
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.9"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

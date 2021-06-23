@@ -9,6 +9,7 @@ import uz.texnopos.texnoposedufinance.data.model.Report
 import uz.texnopos.texnoposedufinance.data.model.response.ExpenseRequest
 import uz.texnopos.texnoposedufinance.data.model.response.IncomeRequest
 import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
+import uz.texnopos.texnoposedufinance.data.model.response.SalaryResponse
 import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 
 class ReportViewModel(private val helper: ReportHelper, private val nHelper: NetworkHelper): ViewModel() {
@@ -49,6 +50,20 @@ class ReportViewModel(private val helper: ReportHelper, private val nHelper: Net
             _report.value = Resource.success(it)
         }, {
             _report.value = Resource.error(it)
+        })
+    }
+
+    private val _salary: MutableLiveData<Resource<SalaryResponse>> = MutableLiveData()
+    val salary: LiveData<Resource<SalaryResponse>>
+        get() = _salary
+
+    fun getSalary(fromDate: Long,
+                   toDate: Long) {
+        _salary.value = Resource.loading()
+        nHelper.getSalary(fromDate, toDate, {
+            _salary.value = Resource.success(it)
+        }, {
+            _salary.value = Resource.error(it)
         })
     }
 }

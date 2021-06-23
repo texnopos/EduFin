@@ -250,4 +250,27 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
             }
         })
     }
+
+    fun getSalary(
+        fromDate: Long,
+        toDate: Long,
+        onSuccess: (SalaryResponse) -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
+        val call: Call<SalaryResponse> = apiInterface.getSalary(orgId, fromDate, toDate)
+        call.enqueue(object : Callback<SalaryResponse> {
+            override fun onFailure(call: Call<SalaryResponse>, t: Throwable) {
+                onFailure.invoke(t.localizedMessage!!)
+            }
+
+            override fun onResponse(
+                call: Call<SalaryResponse>,
+                response: Response<SalaryResponse>
+            ) {
+                response.body().let {
+                    onSuccess.invoke(it!!)
+                }
+            }
+        })
+    }
 }

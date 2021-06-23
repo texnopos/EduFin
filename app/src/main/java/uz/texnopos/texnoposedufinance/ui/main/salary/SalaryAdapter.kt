@@ -7,15 +7,29 @@ import uz.texnopos.texnoposedufinance.core.BaseAdapter
 import uz.texnopos.texnoposedufinance.core.extentions.inflate
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.Teacher
+import uz.texnopos.texnoposedufinance.data.model.response.EmployeeResponse
+import uz.texnopos.texnoposedufinance.data.model.response.ExpenseRequest
+import uz.texnopos.texnoposedufinance.data.model.response.SalaryResponse
+import uz.texnopos.texnoposedufinance.databinding.ItemSalaryBinding
 import uz.texnopos.texnoposedufinance.databinding.ItemTeacherBinding
 
-class SalaryAdapter: BaseAdapter<Teacher, SalaryAdapter.SalaryViewHolder>() {
-    inner class SalaryViewHolder(private val binding: ItemTeacherBinding): RecyclerView.ViewHolder(binding.root){
-        fun populateModel(model: Teacher){
+class SalaryAdapter: BaseAdapter<EmployeeResponse, SalaryAdapter.SalaryViewHolder>() {
+    inner class SalaryViewHolder(private val binding: ItemSalaryBinding): RecyclerView.ViewHolder(binding.root){
+        fun populateModel(model: EmployeeResponse){
             binding.apply {
+                val eSalary = mutableListOf<ExpenseRequest>()
+                var sum = 0
                 clItemTeacher.onClick {
                     onItemClick.invoke(model.id)
                 }
+                tvEmployeeName.text = model.name
+                model.mySalary.forEach { e ->
+                    eSalary.add(e)
+                }
+                eSalary.forEach {m ->
+                    sum += m.amount
+                }
+                tvSalary.text = sum.toString()
             }
         }
     }
@@ -24,8 +38,8 @@ class SalaryAdapter: BaseAdapter<Teacher, SalaryAdapter.SalaryViewHolder>() {
         this.onItemClick = onItemClick
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SalaryViewHolder {
-        val itemView = parent.inflate(R.layout.item_teacher)
-        val binding = ItemTeacherBinding.bind(itemView)
+        val itemView = parent.inflate(R.layout.item_salary)
+        val binding = ItemSalaryBinding.bind(itemView)
         return SalaryViewHolder(binding)
     }
 
