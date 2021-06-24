@@ -116,7 +116,7 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
                                 employ = adapterView.getItemAtPosition(index).toString()
                                 employeeId = allEmployeeId[index]
                             }
-                            ctViewModel.expenseCategory.value?.data!![i].name
+                           // ctViewModel.expenseCategory.value?.data!![i].name
                         }
                     }
                     btnSave.onClick {
@@ -148,15 +148,15 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
         binding.apply {
             ctViewModel.expenseCategory.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-                    ResourceState.LOADING -> loading.visibility(true)
-                    ResourceState.SUCCESS -> {
-                        loading.visibility(false)
-                        categoryAdapter.addAll(it.data!!.map { e -> e.name })
-                    }
-                    ResourceState.ERROR -> {
-                        loading.visibility(false)
-                        toastLN(it.message)
-                    }
+//                    ResourceState.LOADING -> loading.visibility(true)
+//                    ResourceState.SUCCESS -> {
+//                        loading.visibility(false)
+//                        categoryAdapter.addAll(it.data!!.map { e -> e.name })
+//                    }
+//                    ResourceState.ERROR -> {
+//                        loading.visibility(false)
+//                        toastLN(it.message)
+//                    }
                 }
             })
             tViewModel.teacherList.observe(viewLifecycleOwner, Observer {

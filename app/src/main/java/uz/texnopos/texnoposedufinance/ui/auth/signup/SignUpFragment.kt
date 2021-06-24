@@ -12,6 +12,7 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.FragmentSignUpBinding
+import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 
 class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 

@@ -13,6 +13,7 @@ import org.koin.android.ext.android.inject
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.databinding.FragmentSplashBinding
+import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 
 class SplashFragment : BaseFragment(R.layout.fragment_splash) {
     private val auth: FirebaseAuth by inject()

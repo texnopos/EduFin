@@ -3,7 +3,6 @@ package uz.texnopos.texnoposedufinance.ui.main.report
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
@@ -11,6 +10,7 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
 import uz.texnopos.texnoposedufinance.databinding.ActionBarReportBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentReportsBinding
+import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import java.text.SimpleDateFormat
@@ -19,12 +19,10 @@ import java.util.*
 class ReportFragment : BaseFragment(R.layout.fragment_reports) {
     private lateinit var binding: FragmentReportsBinding
     private lateinit var actBinding: ActionBarReportBinding
-    private val viewModel: ReportViewModel by viewModel()
     private lateinit var adapter: ViewPagerAdapter
     var currentDate = 0L
     var toLong = 0L
     var fromLong = 0L
-
 
     @SuppressLint("SimpleDateFormat", "ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,6 +35,9 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
         val day = toString.substring(0, 2)
         toLong = calendar.timeInMillis
         fromLong = toLong - day.toInt() * 3600 * 1000 * 24
+        if ((requireActivity() as MainActivity).report.value == null) {
+            (requireActivity() as MainActivity).getReport()
+        }
         adapter = ViewPagerAdapter(
             requireActivity().supportFragmentManager,
             lifecycle
@@ -44,9 +45,6 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
         binding = FragmentReportsBinding.bind(view)
         actBinding = ActionBarReportBinding.bind(view)
         setUpObservers()
-        if (viewModel.report.value == null) {
-            viewModel.getReports(fromLong, toLong)
-        }
 
         actBinding.apply {
             tvTitle.text = context?.getString(R.string.reports)
@@ -162,7 +160,7 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
 
     private fun setUpObservers() {
         binding.apply {
-            viewModel.report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            (requireActivity() as MainActivity).report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 adapter.setReport(it)
                 when (it.status) {
                     ResourceState.SUCCESS -> {

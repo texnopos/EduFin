@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:allowBackup="true"
         android:theme="@style/Theme.TexnoPOSEDUFinance">
-        <activity android:name=".MainActivity"
+        <activity android:name=".ui.app.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>

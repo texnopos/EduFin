@@ -17,6 +17,7 @@ import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.data.firebase.*
 import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 import uz.texnopos.texnoposedufinance.data.retrofit.ApiInterface
+import uz.texnopos.texnoposedufinance.ui.app.MainActivityViewModel
 import uz.texnopos.texnoposedufinance.ui.auth.signin.SignInViewModel
 import uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpViewModel
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
@@ -101,6 +102,7 @@ val viewModelModule = module {
     viewModel { InfoViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
     viewModel { ReportViewModel(get(), get()) }
+    viewModel { MainActivityViewModel(get()) }
 }
 val adapterModule = module {
     single { CourseAdapter() }

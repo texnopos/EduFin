@@ -59,7 +59,7 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
         onSuccess: (List<Student>) -> Unit,
         onFailure: (msg: String) -> Unit
     ) {
-        val call: Call<List<Student>> = apiInterface.selectExistingStudentToGroup(orgId, groupId)
+        val call: Call<List<Student>> = apiInterface.selectExistingStudentToGroup(orgId!!, groupId)
         call.enqueue(object : Callback<List<Student>> {
             override fun onFailure(call: Call<List<Student>>, t: Throwable) {
                 onFailure.invoke(t.localizedMessage!!)
