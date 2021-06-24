@@ -61,7 +61,7 @@
         tools:layout="@layout/fragment_teachers"/>
     <fragment
         android:id="@+id/nav_student"
-        android:name="uz.texnopos.texnoposedufinance.ui.main.student.StudentsFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.student.StudentFragment"
         android:label="StudentsFragment" />
     <fragment
         android:id="@+id/nav_category"

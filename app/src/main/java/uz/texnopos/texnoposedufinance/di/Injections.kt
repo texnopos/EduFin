@@ -22,18 +22,15 @@ import uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpViewModel
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseAdapter
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
-import uz.texnopos.texnoposedufinance.ui.main.course.add.AddCourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
-import uz.texnopos.texnoposedufinance.ui.main.teacher.add.AddTeacherViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.AddGroupViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.info.GroupInfoAdapter
 import uz.texnopos.texnoposedufinance.ui.main.info.InfoViewModel
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 import uz.texnopos.texnoposedufinance.ui.main.student.StudentAdapter
-import uz.texnopos.texnoposedufinance.ui.main.student.StudentsViewModel
-import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentViewModel
 import uz.texnopos.texnoposedufinance.ui.main.student.add.select_existing_student.SelectExistingStudentAdapter
 import uz.texnopos.texnoposedufinance.ui.main.student.select.SelectStudentsAdapter
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherAdapter
@@ -63,9 +60,9 @@ val networkModule = module {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
             .retryOnConnectionFailure(false)
             .build()
 
@@ -97,13 +94,10 @@ val viewModelModule = module {
     viewModel { SignInViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { TeacherViewModel(get()) }
-    viewModel { AddTeacherViewModel(get()) }
-    viewModel { CourseViewModel(get()) }
-    viewModel { AddCourseViewModel(get()) }
-    viewModel { AddGroupViewModel(get(), get()) }
+    viewModel { CourseViewModel(get(), get()) }
+    viewModel { AddGroupViewModel(get()) }
     viewModel { GroupInfoViewModel(get()) }
-    viewModel { CreateStudentViewModel(get(), get()) }
-    viewModel { StudentsViewModel(get(), get()) }
+    viewModel { StudentViewModel(get(), get()) }
     viewModel { InfoViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
     viewModel { ReportViewModel(get(), get()) }

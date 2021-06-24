@@ -24,8 +24,7 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
     var currentDate = 0L
     var toLong = 0L
     var fromLong = 0L
-    var allIncome = 0
-    var allExpense = 0
+
 
     @SuppressLint("SimpleDateFormat", "ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -167,6 +166,8 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                 adapter.setReport(it)
                 when (it.status) {
                     ResourceState.SUCCESS -> {
+                        var allIncome = 0
+                        var allExpense = 0
                         val incomeList = mutableListOf<MyResponse>()
                         val expenseList = mutableListOf<MyResponse>()
                         it.data!!.incomeCategories.forEach { i ->
@@ -180,6 +181,7 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                             allIncome += sum
                         }
                         tvIncomeAmount.text = context?.getString(R.string.amountIncomes, allIncome)
+
 
                         it.data.expenseCategories.forEach { e ->
                             expenseList.add(e)

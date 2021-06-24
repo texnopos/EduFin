@@ -45,11 +45,24 @@ class CategoryHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     }
 
     fun getAllExpenseCategories(
-        onSuccess: (List<ExpenseCategory>) -> Unit,
+        onAdded: (ExpenseCategory)->Unit,
+        onModified: (ExpenseCategory)->Unit,
+        onRemoved: (ExpenseCategory) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-
         db.collection("users/$orgId/expenseCategory").addSnapshotListener { value, error ->
+            if (error != null) {
+                onFailure.invoke(error.message.toString())
+            }
+            for (doc in value!!.documentChanges) {
+                when(doc.type) {
+                    DocumentChange.Type.ADDED -> onAdded(doc.document.toObject(ExpenseCategory::class.java))
+                    DocumentChange.Type.MODIFIED -> onModified(doc.document.toObject(ExpenseCategory::class.java))
+                    DocumentChange.Type.REMOVED -> onRemoved(doc.document.toObject(ExpenseCategory::class.java))
+                }
+            }
+        }
+        /*db.collection("users/$orgId/expenseCategory").addSnapshotListener { value, error ->
             if (error != null) {
                 onFailure.invoke(error.message.toString())
             }
@@ -58,19 +71,7 @@ class CategoryHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
                 categories.add(doc.toObject(ExpenseCategory::class.java))
             }
             onSuccess.invoke(categories)
-        }
-        /*db.collection("users/$orgId/expenseCategory").get()
-            .addOnSuccessListener {doc ->
-                if(doc.documents.isNotEmpty()){
-                    onSuccess.invoke(doc.documents.map {
-                        it.toObject(ExpenseCategory::class.java)?: ExpenseCategory()
-                    })
-                }
-                else onSuccess.invoke(listOf())
-            }
-            .addOnFailureListener {
-                onFailure.invoke(it.message)
-            }*/
+        }*/
     }
 
     fun addExpenseCategory(

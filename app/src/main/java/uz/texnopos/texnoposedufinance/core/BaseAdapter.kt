@@ -10,6 +10,19 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapt
             notifyDataSetChanged()
         }
 
+    fun onAdded(data: T) {
+        val list = models.toMutableList()
+        list.add(data)
+        models = list
+        notifyItemInserted(list.lastIndex)
+    }
+    fun onRemoved(data: T) {
+        val index = models.indexOf(data)
+        val list = models.toMutableList()
+        list.removeAt(index)
+        models = list
+        notifyItemRemoved(index)
+    }
     fun update() {
         notifyDataSetChanged()
     }

@@ -26,6 +26,7 @@ import uz.texnopos.texnoposedufinance.data.model.SendParticipantDataRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCreateParticipantBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentViewModel
 import java.util.*
 
 class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_participant) {
@@ -34,7 +35,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
     private lateinit var navController: NavController
     private lateinit var parentNavController: NavController
     private val args: CreateParticipantFragmentArgs by navArgs()
-    private val viewModel: CreateStudentViewModel by viewModel()
+    private val viewModel: StudentViewModel by viewModel()
     private lateinit var myGroup: Group
     private lateinit var studentId: String
     private var birthDate: Long = 0L
@@ -143,7 +144,6 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
             }
         }
         setUpObservers()
-        setUpObserversStudent()
     }
 
     private fun setUpObservers() {
@@ -216,11 +216,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                     }
                 }
             })
-        }
-    }
 
-    private fun setUpObserversStudent() {
-        binding.apply {
             viewModel.student.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {

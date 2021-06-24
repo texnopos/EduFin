@@ -15,11 +15,12 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddTeacherBinding
+import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 
 
 class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
 
-    private val viewModel: AddTeacherViewModel by viewModel()
+    private val viewModel: TeacherViewModel by viewModel()
     private lateinit var binding: FragmentAddTeacherBinding
     private lateinit var navController: NavController
     private lateinit var actBinding: ActionBarAddBinding
@@ -97,7 +98,7 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                     ResourceState.SUCCESS -> {
                         loading.visibility = View.GONE
                         isLoading(false)
-                        toastLN(getString(R.string.added_new_teacher))
+                        toastLN(getString(R.string.added_successfully))
                         navController.popBackStack()
                     }
                     ResourceState.ERROR -> {

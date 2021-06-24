@@ -9,13 +9,25 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.ExpenseCategory
 import uz.texnopos.texnoposedufinance.databinding.ItemCategoryBinding
 
-class ExpenseCategoryAdapter: BaseAdapter<ExpenseCategory, ExpenseCategoryAdapter.ExpenseCategoryVH>(){
+class ExpenseCategoryAdapter :
+    BaseAdapter<ExpenseCategory, ExpenseCategoryAdapter.ExpenseCategoryVH>() {
     private var onItemClicked: (name: String) -> Unit = {}
     fun setOnItemClickListener(onGroupItemClicked: (name: String) -> Unit) {
         this.onItemClicked = onGroupItemClicked
     }
-    inner class ExpenseCategoryVH(private val binding: ItemCategoryBinding): RecyclerView.ViewHolder(binding.root){
-        fun populateModel(model: ExpenseCategory){
+
+    fun onModified(data: ExpenseCategory) {
+        val prev = models.find { it.id == data.id }!!
+        val index = models.indexOf(prev)
+        val list = models.toMutableList()
+        list[index] = data
+        models = list
+        notifyItemChanged(index)
+    }
+
+    inner class ExpenseCategoryVH(private val binding: ItemCategoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun populateModel(model: ExpenseCategory) {
             binding.apply {
                 tvCategoryName.text = model.name
                 llCategory.onClick {

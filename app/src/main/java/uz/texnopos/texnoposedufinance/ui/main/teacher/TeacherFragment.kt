@@ -10,6 +10,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.RealtimeChangesResourceState
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
@@ -37,10 +38,6 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
         setUpObservers()
         binding.apply {
             rcvTeachers.adapter = adapter
-            srlTeachers.setOnRefreshListener {
-                viewModel.getAllTeachers()
-                loading.visibility(false)
-            }
         }
         if (requireParentFragment().requireActivity() is MainActivity) {
             parentNavController = Navigation.findNavController(requireParentFragment().requireActivity() as MainActivity, R.id.nav_host)
@@ -53,26 +50,28 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
     }
 
     private fun setUpObservers() {
+        adapter.models = mutableListOf()
         binding.apply {
             viewModel.teacherList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-                    ResourceState.LOADING -> {
-                        isLoading(true)
+                    RealtimeChangesResourceState.LOADING -> {
+                        loading.visibility(true)
                     }
-                    ResourceState.SUCCESS -> {
-                        isLoading(false)
-                        if (it.data!!.isNotEmpty()) {
-                            tvEmptyList.visibility = View.GONE
-                            rcvTeachers.visibility = View.VISIBLE
-                            adapter.models = it.data
-                        } else {
-                            tvEmptyList.visibility = View.VISIBLE
-                            rcvTeachers.visibility = View.GONE
-                        }
+                    RealtimeChangesResourceState.ADDED -> {
+                        loading.visibility(false)
+                        adapter.onAdded(it.data!!)
                     }
-                    ResourceState.ERROR -> {
-                        isLoading(false)
+                    RealtimeChangesResourceState.MODIFIED -> {
+                        loading.visibility(false)
+                        adapter.onModified(it.data!!)
+                    }
+                    RealtimeChangesResourceState.REMOVED -> {
+                        loading.visibility(false)
+                        adapter.onRemoved(it.data!!)
+                    }
+                    RealtimeChangesResourceState.ERROR -> {
                         toastLN(it.message)
+                        loading.visibility(false)
                     }
                 }
             })
@@ -81,7 +80,6 @@ class TeacherFragment : BaseFragment(R.layout.fragment_teachers) {
     private fun isLoading(b: Boolean){
         binding.apply {
             loading.visibility(b)
-            srlTeachers.isRefreshing = false
             rcvTeachers.visibility(!b)
         }
     }

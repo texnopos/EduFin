@@ -23,10 +23,6 @@ class IncomeCategoryFragment : BaseFragment(R.layout.fragment_income_category) {
             rcvCategory.adapter = adapter
             setUpObservers()
             viewModel.getAllIncomeCategories()
-            srlCategory.setOnRefreshListener {
-                srlCategory.isRefreshing = false
-                viewModel.getAllIncomeCategories()
-            }
             rcvCategory.addItemDecoration(DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL))
         }
     }
@@ -36,27 +32,22 @@ class IncomeCategoryFragment : BaseFragment(R.layout.fragment_income_category) {
             viewModel.incomeCategory.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     RealtimeChangesResourceState.LOADING -> {
-                        srlCategory.isRefreshing = false
                         loading.visibility(true)
                     }
                     RealtimeChangesResourceState.ADDED -> {
-                        srlCategory.isRefreshing = false
                         loading.visibility(false)
                         adapter.onAdded(it.data!!)
                     }
                     RealtimeChangesResourceState.MODIFIED -> {
-                        srlCategory.isRefreshing = false
                         loading.visibility(false)
                         adapter.onModified(it.data!!)
                     }
                     RealtimeChangesResourceState.REMOVED -> {
-                        srlCategory.isRefreshing = false
                         loading.visibility(false)
                         adapter.onRemoved(it.data!!)
                     }
                     RealtimeChangesResourceState.ERROR -> {
                         toastLN(it.message)
-                        srlCategory.isRefreshing = false
                         loading.visibility(false)
                     }
                 }

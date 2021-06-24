@@ -19,16 +19,14 @@ import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.*
 import uz.texnopos.texnoposedufinance.databinding.FragmentSelectStudentsBinding
 import uz.texnopos.texnoposedufinance.databinding.SelectActionBarBinding
-import uz.texnopos.texnoposedufinance.ui.main.student.StudentsViewModel
-import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentViewModel
 import java.util.*
 
 class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
     private lateinit var binding: FragmentSelectStudentsBinding
     private lateinit var actBinding: SelectActionBarBinding
     private val adapter: SelectStudentsAdapter by inject()
-    private val viewModel: StudentsViewModel by viewModel()
-    private val vm: CreateStudentViewModel by viewModel()
+    private val viewModel: StudentViewModel by viewModel()
     private val args: SelectStudentsFragmentArgs by navArgs()
     private lateinit var newParticipant: SendParticipantDataRequest
     private val auth: FirebaseAuth by inject()
@@ -73,7 +71,7 @@ class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
                         val id = UUID.randomUUID().toString()
                         if (contract.isNotEmpty()) {
                             val cnt = contract.toInt()
-                            vm.checkContract(ContractRequest(auth.currentUser!!.uid, cnt))
+                            viewModel.checkContract(ContractRequest(auth.currentUser!!.uid, cnt))
                             newParticipant = SendParticipantDataRequest(
                                 id,
                                 student.id,
@@ -103,7 +101,7 @@ class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
 
     private fun setUpObserversCheck() {
         binding.apply {
-            vm.contract.observe(viewLifecycleOwner, Observer {
+            viewModel.contract.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {
                         isLoadingDialog(true)
@@ -116,7 +114,7 @@ class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
                             loading.visibility(false)
                         }
                         if (it.data == "success") {
-                            vm.createParticipantWithStudentId(newParticipant)
+                            viewModel.createParticipantWithStudentId(newParticipant)
                             dialog.dismiss()
                         }
                     }
@@ -170,14 +168,14 @@ class SelectStudentsFragment : BaseFragment(R.layout.fragment_select_students) {
 
     private fun setUpObserversCreateParticipant() {
         binding.apply {
-            vm.createParticipantWithStudentId.observe(viewLifecycleOwner, Observer { st ->
+            viewModel.createParticipantWithStudentId.observe(viewLifecycleOwner, Observer { st ->
                 when (st.status) {
                     ResourceState.LOADING -> {
                         dialog.binding.loading.visibility(true)
                     }
                     ResourceState.SUCCESS -> {
                         if (st.data == "success") {
-                            vm.createParticipantWithStudentId(newParticipant)
+                            viewModel.createParticipantWithStudentId(newParticipant)
                             toastLN(context?.getString(R.string.added_successfully))
                             viewModel.selectExistingStudentToGroup(group.id)
                             dialog.binding.loading.visibility(false)

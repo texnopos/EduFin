@@ -37,17 +37,26 @@ class CategoryViewModel(private val helper: CategoryHelper) : ViewModel() {
         )
     }
 
-    private val _expenseCategory: MutableLiveData<Resource<List<ExpenseCategory>>> =
+    private val _expenseCategory: MutableLiveData<RealtimeChangesResource<ExpenseCategory>> =
         MutableLiveData()
-    val expenseCategory: LiveData<Resource<List<ExpenseCategory>>>
+    val expenseCategory: LiveData<RealtimeChangesResource<ExpenseCategory>>
         get() = _expenseCategory
 
     fun getAllExpenseCategories() {
-        _expenseCategory.value = Resource.loading()
+        _expenseCategory.value = RealtimeChangesResource.loading()
         helper.getAllExpenseCategories(
             {
-                _expenseCategory.value = Resource.success(it)
-            }, { _expenseCategory.value = Resource.error(it) })
+                _expenseCategory.value = RealtimeChangesResource.onAdded(it)
+            },
+            {
+                _expenseCategory.value = RealtimeChangesResource.onModified(it)
+            },
+            {
+                _expenseCategory.value = RealtimeChangesResource.onRemoved(it)
+            },
+            {
+                _expenseCategory.value = RealtimeChangesResource.error(it)
+            })
     }
 
     private val _incomeCategory: MutableLiveData<RealtimeChangesResource<IncomeCategory>> = MutableLiveData()

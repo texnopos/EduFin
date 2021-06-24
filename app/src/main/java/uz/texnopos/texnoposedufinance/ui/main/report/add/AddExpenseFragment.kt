@@ -13,6 +13,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.RealtimeChangesResourceState
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
@@ -40,10 +41,13 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
     private lateinit var actBinding: ActionBarAddBinding
     private val allCategory = mutableListOf<String>()
     private val allEmployee = mutableListOf<String>()
+    private val allEmployeeId = mutableListOf<String>()
     private lateinit var categoryAdapter: ArrayAdapter<String>
     private lateinit var employeeAdapter: ArrayAdapter<String>
     var employeeId = ""
+    var employ = ""
     val auth: FirebaseAuth by inject()
+
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -109,7 +113,8 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
                             if(adapterView.getItemAtPosition(index)
                                     .toString() != view.context.getString(R.string.doNotSelected)
                             ) {
-                               employeeId = tViewModel.teacherList.value!!.data!![index].id
+                                employ = adapterView.getItemAtPosition(index).toString()
+                                employeeId = allEmployeeId[index]
                             }
                             ctViewModel.expenseCategory.value?.data!![i].name
                         }
@@ -137,6 +142,9 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
     }
 
     private fun setUpObservers() {
+        allEmployeeId.clear()
+        allEmployee.clear()
+        allCategory.clear()
         binding.apply {
             ctViewModel.expenseCategory.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -153,14 +161,19 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
             })
             tViewModel.teacherList.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-                    ResourceState.LOADING -> loading.visibility(true)
-                    ResourceState.SUCCESS -> {
-                        loading.visibility(false)
-                        employeeAdapter.addAll(it.data!!.map { e -> e.name })
+                    RealtimeChangesResourceState.LOADING -> {
+                        loading.visibility(true)
                     }
-                    ResourceState.ERROR -> {
+                    RealtimeChangesResourceState.ADDED -> {
+                        loading.visibility(false)
+                        employeeAdapter.add(it.data!!.name)
+                        allEmployeeId.add(it.data.id)
+                    }
+                    RealtimeChangesResourceState.ERROR -> {
                         loading.visibility(false)
                         toastLN(it.message)
+                    }
+                    else -> {
                     }
                 }
             })
@@ -201,6 +214,5 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
                 btnSave.enabled(b)
             }
         }
-
     }
 }

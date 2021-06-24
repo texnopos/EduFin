@@ -16,13 +16,14 @@ import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddStudentBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentViewModel
 import java.util.*
 
 class CreateStudentFragment : BaseFragment(R.layout.fragment_add_student) {
     lateinit var binding: FragmentAddStudentBinding
     lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
-    private val viewModel: CreateStudentViewModel by viewModel()
+    private val viewModel: StudentViewModel by viewModel()
     lateinit var studentId: String
     private var createdDate = 0L
     private var birthDate = 0L

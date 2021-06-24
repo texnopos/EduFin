@@ -11,16 +11,11 @@ import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.data.model.Teacher
 
-class AddGroupViewModel(private val helper: GroupHelper,
-                        private val teacherHelper: TeacherHelper): ViewModel() {
+class AddGroupViewModel(private val helper: GroupHelper): ViewModel() {
 
     private val _createGroup: MutableLiveData<Resource<Group?>> = MutableLiveData()
     val createGroup: LiveData<Resource<Group?>>
         get() = _createGroup
-
-    private val _teacherList: MutableLiveData<Resource<List<Teacher>>> = MutableLiveData()
-    val teacherList: LiveData<Resource<List<Teacher>>>
-        get() = _teacherList
 
     fun createGroup(name: String,
                     teacher: String,
@@ -38,17 +33,6 @@ class AddGroupViewModel(private val helper: GroupHelper,
             },
             {
                 _createGroup.value = Resource.error(it)
-            }
-        )
-    }
-    fun getAllTeachers() {
-        _teacherList.value = Resource.loading()
-        teacherHelper.getAllTeachers(
-            {
-                _teacherList.value = Resource.success(it)
-            },
-            {
-                _teacherList.value = Resource.error(it)
             }
         )
     }

@@ -1,15 +1,38 @@
 package uz.texnopos.texnoposedufinance.data.firebase
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import uz.texnopos.texnoposedufinance.data.model.Course
+import uz.texnopos.texnoposedufinance.data.model.IncomeCategory
 import uz.texnopos.texnoposedufinance.data.model.Teacher
 import java.util.*
 
 class TeacherHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val orgId = auth.currentUser!!.uid
+
     fun getAllTeachers(
+        onAdded: (Teacher)->Unit,
+        onModified: (Teacher)->Unit,
+        onRemoved: (Teacher) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        db.collection("users/$orgId/teachers").addSnapshotListener { value, error ->
+            if (error != null) {
+                onFailure.invoke(error.message.toString())
+            }
+            for (doc in value!!.documentChanges) {
+                when(doc.type) {
+                    DocumentChange.Type.ADDED -> onAdded(doc.document.toObject(Teacher::class.java))
+                    DocumentChange.Type.MODIFIED -> onModified(doc.document.toObject(Teacher::class.java))
+                    DocumentChange.Type.REMOVED -> onRemoved(doc.document.toObject(Teacher::class.java))
+                }
+            }
+        }
+    }
+
+    /*fun getAllTeachers(
         onSuccess: (list: List<Teacher>) -> Unit,
         onFailure: (msg: String?) -> Unit) {
         db.collection("users/$orgId/teachers").get()
@@ -24,7 +47,7 @@ class TeacherHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
             .addOnFailureListener {
                 onFailure.invoke(it.localizedMessage)
             }
-    }
+    }*/
 
     fun createTeacher(
         name: String, phone: String, username: String, password: String, salary: String,

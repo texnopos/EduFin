@@ -42,7 +42,6 @@ class AddExpenseCategoryFragment(private val fr: AddCategoryFragment): BaseFragm
                     ResourceState.SUCCESS ->{
                         isLoading(false)
                         toastLN(context?.getString(R.string.added_successfully))
-                        viewModel.getAllIncomeCategories()
                         fr.navController.popBackStack()
                     }
                     ResourceState.ERROR ->{

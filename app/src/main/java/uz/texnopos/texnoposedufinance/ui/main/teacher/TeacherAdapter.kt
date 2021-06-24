@@ -17,6 +17,15 @@ class TeacherAdapter :
         this.onItemClick = onItemClick
     }
 
+    fun onModified(data: Teacher) {
+        val prev = models.find { it.id == data.id }!!
+        val index = models.indexOf(prev)
+        val list = models.toMutableList()
+        list[index] = data
+        models = list
+        notifyItemChanged(index)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeacherViewHolder {
         val itemView = parent.inflate(R.layout.item_teacher)
         val binding =ItemTeacherBinding.bind(itemView)
