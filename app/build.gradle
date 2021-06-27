@@ -22,7 +22,10 @@ android {
         buildFeatures{
             viewBinding = true
         }
-       
+
+        dataBinding{
+            enabled true
+        }
 
     }
     buildTypes {
@@ -113,7 +116,13 @@ dependencies {
     //gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    //sdp
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    //lottie
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
+    //mask for edit-text
+    implementation 'com.github.santalu:mask-edittext:1.0.1'
+
+    //xEditText
+    implementation 'com.xw.repo:xedittext:2.3.0'
 }

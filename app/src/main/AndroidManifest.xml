@@ -3,6 +3,8 @@
     package="uz.texnopos.texnoposedufinance">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -12,7 +14,7 @@
         android:supportsRtl="true"
         android:allowBackup="true"
         android:theme="@style/Theme.TexnoPOSEDUFinance">
-        <activity android:name=".MainActivity"
+        <activity android:name=".ui.app.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>

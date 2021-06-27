@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/internetConnection">
     <fragment
         android:id="@+id/signUpFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpFragment"
@@ -88,8 +88,16 @@
             app:destination="@id/addInfoFragment" />
         <action
             android:id="@+id/action_mainFragment_to_addCategoryFragment"
-            app:destination="@id/addCategoryFragment"
-            />
+            app:destination="@id/addCategoryFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addIncomeFragment"
+            app:destination="@id/addIncomeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_salaryFragment"
+            app:destination="@id/salaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -199,5 +207,36 @@
         <argument
             android:name="position"
             app:argType="integer"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addIncomeFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.report.add.AddIncomeFragment"
+        android:label="AddIncomeFragment"
+        tools:layout="@layout/fragment_add_income"/>
+
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.report.add.AddExpenseFragment"
+        android:label="AddExpenseFragment"
+        tools:layout="@layout/fragment_add_expense"/>
+    <fragment
+        android:id="@+id/salaryFragment"
+        android:name="uz.texnopos.texnoposedufinance.ui.main.salary.SalaryFragment"
+        android:label="SalaryFragment"
+        tools:layout="@layout/fragment_salary"/>
+    <fragment
+        android:id="@+id/internetConnection"
+        android:name="uz.texnopos.texnoposedufinance.ui.internet.InternetConnection"
+        android:label="InternetConnection" >
+        <action
+            android:id="@+id/action_internetConnection_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/internetConnection"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

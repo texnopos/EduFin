@@ -15,11 +15,12 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddTeacherBinding
+import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 
 
 class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
 
-    private val viewModel: AddTeacherViewModel by viewModel()
+    private val viewModel: TeacherViewModel by viewModel()
     private lateinit var binding: FragmentAddTeacherBinding
     private lateinit var navController: NavController
     private lateinit var actBinding: ActionBarAddBinding
@@ -39,13 +40,14 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
         }
         binding.apply {
 
-            showPass.onClick {
-                showPassword()
-            }
+//            showPass.onClick {
+//                showPassword()
+//            }
 
             btnSave.onClick {
                 val name = etName.text.toString()
-                val phone = etPhone.text.toString()
+                var phone = etPhone.text.toString()
+                phone = phone.replace("\\s".toRegex(), "")
                 val username = etUsername.text.toString()
                 val password = etPassword.text.toString()
                 val confirmPass = etConfirmPass.text.toString()
@@ -97,7 +99,7 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
                     ResourceState.SUCCESS -> {
                         loading.visibility = View.GONE
                         isLoading(false)
-                        toastLN(getString(R.string.added_new_teacher))
+                        toastLN(getString(R.string.added_successfully))
                         navController.popBackStack()
                     }
                     ResourceState.ERROR -> {
@@ -122,15 +124,15 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
         }
     }
 
-    private fun showPassword() {
-        if (showPassword) {
-            binding.etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            binding.showPass.setImageResource(R.drawable.ic_visible)
-            showPassword = false
-        } else {
-            binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            binding.showPass.setImageResource(R.drawable.ic_unvisible)
-            showPassword = true
-        }
-    }
+//    private fun showPassword() {
+//        if (showPassword) {
+//            binding.etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+//            binding.showPass.setImageResource(R.drawable.ic_visible)
+//            showPassword = false
+//        } else {
+//            binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+//            binding.showPass.setImageResource(R.drawable.ic_unvisible)
+//            showPassword = true
+//        }
+//    }
 }

@@ -18,14 +18,14 @@ import uz.texnopos.texnoposedufinance.databinding.ItemCoursesBinding
 
 import uz.texnopos.texnoposedufinance.ui.main.group.GroupAdapter
 
-class CourseAdapter: BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
+class CourseAdapter : BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
 
     private var setAddGroup: (id: String, name: String) -> Unit = { s: String, s1: String -> }
     fun setAddGroupClicked(addGroupId: (id: String, name: String) -> Unit) {
         this.setAddGroup = addGroupId
     }
 
-    private var onGroupItemClicked: (group: String, course: String) -> Unit = {s, s1 ->}
+    private var onGroupItemClicked: (group: String, course: String) -> Unit = { s, s1 -> }
     fun setOnGroupItemClickListener(onGroupItemClicked: (group: String, course: String) -> Unit) {
         this.onGroupItemClicked = onGroupItemClicked
     }
@@ -58,21 +58,27 @@ class CourseAdapter: BaseAdapter<Course, CourseAdapter.CoursesViewHolder>() {
                     DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL)
                 )
                 val gsonPretty = GsonBuilder().setPrettyPrinting().create()
-                val jsonString = gsonPretty.toJson(Course(model.id, model.name, model.price, model.duration, model.groups ))
+                val jsonString = gsonPretty.toJson(
+                    Course(
+                        model.id,
+                        model.name,
+                        model.price,
+                        model.duration,
+                        model.groups
+                    )
+                )
                 rvGroups.visibility(false)
                 addGroup.visibility(false)
                 cvGroups.visibility(false)
                 line.visibility(false)
                 tvCourseName.text = model.name
-                tvGroupCount.text =
-                    root.context.getString(R.string.group_count, model.groups.size.toString())
-                tvPupilsCount.text =
-                    root.context.getString(R.string.period, model.duration)
+                tvGroupCount.text = root.context.getString(R.string.group_count, model.groups.size.toString())
+                tvPupilsCount.text = root.context.getString(R.string.period, model.duration)
                 rlLayout.setBackgroundResource(R.drawable.shape_teachers)
 
                 rlLayout.onClick {
                     val groupAdapter = GroupAdapter()
-                    groupAdapter.setOnItemClickListener {group ->
+                    groupAdapter.setOnItemClickListener { group ->
                         onGroupItemClicked.invoke(group, jsonString)
                     }
                     rvGroups.adapter = groupAdapter

@@ -13,10 +13,10 @@ import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentStudentsBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 
-class StudentsFragment: BaseFragment(R.layout.fragment_students) {
+class StudentFragment: BaseFragment(R.layout.fragment_students) {
     lateinit var binding: FragmentStudentsBinding
     lateinit var actionBarBinding: ActionBarBinding
-    private val viewModel: StudentsViewModel by viewModel()
+    private val viewModel: StudentViewModel by viewModel()
     private val adapter: StudentAdapter by inject()
     var passportList: ArrayList<String> = arrayListOf()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

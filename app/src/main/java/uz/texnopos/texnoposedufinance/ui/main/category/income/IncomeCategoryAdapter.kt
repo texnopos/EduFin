@@ -1,3 +1,4 @@
+
 package uz.texnopos.texnoposedufinance.ui.main.category.income
 
 import android.view.ViewGroup
@@ -17,12 +18,19 @@ class IncomeCategoryAdapter: BaseAdapter<IncomeCategory, IncomeCategoryAdapter.I
         }
     }
 
+    fun onModified(data: IncomeCategory) {
+        val prev = models.find { it.id == data.id }!!
+        val index = models.indexOf(prev)
+        val list = models.toMutableList()
+        list[index] = data
+        models = list
+        notifyItemChanged(index)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncomeCategoryVH {
         val itemView = parent.inflate(R.layout.item_category)
         val binding = ItemCategoryBinding.bind(itemView)
         return IncomeCategoryVH(binding)
     }
-
     override fun onBindViewHolder(holder: IncomeCategoryVH, position: Int) {
         holder.populateModel(models[position])
     }

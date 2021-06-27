@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/margin_middle"
-    android:layout_marginBottom="@dimen/margin_middle">
+    android:layout_marginBottom="@dimen/margin_middle"
+    android:background="@drawable/shape_teachers">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciAva"
@@ -28,7 +29,13 @@
         android:textSize="@dimen/text_size_standard"
         app:layout_constraintStart_toEndOf="@id/ciAva"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/tvUsername"
@@ -41,6 +48,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/ciAva"
         app:layout_constraintTop_toBottomOf="@id/tvTeacherName"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

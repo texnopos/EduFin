@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import uz.texnopos.texnoposedufinance.core.Resource
 import uz.texnopos.texnoposedufinance.data.firebase.InfoHelper
 import uz.texnopos.texnoposedufinance.data.model.Organization
+import uz.texnopos.texnoposedufinance.data.model.Teacher
 
 class InfoViewModel(private val helper: InfoHelper): ViewModel() {
     private val _org: MutableLiveData<Resource<Organization>> = MutableLiveData()

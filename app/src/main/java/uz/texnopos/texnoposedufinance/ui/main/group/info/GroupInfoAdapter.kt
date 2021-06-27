@@ -1,5 +1,6 @@
 package uz.texnopos.texnoposedufinance.ui.main.group.info
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -44,17 +45,29 @@ class GroupInfoAdapter : BaseAdapter<ParticipantResponse, GroupInfoAdapter.Group
             }
         }
 
+        @SuppressLint("ResourceAsColor")
         fun populateModel(model: ParticipantResponse) {
             binding.apply {
                 model.apply {
-                    tvName.text = student.name
-                    tvAddress.text = student.address
-                    tvContactNum.text = participant.contract.toString()
-                    tvPassport.text = student.passport
+                    tvName.text = root.context?.getString(R.string.studentName, student.name)
+                    tvAddress.text = root.context?.getString(R.string.studentAddress, student.address)
+                    tvContactNum.text = root.context?.getString(R.string.studentContract, participant.contract)
+                    tvPassport.text = root.context?.getString(R.string.studentPassport, student.passport)
                     setPeriodVisible(periodCount)
                     var paymentAmount = payments.map { it.amount }.sum()
                     val remainder = paymentAmount - coursePrice * periodCount
-                    tvRemainder.text = remainder.toString()
+                    when {
+                        remainder > 0 -> {
+                            tvRemainder.setTextColor(R.color.green)
+                            tvRemainder.visibility(true)
+                        }
+                        remainder == 0 -> tvRemainder.visibility(false)
+                        else -> {
+                            tvRemainder.setTextColor(R.color.red)
+                            tvRemainder.visibility(true)
+                        }
+                    }
+                    tvRemainder.text = root.context?.getString(R.string.studentRemainder, remainder)
                     periodViewList.forEach {
                         it.setImageResource(R.drawable.red_round)
                     }

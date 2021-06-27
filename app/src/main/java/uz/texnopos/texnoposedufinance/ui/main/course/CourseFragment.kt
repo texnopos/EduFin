@@ -5,25 +5,18 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.util.Assert
-import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import uz.texnopos.texnoposedufinance.MainActivity
+import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
-import uz.texnopos.texnoposedufinance.data.model.Course
-import uz.texnopos.texnoposedufinance.data.model.Group
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCoursesBinding
 import uz.texnopos.texnoposedufinance.ui.main.MainFragmentDirections
 
 class CourseFragment: BaseFragment(R.layout.fragment_courses) {
-
-    private val viewModel: CourseViewModel by viewModel()
     private val adapter: CourseAdapter by inject()
     private lateinit var binding: FragmentCoursesBinding
     lateinit var actBinding: ActionBarBinding
@@ -32,12 +25,13 @@ class CourseFragment: BaseFragment(R.layout.fragment_courses) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentCoursesBinding.bind(view)
         actBinding = ActionBarBinding.bind(view)
         navController = Navigation.findNavController(view)
+        if ((requireActivity() as MainActivity).course.value == null) {
+            (requireActivity() as MainActivity).getAllCourse()
+        }
         setUpObservers()
-
         adapter.onResponse {
             adapter.models = it
         }
@@ -63,17 +57,16 @@ class CourseFragment: BaseFragment(R.layout.fragment_courses) {
         }
         binding.apply {
             swlCourses.setOnRefreshListener {
-                viewModel.getAllCourses()
+                (requireActivity() as MainActivity).getAllCourse()
                 loading.visibility(false)
             }
             rcvCourses.adapter = adapter
         }
-        viewModel.getAllCourses()
     }
 
     private fun setUpObservers() {
         binding.apply {
-            viewModel.courseList.observe(viewLifecycleOwner, Observer {
+            (requireActivity() as MainActivity).course.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {
                         loading.visibility(true)

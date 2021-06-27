@@ -9,6 +9,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ItemAddExpenseCategoryBinding
@@ -42,7 +43,6 @@ class AddExpenseCategoryFragment(private val fr: AddCategoryFragment): BaseFragm
                     ResourceState.SUCCESS ->{
                         isLoading(false)
                         toastLN(context?.getString(R.string.added_successfully))
-                        viewModel.getAllIncomeCategories()
                         fr.navController.popBackStack()
                     }
                     ResourceState.ERROR ->{
@@ -55,8 +55,8 @@ class AddExpenseCategoryFragment(private val fr: AddCategoryFragment): BaseFragm
     }
     fun isLoading(b: Boolean){
         binding.apply {
-            btnSave.isEnabled = !b
-            etCategoryName.isEnabled = !b
+            btnSave.enabled(!b)
+            etCategoryName.enabled(!b)
             loading.visibility(b)
         }
     }

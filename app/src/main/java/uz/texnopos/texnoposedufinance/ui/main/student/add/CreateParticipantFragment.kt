@@ -14,7 +14,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import uz.texnopos.texnoposedufinance.MainActivity
+import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
@@ -26,6 +26,7 @@ import uz.texnopos.texnoposedufinance.data.model.SendParticipantDataRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentCreateParticipantBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentViewModel
 import java.util.*
 
 class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_participant) {
@@ -34,7 +35,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
     private lateinit var navController: NavController
     private lateinit var parentNavController: NavController
     private val args: CreateParticipantFragmentArgs by navArgs()
-    private val viewModel: CreateStudentViewModel by viewModel()
+    private val viewModel: StudentViewModel by viewModel()
     private lateinit var myGroup: Group
     private lateinit var studentId: String
     private var birthDate: Long = 0L
@@ -46,7 +47,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
     private lateinit var phone: ArrayList<String>
     private var createdDate: Long = 0L
     private lateinit var participant: CreateParticipantRequest
-    lateinit var orgId: String
+    private lateinit var orgId: String
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -103,25 +104,25 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
             }
             btnSave.onClick {
                 name = etName.text.toString()
-                val phone1 = etPhone1.text.toString()
-                val phone2 = etPhone2.text.toString()
+                var phone1 = etPhone1.text.toString()
+                phone1 = phone1.replace("\\s".toRegex(), "")
+                var phone2 = etPhone2.text.toString()
+                phone2 = phone2.replace("\\s".toRegex(), "")
                 address = etAddress.text.toString()
                 passport = etPassportNum.text.toString()
+                passport = passport.replace("\\s".toRegex(), "")
                 val contract = etContractNum.text.toString()
                 if (name.isEmpty()) etName.error = view.context.getString(R.string.fillField)
                 if (phone1.isEmpty()) etPhone1.error = view.context.getString(R.string.fillField)
                 if (phone2.isEmpty()) etPhone2.error = view.context.getString(R.string.fillField)
                 if (contract.isNotEmpty()) contractNum = contract.toInt()
-                if (passport.isEmpty()) etPassportNum.error =
-                    view.context.getString(R.string.fillField)
+                if (passport.isEmpty()) etPassportNum.error = view.context.getString(R.string.fillField)
                 if (address.isEmpty()) etAddress.error = view.context.getString(R.string.fillField)
                 if (birthDate == 0L) etBirthDate.error = view.context.getString(R.string.fillField)
-                if (contract.isEmpty()) etContractNum.error =
-                    view.context.getString(R.string.fillField)
+                if (contract.isEmpty()) etContractNum.error = view.context.getString(R.string.fillField)
                 scrollView.fullScroll(ScrollView.FOCUS_DOWN)
                 if (name.isNotEmpty() && phone1.isNotEmpty() && phone2.isNotEmpty() && passport.isNotEmpty()
-                    && address.isNotEmpty() && birthDate != 0L && contract.isNotEmpty()
-                ) {
+                    && address.isNotEmpty() && birthDate != 0L && contract.isNotEmpty()) {
                     phone = arrayListOf(phone1, phone2)
                     studentId = UUID.randomUUID().toString()
                     participant = CreateParticipantRequest(
@@ -143,7 +144,6 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
             }
         }
         setUpObservers()
-        setUpObserversStudent()
     }
 
     private fun setUpObservers() {
@@ -173,10 +173,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                                         phone = phone
                                     )
                                 )
-                                val action =
-                                    CreateParticipantFragmentDirections.actionCreateParticipantFragmentToSelectExistingStudentFragment(
-                                        jsonString
-                                    )
+                                val action = CreateParticipantFragmentDirections.actionCreateParticipantFragmentToSelectExistingStudentFragment(jsonString)
                                 parentNavController.navigate(action)
                                 d.dismiss()
                             }
@@ -216,11 +213,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                     }
                 }
             })
-        }
-    }
 
-    private fun setUpObserversStudent() {
-        binding.apply {
             viewModel.student.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {

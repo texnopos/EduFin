@@ -14,11 +14,12 @@ import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddCourseBinding
+import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 
 
 class AddCourseFragment : BaseFragment(R.layout.fragment_add_course){
 
-    private val viewModel: AddCourseViewModel by viewModel()
+    private val viewModel: CourseViewModel by viewModel()
     lateinit var binding: FragmentAddCourseBinding
     lateinit var bindingActBar: ActionBarAddBinding
     lateinit var navController: NavController

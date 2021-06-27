@@ -17,6 +17,7 @@ import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.FragmentSignInBinding
+import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 
 class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 

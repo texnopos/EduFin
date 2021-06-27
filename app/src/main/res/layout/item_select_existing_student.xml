@@ -27,7 +27,13 @@
                 android:textColor="@color/black"
                 android:layout_marginTop="@dimen/margin_middle"
                 android:layout_marginStart="@dimen/margin_middle"
-                tools:ignore="SpUsage" />
+                tools:ignore="SpUsage"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"/>
             <TextView
                 android:id="@+id/tvPassport"
                 android:layout_width="wrap_content"
@@ -38,7 +44,13 @@
                 android:textSize="@dimen/text_size_standard"
                 android:layout_below="@id/tvName"
                 android:layout_alignParentStart="true"
-                tools:ignore="SpUsage" />
+                tools:ignore="SpUsage"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"/>
             <TextView
                 android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
@@ -49,7 +61,13 @@
                 android:textSize="@dimen/text_size_standard"
                 android:layout_below="@id/tvPassport"
                 android:layout_alignParentStart="true"
-                tools:ignore="SpUsage" />
+                tools:ignore="SpUsage"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"/>
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvCourseName"
                 android:layout_width="wrap_content"
@@ -61,7 +79,13 @@
                 android:layout_alignParentStart="true"
                 tools:ignore="SpUsage"
                 android:layout_marginBottom="@dimen/margin_middle"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

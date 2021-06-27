@@ -16,13 +16,14 @@ import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddStudentBinding
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentViewModel
 import java.util.*
 
 class CreateStudentFragment : BaseFragment(R.layout.fragment_add_student) {
     lateinit var binding: FragmentAddStudentBinding
     lateinit var actBinding: ActionBarAddBinding
     private lateinit var navController: NavController
-    private val viewModel: CreateStudentViewModel by viewModel()
+    private val viewModel: StudentViewModel by viewModel()
     lateinit var studentId: String
     private var createdDate = 0L
     private var birthDate = 0L
@@ -69,10 +70,13 @@ class CreateStudentFragment : BaseFragment(R.layout.fragment_add_student) {
                 }
             }
             btnSave.onClick {
-                val passport = etPassportNum.text.toString()
+                var passport = etPassportNum.text.toString()
+                passport = passport.replace("\\s".toRegex(), "")
                 val name = etName.text.toString()
-                val phone1 = etPhone1.text.toString()
-                val phone2 = etPhone2.text.toString()
+                var phone1 = etPhone1.text.toString()
+                phone1 = phone1.replace("\\s".toRegex(), "")
+                var phone2 = etPhone2.text.toString()
+                phone2 = phone2.replace("\\s".toRegex(), "")
                 val interested = etStudy.text.toString()
                 val address = etAddress.text.toString()
                 if (passport.isEmpty()) etPassportNum.error =

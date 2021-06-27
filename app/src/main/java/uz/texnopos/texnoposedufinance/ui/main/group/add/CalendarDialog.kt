@@ -12,5 +12,6 @@ class CalendarDialog(context: Context) : Dialog(context) {
         super.onCreate(savedInstanceState)
         binding = DialogCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.cvCalendar.maxDate = System.currentTimeMillis()
     }
 }

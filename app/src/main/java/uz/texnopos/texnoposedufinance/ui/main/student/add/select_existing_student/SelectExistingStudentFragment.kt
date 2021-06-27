@@ -20,12 +20,12 @@ import uz.texnopos.texnoposedufinance.data.model.SendParticipantDataRequest
 import uz.texnopos.texnoposedufinance.data.model.Student
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentSelectExistingStudentBinding
-import uz.texnopos.texnoposedufinance.ui.main.student.add.CreateStudentViewModel
+import uz.texnopos.texnoposedufinance.ui.main.student.StudentViewModel
 import java.util.*
 
 class SelectExistingStudentFragment : BaseFragment(R.layout.fragment_select_existing_student) {
     private val adapter: SelectExistingStudentAdapter by inject()
-    private val viewModel: CreateStudentViewModel by viewModel()
+    private val viewModel: StudentViewModel by viewModel()
     lateinit var binding: FragmentSelectExistingStudentBinding
     lateinit var actBinding: ActionBarAddBinding
     lateinit var navController: NavController

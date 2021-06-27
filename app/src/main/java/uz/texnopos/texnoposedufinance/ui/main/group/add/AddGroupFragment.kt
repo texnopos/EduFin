@@ -11,19 +11,23 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.RealtimeChangesResourceState
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddGroupBinding
+import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
-    private val viewModel: AddGroupViewModel by inject()
+    private val viewModel: AddGroupViewModel by viewModel()
+    private val tViewModel: TeacherViewModel by viewModel()
     private lateinit var binding: FragmentAddGroupBinding
     private lateinit var bindingActBar: ActionBarAddBinding
     lateinit var navController: NavController
@@ -37,23 +41,22 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
     private var lessonDays = mutableMapOf<Int, String>()
     private val selectedLessonDays = mutableMapOf<Int, Boolean>()
     private val allTeachers = mutableListOf<String>()
+    private lateinit var teachersAdapter: ArrayAdapter<String>
 
     private val safeArgs: AddGroupFragmentArgs by navArgs()
 
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentAddGroupBinding.bind(view)
         bindingActBar = ActionBarAddBinding.bind(view)
-
-        val teachersAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allTeachers)
+        teachersAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, allTeachers)
 
         bindingActBar.actionBarTitle.text = view.context.getString(R.string.create_group)
         navController = Navigation.findNavController(view)
 
-        setUpObserversGroup()
-        viewModel.getAllTeachers()
+        setUpObservers()
+        tViewModel.getAllTeachers()
         bindingActBar.apply {
             binding.apply {
                 val sdf = SimpleDateFormat("dd.MM.yyyy")
@@ -61,27 +64,17 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
                 created = sdf.format(Calendar.getInstance().time).toString()
                 tvLessonStarts.text = context?.getString(R.string.lessonStartsIn, start)
                 tpTime.setIs24HourView(true)
-                viewModel.teacherList.observe(viewLifecycleOwner, Observer {
-                    when (it.status) {
-                        ResourceState.LOADING -> loading.visibility(true)
-                        ResourceState.SUCCESS -> {
-                            loading.visibility(false)
-                            teachersAdapter.clear()
-                            teachersAdapter.addAll(it.data!!.map { e -> e.name })
-                        }
-                        ResourceState.ERROR -> {
-                            loading.visibility(false)
-                            toastLN(it.message)
-                        }
-                    }
-                })
+                tViewModel.getAllTeachers()
+                teachersAdapter.clear()
                 actTeachers.setAdapter(teachersAdapter)
-
+                actTeachers.setOnFocusChangeListener { _, _ ->
+                    actTeachers.showDropDown()
+                }
                 actTeachers.setOnItemClickListener { adapterView, _, i, _ ->
                     teacher = if (adapterView.getItemAtPosition(i)
                             .toString() != view.context.getString(R.string.doNotSelected)
                     ) {
-                        viewModel.teacherList.value?.data!![i].name
+                       adapterView.getItemAtPosition(i).toString()
                     } else ""
                 }
 
@@ -122,6 +115,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
                     val dialog = CalendarDialog(requireContext())
                     dialog.show()
                     dialog.binding.apply {
+                        cvCalendar.maxDate = System.nanoTime()
                         btnCancel.onClick {
                             dialog.dismiss()
                         }
@@ -180,7 +174,7 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
         }
     }
 
-    private fun setUpObserversGroup() {
+    private fun setUpObservers() {
         binding.apply {
             viewModel.createGroup.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -191,11 +185,28 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
                         isLoading(false)
                         toastLNCenter(getString(R.string.added_successfully))
                         navController.popBackStack()
-
                     }
                     ResourceState.ERROR -> {
                         isLoading(false)
                         toastLN(it.message)
+                    }
+                }
+            })
+
+            tViewModel.teacherList.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    RealtimeChangesResourceState.LOADING -> {
+                        loading.visibility(true)
+                    }
+                    RealtimeChangesResourceState.ADDED -> {
+                        loading.visibility(false)
+                        teachersAdapter.add(it.data!!.name)
+                    }
+                    RealtimeChangesResourceState.ERROR -> {
+                        loading.visibility(false)
+                        toastLN(it.message)
+                    }
+                    else -> {
                     }
                 }
             })
@@ -245,7 +256,6 @@ class AddGroupFragment : BaseFragment(R.layout.fragment_add_group) {
             loading.visibility(b)
         }
     }
-
 }
 
 

@@ -28,6 +28,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     lateinit var groupId: String
     var passportList: ArrayList<String> = arrayListOf()
     var pos = -1
+    var temp = 0
     private lateinit var bottomSheetAddStudentBinding: BottomSheetAddStudentBinding
 
     @SuppressLint("InflateParams")
@@ -42,6 +43,16 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         binding.bnvMain.menu.getItem(2).isEnabled = false
         binding.fabMain.onClick {
             when (childNavController.currentDestination?.id) {
+                R.id.nav_report -> {
+                    if (temp == 0) {
+                        val action = MainFragmentDirections.actionMainFragmentToAddExpenseFragment()
+                        navController.navigate(action)
+                    }
+                    if (temp == 1) {
+                        val action = MainFragmentDirections.actionMainFragmentToAddIncomeFragment()
+                        navController.navigate(action)
+                    }
+                }
                 R.id.nav_teacher -> {
                     val action = MainFragmentDirections.actionMainFragmentToAddTeacherFragment()
                     navController.navigate(action)
@@ -52,7 +63,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 }
                 R.id.nav_student -> {
                     if (passportList.size != 0) {
-                        val action = MainFragmentDirections.actionMainFragmentToAddStudentFragment((passportList as List<String>).toTypedArray())
+                        val action =
+                            MainFragmentDirections.actionMainFragmentToAddStudentFragment((passportList as List<String>).toTypedArray())
                         navController.navigate(action)
                     } else {
                         val action = MainFragmentDirections.actionMainFragmentToAddStudentFragment(arrayOf())
@@ -64,8 +76,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                     navController.navigate(action)
                 }
                 R.id.nav_category -> {
-                    if (pos != -1){
-                        val action = MainFragmentDirections.actionMainFragmentToAddCategoryFragment(pos)
+                    if (pos != -1) {
+                        val action =
+                            MainFragmentDirections.actionMainFragmentToAddCategoryFragment(pos)
                         navController.navigate(action)
                     }
                 }
@@ -80,14 +93,20 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                         addNewStudent.onClick {
                             bottomSheetDialog.dismiss()
                             if (::group.isInitialized) {
-                                val action = MainFragmentDirections.actionMainFragmentToAddParticipantFragment(group)
+                                val action =
+                                    MainFragmentDirections.actionMainFragmentToAddParticipantFragment(
+                                        group
+                                    )
                                 navController.navigate(action)
                             }
                         }
                         selectStudents.onClick {
                             bottomSheetDialog.dismiss()
                             if (::group.isInitialized) {
-                                val action = MainFragmentDirections.actionMainFragmentToSelectStudentsFragment(group)
+                                val action =
+                                    MainFragmentDirections.actionMainFragmentToSelectStudentsFragment(
+                                        group
+                                    )
                                 navController.navigate(action)
                             }
                         }
