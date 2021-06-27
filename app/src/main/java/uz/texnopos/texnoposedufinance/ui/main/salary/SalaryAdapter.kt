@@ -29,7 +29,8 @@ class SalaryAdapter: BaseAdapter<EmployeeResponse, SalaryAdapter.SalaryViewHolde
                 eSalary.forEach {m ->
                     sum += m.amount
                 }
-                tvSalary.text = sum.toString()
+                val amount = textFormat(sum.toString())
+                tvSalary.text = root.context.getString(R.string.amount, amount)
             }
         }
     }

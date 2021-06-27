@@ -39,31 +39,17 @@ class ReportViewModel(private val helper: ReportHelper, private val nHelper: Net
             })
     }
 
-    private val _report: MutableLiveData<Resource<ReportResponse>> = MutableLiveData()
-    val report: LiveData<Resource<ReportResponse>>
-        get() = _report
-
-    fun getReports(fromDate: Long,
-                   toDate: Long) {
-        _report.value = Resource.loading()
-        nHelper.getReports(fromDate, toDate, {
-            _report.value = Resource.success(it)
-        }, {
-            _report.value = Resource.error(it)
-        })
-    }
-
-    private val _salary: MutableLiveData<Resource<SalaryResponse>> = MutableLiveData()
-    val salary: LiveData<Resource<SalaryResponse>>
-        get() = _salary
-
-    fun getSalary(fromDate: Long,
-                   toDate: Long) {
-        _salary.value = Resource.loading()
-        nHelper.getSalary(fromDate, toDate, {
-            _salary.value = Resource.success(it)
-        }, {
-            _salary.value = Resource.error(it)
-        })
-    }
+//    private val _report: MutableLiveData<Resource<ReportResponse>> = MutableLiveData()
+//    val report: LiveData<Resource<ReportResponse>>
+//        get() = _report
+//
+//    fun getReports(fromDate: Long,
+//                   toDate: Long) {
+//        _report.value = Resource.loading()
+//        nHelper.getReports(fromDate, toDate, {
+//            _report.value = Resource.success(it)
+//        }, {
+//            _report.value = Resource.error(it)
+//        })
+//    }
 }

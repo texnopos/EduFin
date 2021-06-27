@@ -65,7 +65,8 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:typeface="monospace"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -76,21 +77,23 @@
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_middle"
                     android:hint="@string/phone_number"
-                    app:boxCornerRadiusBottomEnd="16dp"
-                    app:boxCornerRadiusBottomStart="16dp"
-                    app:boxCornerRadiusTopEnd="16dp"
-                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusBottomEnd="@dimen/margin_standard"
+                    app:boxCornerRadiusBottomStart="@dimen/margin_standard"
+                    app:boxCornerRadiusTopEnd="@dimen/margin_standard"
+                    app:boxCornerRadiusTopStart="@dimen/margin_standard"
                     app:layout_constraintTop_toBottomOf="@id/tilName">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.santalu.maskedittext.MaskEditText
                         android:id="@+id/etPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="phone"
                         android:digits="+0123456789"
+                        android:inputType="phone"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        app:mask="+### ## ### ## ##"
+                        android:typeface="monospace"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -111,12 +114,12 @@
                         android:id="@+id/etSalary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:typeface="monospace"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilUsername"
@@ -139,7 +142,8 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:typeface="monospace"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -156,14 +160,15 @@
                     app:boxCornerRadiusTopStart="@dimen/margin_standard"
                     app:layout_constraintTop_toBottomOf="@id/tilUsername">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.xw.repo.XEditText
                         android:id="@+id/etPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -173,16 +178,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_middle"
+                    android:layout_marginBottom="@dimen/margin_large"
                     android:hint="@string/confirmYourPass"
                     app:boxCornerRadiusBottomEnd="@dimen/margin_standard"
                     app:boxCornerRadiusBottomStart="@dimen/margin_standard"
                     app:boxCornerRadiusTopEnd="@dimen/margin_standard"
                     app:boxCornerRadiusTopStart="@dimen/margin_standard"
-                    app:layout_constraintTop_toBottomOf="@id/tilPassword"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="@dimen/margin_large">
+                    app:layout_constraintTop_toBottomOf="@id/tilPassword">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.xw.repo.XEditText
                         android:id="@+id/etConfirmPass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -192,15 +197,6 @@
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/showPass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_standard"
-                    android:src="@drawable/ic_unvisible"
-                    app:layout_constraintBottom_toTopOf="@id/tilConfirmPassword"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilUsername" />
                 <ProgressBar
                     android:id="@+id/loading"
                     android:layout_width="wrap_content"

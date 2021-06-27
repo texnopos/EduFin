@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginHorizontal="@dimen/margin_large"
         android:layout_marginVertical="@dimen/margin_standard"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_standard"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="SpUsage"

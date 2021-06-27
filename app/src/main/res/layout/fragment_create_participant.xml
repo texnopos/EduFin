@@ -106,14 +106,15 @@
                     app:boxCornerRadiusBottomEnd="16dp"
                     app:boxCornerRadiusTopStart="16dp"
                     android:layout_marginTop="@dimen/margin_middle">
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.santalu.maskedittext.MaskEditText
                         android:id="@+id/etPassportNum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        app:mask="KA #######"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -152,7 +153,7 @@
                     app:boxCornerRadiusBottomEnd="16dp"
                     app:boxCornerRadiusTopStart="16dp"
                     android:layout_marginTop="@dimen/margin_middle">
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.santalu.maskedittext.MaskEditText
                         android:id="@+id/etPhone1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -160,7 +161,8 @@
                         android:digits="+0123456789"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        app:mask="+### ## ### ## ##"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -176,7 +178,7 @@
                     app:boxCornerRadiusBottomEnd="16dp"
                     app:boxCornerRadiusTopStart="16dp"
                     android:layout_marginTop="@dimen/margin_middle">
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.santalu.maskedittext.MaskEditText
                         android:id="@+id/etPhone2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -184,7 +186,8 @@
                         android:digits="+0123456789"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        app:mask="+### ## ### ## ##"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

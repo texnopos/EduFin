@@ -24,7 +24,6 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
                     onSuccess.invoke(listOf())
                 }
             }
-
         })
     }
 
@@ -96,7 +95,6 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
             }
         })
     }
-
     fun createParticipantWithNewStudent(
         data: CreateParticipantRequest,
         onSuccess: (String) -> Unit,
@@ -119,7 +117,6 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
             }
         })
     }
-
     fun coursePayment(
         data: CoursePayments,
         onSuccess: (String) -> Unit,
@@ -204,11 +201,10 @@ class NetworkHelper(auth: FirebaseAuth, private val apiInterface: ApiInterface) 
                 call: Call<ReportResponse>,
                 response: Response<ReportResponse>
             ) {
-                response.body().let {
-                    onSuccess.invoke(it!!)
-                }
+                response.body()?.let {
+                    onSuccess.invoke(it)
+                }?: onFailure.invoke("Непредвиденная ошибка")
             }
-
         })
     }
 

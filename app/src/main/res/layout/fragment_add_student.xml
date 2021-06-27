@@ -26,7 +26,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -53,15 +54,16 @@
                     app:boxCornerRadiusTopEnd="16dp"
                     app:boxCornerRadiusTopStart="16dp"
                     app:layout_constraintTop_toBottomOf="@id/tilName">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.santalu.maskedittext.MaskEditText
                         android:id="@+id/etPassportNum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLines="1"
+                        android:inputType="number"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:typeface="monospace"
+                        app:mask="KA #######"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -85,7 +87,9 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:typeface="monospace"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -102,7 +106,7 @@
                     app:boxCornerRadiusTopStart="16dp"
                     app:layout_constraintTop_toBottomOf="@id/tilPassport">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.santalu.maskedittext.MaskEditText
                         android:id="@+id/etPhone1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -110,7 +114,9 @@
                         android:inputType="phone"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:typeface="monospace"
+                        app:mask="+### ## ### ## ##"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -127,7 +133,7 @@
                     app:boxCornerRadiusTopStart="16dp"
                     app:layout_constraintTop_toBottomOf="@id/tilPhone1">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.santalu.maskedittext.MaskEditText
                         android:id="@+id/etPhone2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -135,7 +141,9 @@
                         android:inputType="phone"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:typeface="monospace"
+                        app:mask="+### ## ### ## ##"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -159,7 +167,8 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:typeface="monospace"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -185,7 +194,8 @@
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
                         android:textColor="@color/black"
-                        android:focusable="false"/>
+                        android:focusable="false"
+                        android:typeface="monospace"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -211,7 +221,8 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="@dimen/margin_standard"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:typeface="monospace"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ProgressBar

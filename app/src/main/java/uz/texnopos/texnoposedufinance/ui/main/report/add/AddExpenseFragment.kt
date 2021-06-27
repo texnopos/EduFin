@@ -116,8 +116,11 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
                                 employ = adapterView.getItemAtPosition(index).toString()
                                 employeeId = allEmployeeId[index]
                             }
-                           // ctViewModel.expenseCategory.value?.data!![i].name
                         }
+                    }
+                    else{
+                        tilEmployees.visibility(false)
+                        tilEmployees.isEnabled = false
                     }
                     btnSave.onClick {
                         val amount = etAmount.text.toString()
@@ -148,15 +151,19 @@ class AddExpenseFragment : BaseFragment(R.layout.fragment_add_expense) {
         binding.apply {
             ctViewModel.expenseCategory.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
-//                    ResourceState.LOADING -> loading.visibility(true)
-//                    ResourceState.SUCCESS -> {
-//                        loading.visibility(false)
-//                        categoryAdapter.addAll(it.data!!.map { e -> e.name })
-//                    }
-//                    ResourceState.ERROR -> {
-//                        loading.visibility(false)
-//                        toastLN(it.message)
-//                    }
+                    RealtimeChangesResourceState.LOADING -> {
+                        loading.visibility(true)
+                    }
+                    RealtimeChangesResourceState.ADDED -> {
+                        loading.visibility(false)
+                        categoryAdapter.add(it.data!!.name)
+                    }
+                    RealtimeChangesResourceState.ERROR -> {
+                        loading.visibility(false)
+                        toastLN(it.message)
+                    }
+                    else -> {
+                    }
                 }
             })
             tViewModel.teacherList.observe(viewLifecycleOwner, Observer {

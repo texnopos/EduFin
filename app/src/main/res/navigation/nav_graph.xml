@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/internetConnection">
     <fragment
         android:id="@+id/signUpFragment"
         android:name="uz.texnopos.texnoposedufinance.ui.auth.signup.SignUpFragment"
@@ -224,4 +224,19 @@
         android:name="uz.texnopos.texnoposedufinance.ui.main.salary.SalaryFragment"
         android:label="SalaryFragment"
         tools:layout="@layout/fragment_salary"/>
+    <fragment
+        android:id="@+id/internetConnection"
+        android:name="uz.texnopos.texnoposedufinance.ui.internet.InternetConnection"
+        android:label="InternetConnection" >
+        <action
+            android:id="@+id/action_internetConnection_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/internetConnection"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

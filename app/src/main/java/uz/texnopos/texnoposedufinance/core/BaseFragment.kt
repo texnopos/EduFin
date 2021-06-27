@@ -38,4 +38,12 @@ open class BaseFragment(resId: Int) : Fragment(resId) {
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+    fun textFormat(t: String): String{
+        var text = t
+        text = text.reversed()
+        text = text.subSequence(0, text.length)
+            .chunked(3) // group every 3 chars
+            .joinToString(" ")
+        return text.reversed()
+    }
 }

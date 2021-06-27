@@ -40,13 +40,14 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
         }
         binding.apply {
 
-            showPass.onClick {
-                showPassword()
-            }
+//            showPass.onClick {
+//                showPassword()
+//            }
 
             btnSave.onClick {
                 val name = etName.text.toString()
-                val phone = etPhone.text.toString()
+                var phone = etPhone.text.toString()
+                phone = phone.replace("\\s".toRegex(), "")
                 val username = etUsername.text.toString()
                 val password = etPassword.text.toString()
                 val confirmPass = etConfirmPass.text.toString()
@@ -123,15 +124,15 @@ class AddTeacherFragment : BaseFragment(R.layout.fragment_add_teacher) {
         }
     }
 
-    private fun showPassword() {
-        if (showPassword) {
-            binding.etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            binding.showPass.setImageResource(R.drawable.ic_visible)
-            showPassword = false
-        } else {
-            binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            binding.showPass.setImageResource(R.drawable.ic_unvisible)
-            showPassword = true
-        }
-    }
+//    private fun showPassword() {
+//        if (showPassword) {
+//            binding.etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+//            binding.showPass.setImageResource(R.drawable.ic_visible)
+//            showPassword = false
+//        } else {
+//            binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+//            binding.showPass.setImageResource(R.drawable.ic_unvisible)
+//            showPassword = true
+//        }
+//    }
 }

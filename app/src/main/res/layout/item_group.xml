@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/time"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_middle"
         android:layout_marginTop="@dimen/margin_middle"
@@ -43,13 +43,13 @@
         android:textColor="@color/black"
         android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/line"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpUsage" />
+        tools:ignore="SpUsage"
+        android:layout_marginEnd="@dimen/margin_standard"/>
 
     <TextView
         android:id="@+id/days"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_middle"
         android:layout_marginBottom="@dimen/margin_middle"
@@ -63,16 +63,16 @@
         android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/line"
         app:layout_constraintTop_toBottomOf="@id/time"
-        tools:ignore="SpUsage" />
+        tools:ignore="SpUsage"
+        android:layout_marginEnd="@dimen/margin_standard"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.6" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

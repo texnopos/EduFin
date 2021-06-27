@@ -11,7 +11,7 @@ import uz.texnopos.texnoposedufinance.di.*
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val modules = listOf(firebaseModule, helperModule, viewModelModule, adapterModule, networkModule)
         startKoin { // use AndroidLogger as Koin Logger - default Level.INFO
             androidLogger()

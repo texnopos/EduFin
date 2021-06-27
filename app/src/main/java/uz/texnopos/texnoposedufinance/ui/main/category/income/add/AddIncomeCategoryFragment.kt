@@ -9,6 +9,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.databinding.ItemAddIncomeCategoryBinding
@@ -54,8 +55,8 @@ class AddIncomeCategoryFragment(private val fr: AddCategoryFragment): BaseFragme
     }
     fun isLoading(b: Boolean){
         binding.apply {
-            btnSave.isEnabled = !b
-            etCategoryName.isEnabled = !b
+            btnSave.enabled(!b)
+            etCategoryName.enabled(!b)
             loading.visibility(b)
         }
     }

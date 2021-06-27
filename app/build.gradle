@@ -120,4 +120,9 @@ dependencies {
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
+    //mask for edit-text
+    implementation 'com.github.santalu:mask-edittext:1.0.1'
+
+    //xEditText
+    implementation 'com.xw.repo:xedittext:2.3.0'
 }

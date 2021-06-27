@@ -10,6 +10,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.CoursePayments
@@ -18,6 +19,7 @@ import uz.texnopos.texnoposedufinance.data.model.response.ExpenseRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.ActionBarBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentSalaryBinding
+import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
 import uz.texnopos.texnoposedufinance.ui.main.group.info.PaymentDialog
 import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
@@ -53,9 +55,10 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
         binding = FragmentSalaryBinding.bind(view)
         toLong = calendar.timeInMillis
         fromLong = toLong - day.toInt() * 3600 * 1000 * 24
+        if((requireActivity() as MainActivity).salary.value == null){
+            (requireActivity() as MainActivity).getSalary(fromLong, toLong)
+        }
         setUpObservers()
-        viewModel.getSalary(fromLong, toLong)
-
         actBinding.apply {
             tvTitle.text = context?.getString(R.string.salary_x)
         }
@@ -127,7 +130,7 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
             srlEmployees.setOnRefreshListener {
                 isLoading(false)
                 loading.visibility(false)
-                viewModel.getSalary(fromLong, toLong)
+                (requireActivity() as MainActivity).getSalary(fromLong, toLong)
             }
 
             adapter.setOnItemClickListener { tId ->
@@ -167,7 +170,7 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
 
     private fun setUpObservers() {
         binding.apply {
-            viewModel.salary.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            (requireActivity() as MainActivity).salary.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 when(it.status){
                     ResourceState.LOADING ->{
                         loading.visibility(true)
@@ -190,11 +193,11 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
     private fun isLoadingDialog(b: Boolean){
         sDialog.binding.apply {
             loading.visibility(b)
-            etNote.isEnabled = !b
-            etPayment.isEnabled = !b
-            dpDate.isEnabled = !b
-            btnCancel.isEnabled = !b
-            btnYes.isEnabled = !b
+            etNote.enabled(!b)
+            etPayment.enabled(!b)
+            dpDate.enabled(!b)
+            btnCancel.enabled(!b)
+            btnYes.enabled(!b)
         }
     }
 

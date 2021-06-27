@@ -13,11 +13,18 @@ import uz.texnopos.texnoposedufinance.databinding.ItemReportBinding
 import uz.texnopos.texnoposedufinance.databinding.ItemStudentBinding
 
 class ReportsAdapter: BaseAdapter<AllReports, ReportsAdapter.ReportsViewHolder>(){
+
+    private var onItemClick: (String) -> Unit = {}
+    fun setOnItemClickListener(onItemClick: (String) -> Unit) {
+        this.onItemClick = onItemClick
+    }
+
     inner class ReportsViewHolder(private val binding: ItemReportBinding): RecyclerView.ViewHolder(binding.root){
         fun populateModel(model: AllReports){
             binding.apply {
                 tvCategory.text = root.context.getString(R.string.reportCategory, model.category)
-                tvAmount.text = root.context.getString(R.string.amount, model.amount)
+                val amount = textFormat(model.amount.toString())
+                tvAmount.text = root.context.getString(R.string.amount, amount)
                 tvTrans.text =  root.context.getString(R.string.trans, model.trans)
             }
         }

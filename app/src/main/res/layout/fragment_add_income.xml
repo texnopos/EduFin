@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_standard"
-                    android:hint="@string/add_category"
+                    android:hint="@string/selectCategory"
                     app:layout_constraintTop_toBottomOf="@id/tilAmount">
 
                     <AutoCompleteTextView
@@ -87,7 +87,8 @@
                     android:layout_marginTop="@dimen/margin_standard"
                     android:enabled="false"
                     android:hint="@string/selectCourse"
-                    app:layout_constraintTop_toBottomOf="@id/tilCategory">
+                    app:layout_constraintTop_toBottomOf="@id/tilCategory"
+                    android:visibility="gone">
 
                     <AutoCompleteTextView
                         android:id="@+id/actCourse"
@@ -109,7 +110,8 @@
                     android:layout_marginTop="@dimen/margin_standard"
                     android:enabled="false"
                     android:hint="@string/selectGroup"
-                    app:layout_constraintTop_toBottomOf="@id/tilCourse">
+                    app:layout_constraintTop_toBottomOf="@id/tilCourse"
+                    android:visibility="gone">
 
                     <AutoCompleteTextView
                         android:id="@+id/actGroup"
@@ -131,7 +133,8 @@
                     android:layout_marginTop="@dimen/margin_standard"
                     android:enabled="false"
                     android:hint="@string/selectParticipant"
-                    app:layout_constraintTop_toBottomOf="@id/tilGroup">
+                    app:layout_constraintTop_toBottomOf="@id/tilGroup"
+                    android:visibility="gone">
 
                     <AutoCompleteTextView
                         android:id="@+id/actParticipant"

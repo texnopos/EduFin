@@ -26,6 +26,14 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapt
     fun update() {
         notifyDataSetChanged()
     }
-
     override fun getItemCount(): Int = models.size
+
+    fun textFormat(t: String): String{
+        var text = t
+        text = text.reversed()
+        text = text.subSequence(0, text.length)
+            .chunked(3)
+            .joinToString(" ")
+        return text.reversed()
+    }
 }

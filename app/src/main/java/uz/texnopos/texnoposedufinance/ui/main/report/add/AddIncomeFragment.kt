@@ -19,6 +19,7 @@ import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.response.IncomeRequest
 import uz.texnopos.texnoposedufinance.databinding.ActionBarAddBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentAddIncomeBinding
+import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 import uz.texnopos.texnoposedufinance.ui.main.category.CategoryViewModel
 import uz.texnopos.texnoposedufinance.ui.main.course.CourseViewModel
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
@@ -36,7 +37,6 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
     private var category: String = ""
     private val viewModel: ReportViewModel by viewModel()
     private val categoryVM: CategoryViewModel by viewModel()
-    private val courseVM: CourseViewModel by viewModel()
     private val groupInfoVM: GroupInfoViewModel by viewModel()
     private val allCategory = mutableListOf<String>()
     private val allCourse = mutableListOf<String>()
@@ -128,16 +128,18 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                         tilCourse.enabled(true)
                         tilGroup.enabled(true)
                         tilParticipant.enabled(true)
-                        courseVM.getAllCourses()
+                        if((requireActivity() as MainActivity).course.value == null){
+                            (requireActivity() as MainActivity).getAllCourse()
+                        }
                         courseAdapter.clear()
                         actCourse.setAdapter(courseAdapter)
                         actCourse.setOnItemClickListener { adapterView, _, i, _ ->
                             if (adapterView.getItemAtPosition(i)
                                     .toString() != view.context.getString(R.string.doNotSelected)
                             ) {
-                                course = courseVM.courseList.value?.data!![i].name
-                                courseId = courseVM.courseList.value?.data!![i].id
-                                size = courseVM.courseList.value?.data!![i].groups.size
+                                course = (requireActivity() as MainActivity).course.value?.data!![i].name
+                                courseId = (requireActivity() as MainActivity).course.value?.data!![i].id
+                                size = (requireActivity() as MainActivity).course.value?.data!![i].groups.size
                                 position = i
                                 tilGroup.visibility(true)
                                 if (size <= 0) {
@@ -152,17 +154,15 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                                     tilParticipant.isEnabled = true
                                     groupAdapter.clear()
                                     actGroup.setAdapter(groupAdapter)
-                                    courseVM.courseList.value?.data!![i].groups.forEach { i ->
+                                    (requireActivity() as MainActivity).course.value?.data!![i].groups.forEach { i ->
                                         groupAdapter.add(i.name)
                                     }
                                     actGroup.setOnItemClickListener { adapterView, _, i, _ ->
                                         if (adapterView.getItemAtPosition(i)
                                                 .toString() != view.context.getString(R.string.doNotSelected)
                                         ) {
-                                            group =
-                                                courseVM.courseList.value?.data!![position].groups[i].name
-                                            groupId =
-                                                courseVM.courseList.value?.data!![position].groups[i].id
+                                            group = (requireActivity() as MainActivity).course.value?.data!![position].groups[i].name
+                                            groupId = (requireActivity() as MainActivity).course.value?.data!![position].groups[i].id
                                             tilParticipant.visibility(true)
                                             participantAdapter.clear()
                                             groupInfoVM.getGroupParticipants(groupId)
@@ -186,6 +186,9 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                         tilCourse.visibility(false)
                         tilGroup.visibility(false)
                         tilParticipant.visibility(false)
+                        tilCourse.enabled(false)
+                        tilGroup.enabled(false)
+                        tilParticipant.enabled(false)
                     }
                 }
             }
@@ -307,12 +310,11 @@ class AddIncomeFragment : BaseFragment(R.layout.fragment_add_income) {
                         toastLN(it.message)
                     }
                 }
-            }
-            )
+            })
 
-            courseVM.courseList.observe(viewLifecycleOwner,
+            (requireActivity() as MainActivity).course.observe(viewLifecycleOwner,
                 androidx.lifecycle.Observer {
-                    when (it.status) {
+                    when(it.status) {
                         ResourceState.SUCCESS -> {
                             courseAdapter.addAll(it.data!!.map { e -> e.name })
                         }

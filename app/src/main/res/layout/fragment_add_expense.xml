@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_standard"
-                    android:hint="@string/add_category"
+                    android:hint="@string/selectCategory"
                     app:layout_constraintTop_toBottomOf="@id/tilAmount">
 
                     <AutoCompleteTextView
@@ -90,7 +90,8 @@
                     android:layout_marginTop="@dimen/margin_standard"
                     android:hint="@string/add_salary"
                     app:layout_constraintTop_toBottomOf="@id/tilCategory"
-                    android:enabled="false">
+                    android:enabled="false"
+                    android:visibility="gone">
 
                     <AutoCompleteTextView
                         android:id="@+id/actEmployees"

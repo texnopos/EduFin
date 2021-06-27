@@ -149,9 +149,9 @@
     <string name="add_salary">Добавить зарплату</string>
     <string name="reportCategory">%1$s</string>
     <string name="trans">%1$d Транзакций</string>
-    <string name="amount">%1$d Сум</string>
-    <string name="amountIncomes">+ %1$d Сум</string>
-    <string name="amountExpenses">- %1$d Сум</string>
+    <string name="amount">%1$s Сум</string>
+    <string name="amountIncomes">+ %1$s Сум</string>
+    <string name="amountExpenses">- %1$s Сум</string>
     <string name="daySalary">Когда дано?</string>
     <string name="our_address">Наш аддресс</string>
     <string name="studentName">ФИО: %1$s</string>

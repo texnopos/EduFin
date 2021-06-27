@@ -104,25 +104,25 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
             }
             btnSave.onClick {
                 name = etName.text.toString()
-                val phone1 = etPhone1.text.toString()
-                val phone2 = etPhone2.text.toString()
+                var phone1 = etPhone1.text.toString()
+                phone1 = phone1.replace("\\s".toRegex(), "")
+                var phone2 = etPhone2.text.toString()
+                phone2 = phone2.replace("\\s".toRegex(), "")
                 address = etAddress.text.toString()
                 passport = etPassportNum.text.toString()
+                passport = passport.replace("\\s".toRegex(), "")
                 val contract = etContractNum.text.toString()
                 if (name.isEmpty()) etName.error = view.context.getString(R.string.fillField)
                 if (phone1.isEmpty()) etPhone1.error = view.context.getString(R.string.fillField)
                 if (phone2.isEmpty()) etPhone2.error = view.context.getString(R.string.fillField)
                 if (contract.isNotEmpty()) contractNum = contract.toInt()
-                if (passport.isEmpty()) etPassportNum.error =
-                    view.context.getString(R.string.fillField)
+                if (passport.isEmpty()) etPassportNum.error = view.context.getString(R.string.fillField)
                 if (address.isEmpty()) etAddress.error = view.context.getString(R.string.fillField)
                 if (birthDate == 0L) etBirthDate.error = view.context.getString(R.string.fillField)
-                if (contract.isEmpty()) etContractNum.error =
-                    view.context.getString(R.string.fillField)
+                if (contract.isEmpty()) etContractNum.error = view.context.getString(R.string.fillField)
                 scrollView.fullScroll(ScrollView.FOCUS_DOWN)
                 if (name.isNotEmpty() && phone1.isNotEmpty() && phone2.isNotEmpty() && passport.isNotEmpty()
-                    && address.isNotEmpty() && birthDate != 0L && contract.isNotEmpty()
-                ) {
+                    && address.isNotEmpty() && birthDate != 0L && contract.isNotEmpty()) {
                     phone = arrayListOf(phone1, phone2)
                     studentId = UUID.randomUUID().toString()
                     participant = CreateParticipantRequest(
@@ -173,10 +173,7 @@ class CreateParticipantFragment : BaseFragment(R.layout.fragment_create_particip
                                         phone = phone
                                     )
                                 )
-                                val action =
-                                    CreateParticipantFragmentDirections.actionCreateParticipantFragmentToSelectExistingStudentFragment(
-                                        jsonString
-                                    )
+                                val action = CreateParticipantFragmentDirections.actionCreateParticipantFragmentToSelectExistingStudentFragment(jsonString)
                                 parentNavController.navigate(action)
                                 d.dismiss()
                             }

@@ -3,12 +3,12 @@ package uz.texnopos.texnoposedufinance.ui.main.report
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
-import uz.texnopos.texnoposedufinance.databinding.ActionBarReportBinding
 import uz.texnopos.texnoposedufinance.databinding.FragmentReportsBinding
 import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
@@ -18,11 +18,10 @@ import java.util.*
 
 class ReportFragment : BaseFragment(R.layout.fragment_reports) {
     private lateinit var binding: FragmentReportsBinding
-    private lateinit var actBinding: ActionBarReportBinding
+    //private lateinit var actBinding: ActionBarReportBinding
     private lateinit var adapter: ViewPagerAdapter
-    var currentDate = 0L
-    var toLong = 0L
-    var fromLong = 0L
+    private lateinit var title: TextView
+    private lateinit var allAmount: TextView
 
     @SuppressLint("SimpleDateFormat", "ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,27 +32,27 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
         var toString = sdf.format(calendar.time).toString()
         var fromString = "01.${sdf2.format(calendar.time)}"
         val day = toString.substring(0, 2)
-        toLong = calendar.timeInMillis
-        fromLong = toLong - day.toInt() * 3600 * 1000 * 24
+        var toLong = calendar.timeInMillis
+        var fromLong = toLong - day.toInt() * 3600 * 1000 * 24
         if ((requireActivity() as MainActivity).report.value == null) {
-            (requireActivity() as MainActivity).getReport()
+            (requireActivity() as MainActivity).getReport(fromLong, toLong)
         }
-        adapter = ViewPagerAdapter(
-            requireActivity().supportFragmentManager,
-            lifecycle
-        )
+        adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle)
         binding = FragmentReportsBinding.bind(view)
-        actBinding = ActionBarReportBinding.bind(view)
+        //actBinding = ActionBarReportBinding.bind(view.fi)
         setUpObservers()
 
-        actBinding.apply {
-            tvTitle.text = context?.getString(R.string.reports)
-        }
+//        actBinding.apply {
+//            tvTitle.text = context?.getString(R.string.reports)
+//        }
+        title = view.findViewById(R.id.tvTitle)
+        allAmount = view.findViewById(R.id.tvAmount)
+        title.text = context?.getString(R.string.reports)
         binding.apply {
             to.text = context?.getString(R.string.toText, toString)
             from.text = context?.getString(R.string.fromText, fromString)
             val cal = Calendar.getInstance()
-            currentDate = Calendar.getInstance().timeInMillis
+            var currentDate = Calendar.getInstance().timeInMillis
             if ((requireParentFragment().requireParentFragment() as MainFragment).temp == 0) {
                 onExpense()
             }
@@ -177,8 +176,10 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                                 sum += j.amount
                             }
                             allIncome += sum
+                            //transAdapter.models = i.incomes
                         }
-                        tvIncomeAmount.text = context?.getString(R.string.amountIncomes, allIncome)
+                        val allIncomeString = textFormat(allIncome.toString())
+                        tvIncomeAmount.text = context?.getString(R.string.amountIncomes, allIncomeString)
 
 
                         it.data.expenseCategories.forEach { e ->
@@ -191,11 +192,15 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                             }
                             allExpense += sum
                         }
-                        tvExpenseAmount.text = context?.getString(R.string.amountExpenses, allExpense)
-                        actBinding.tvAmount.text = context?.getString(R.string.amount, allIncome - allExpense)
+                        val allExpenseString = textFormat(allExpense.toString())
+                        tvExpenseAmount.text = context?.getString(R.string.amountExpenses, allExpenseString)
+                        val amount = textFormat((allIncome - allExpense).toString())
+                        //actBinding.tvAmount.text = context?.getString(R.string.amount, amount)
+                        allAmount.text = context?.getString(R.string.amount, amount)
                     }
                 }
             })
+
         }
     }
 }

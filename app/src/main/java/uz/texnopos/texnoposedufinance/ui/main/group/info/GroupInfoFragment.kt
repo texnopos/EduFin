@@ -17,6 +17,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.ResourceState
+import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.model.Course
@@ -53,6 +54,8 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter.models = listOf()
+
         groupStr = safeArgs.group
         courseStr = safeArgs.course
         val gson = Gson()
@@ -165,12 +168,12 @@ class GroupInfoFragment : BaseFragment(R.layout.fragment_group_info) {
 
     private fun isLoadingDialog(b: Boolean) {
         pDialog.binding.apply {
-            btnYes.isEnabled = !b
-            btnCancel.isEnabled = !b
-            dpDate.isEnabled = !b
-            etPayment.isEnabled = !b
+            btnYes.enabled(!b)
+            btnCancel.enabled(!b)
+            dpDate.enabled(!b)
+            etPayment.enabled(!b)
             loading.visibility(b)
-            etNote.isEnabled = !b
+            etNote.enabled(!b)
         }
     }
 

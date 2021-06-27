@@ -9,23 +9,7 @@ import uz.texnopos.texnoposedufinance.data.firebase.CourseHelper
 import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.retrofit.NetworkHelper
 
-class CourseViewModel(private val networkHelper: NetworkHelper, private val helper: CourseHelper) : ViewModel() {
-    private val _courseList: MutableLiveData<Resource<List<Course>>> = MutableLiveData()
-    val courseList: LiveData<Resource<List<Course>>>
-        get() = _courseList
-
-    fun getAllCourses() {
-        _courseList.value = Resource.loading()
-        networkHelper.getAllCourses(
-            {
-                _courseList.value = Resource.success(it)
-            },
-            {
-                _courseList.value = Resource.error(it)
-            }
-        )
-    }
-
+class CourseViewModel(private val helper: CourseHelper) : ViewModel() {
     private val _createCourse: MutableLiveData<Resource<Course>> = MutableLiveData()
     val createCourse: LiveData<Resource<Course>>
         get() = _createCourse
