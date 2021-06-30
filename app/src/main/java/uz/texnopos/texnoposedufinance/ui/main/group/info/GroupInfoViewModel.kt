@@ -24,17 +24,4 @@ class GroupInfoViewModel(private val helper: NetworkHelper) : ViewModel() {
             _participantList.value = Resource.error(it)
         })
     }
-
-    private val _coursePayment: MutableLiveData<Resource<CoursePayments>> = MutableLiveData()
-    val coursePayment: LiveData<Resource<CoursePayments>>
-        get() = _coursePayment
-
-    fun coursePayment(data: CoursePayments) {
-        _coursePayment.value = Resource.loading()
-        helper.coursePayment(data, {
-            _coursePayment.value = Resource.success(CoursePayments())
-        }, {
-            _coursePayment.value = Resource.error(it)
-        })
-    }
 }

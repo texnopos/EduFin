@@ -11,8 +11,7 @@ class CategoryHelper(auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val orgId = auth.currentUser!!.uid
     fun addIncomeCategory(
         name: String, onSuccess: () -> Unit,
-        onFailure: (msg: String?) -> Unit
-    ) {
+        onFailure: (msg: String?) -> Unit) {
         val id = UUID.randomUUID().toString()
         val incomeCategory = IncomeCategory(name, id)
         db.collection("users/$orgId/incomeCategory").document(id).set(incomeCategory)

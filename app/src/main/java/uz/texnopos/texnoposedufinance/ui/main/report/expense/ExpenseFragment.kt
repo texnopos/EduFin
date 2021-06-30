@@ -9,7 +9,6 @@ import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Pie
-import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.Resource
@@ -19,11 +18,11 @@ import uz.texnopos.texnoposedufinance.data.AllReports
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
 import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
 import uz.texnopos.texnoposedufinance.databinding.ItemExpenseBinding
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsAdapter
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
+import uz.texnopos.texnoposedufinance.ui.main.report.income.ReportIncAdapter
 
 class ExpenseFragment: BaseFragment(R.layout.item_expense){
-    private val expenseAdapter = ReportsAdapter()
+    private val expenseAdapter =
+        ReportExpAdapter()
     private lateinit var pie: Pie
     lateinit var binding: ItemExpenseBinding
     var allExpense = 0
@@ -63,7 +62,8 @@ class ExpenseFragment: BaseFragment(R.layout.item_expense){
                                 AllReports(
                                     category = category,
                                     amount = sum,
-                                    trans = e.expenses.size
+                                    trans = e.expenses.size,
+                                    expenses = e.expenses
                                 )
                             )
                             allExpense += sum

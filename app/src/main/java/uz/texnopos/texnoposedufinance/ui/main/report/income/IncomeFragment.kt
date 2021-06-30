@@ -7,7 +7,6 @@ import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Pie
-import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.Resource
@@ -17,14 +16,13 @@ import uz.texnopos.texnoposedufinance.data.AllReports
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
 import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
 import uz.texnopos.texnoposedufinance.databinding.ItemIncomeBinding
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportsAdapter
-import uz.texnopos.texnoposedufinance.ui.main.report.ReportViewModel
 import java.util.*
 
 class IncomeFragment : BaseFragment(R.layout.item_income) {
     lateinit var binding: ItemIncomeBinding
     private lateinit var pie: Pie
-    private val incomeAdapter = ReportsAdapter()
+    private val incomeAdapter =
+        ReportIncAdapter()
     var allIncome = 0
     var report: MutableLiveData<Resource<ReportResponse>> = MutableLiveData()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,6 +32,9 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
         setUpObservers()
         binding.apply {
             rcvIncome.adapter = incomeAdapter
+            incomeAdapter.setOnItemClickListener {
+
+            }
         }
     }
 
@@ -58,12 +59,15 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
                             for (j in i.incomes) {
                                 sum += j.amount
                             }
+                            /*incomeAdapter.myAdapter.models = listOf()
+                            incomeAdapter.myAdapter.models = i.incomes*/
                             iList.add(ValueDataEntry(category, sum))
                             incomes.add(
                                 AllReports(
                                     category = category,
                                     amount = sum,
-                                    trans = i.incomes.size
+                                    trans = i.incomes.size,
+                                    incomes = i.incomes
                                 )
                             )
                             allIncome += sum
