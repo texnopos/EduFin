@@ -35,7 +35,7 @@ class ReportIncAdapter: BaseAdapter<AllReports, ReportIncAdapter.ReportsViewHold
                     }
                     val myIncAdapter = IncomeTransAdapter()
                     rcvItemReport.adapter = myIncAdapter
-                    myIncAdapter.models = model.incomes
+                    myIncAdapter.models = model.incomes.sortedByDescending { it.date }
                 }
             }
         }

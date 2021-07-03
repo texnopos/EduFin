@@ -11,7 +11,9 @@ import uz.texnopos.texnoposedufinance.core.extentions.inflate
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.core.extentions.visibility
 import uz.texnopos.texnoposedufinance.data.AllReports
+import uz.texnopos.texnoposedufinance.data.model.Report
 import uz.texnopos.texnoposedufinance.databinding.ItemReportExpBinding
+import kotlin.math.exp
 
 class ReportExpAdapter: BaseAdapter<AllReports, ReportExpAdapter.ReportsViewHolder>(){
     private var onItemClick: (String) -> Unit = {}
@@ -31,7 +33,7 @@ class ReportExpAdapter: BaseAdapter<AllReports, ReportExpAdapter.ReportsViewHold
                     clItemReport.onClick {
                         val myExpAdapter = ExpenseTransAdapter()
                         rcvItemReport.adapter = myExpAdapter
-                        myExpAdapter.models = model.expenses
+                        myExpAdapter.models = model.expenses.sortedByDescending { it.date }
                         if(rcvItemReport.visibility == View.GONE){
                             rcvItemReport.visibility(true)
                         }

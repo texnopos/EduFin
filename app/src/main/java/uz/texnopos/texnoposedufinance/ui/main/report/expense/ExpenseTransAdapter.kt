@@ -12,7 +12,10 @@ class ExpenseTransAdapter  : BaseAdapter<Report, ExpenseTransAdapter.ExpenseView
     inner class ExpenseViewHolder(private val binding: ItemTransBinding): RecyclerView.ViewHolder(binding.root){
         fun populateModel(model: Report){
             binding.apply {
-                tvCategory.text = root.context.getString(R.string.reportCategory, model.note)
+                var cat = ""
+                cat = if(model.note.isNotEmpty() && model.note != "") model.note
+                else model.category
+                tvCategory.text = root.context.getString(R.string.reportCategory, cat)
                 val amount = textFormat(model.amount.toString())
                 tvAmount.text = root.context.getString(R.string.amount, amount)
                 tvTime.text = convertLongString(model.date)

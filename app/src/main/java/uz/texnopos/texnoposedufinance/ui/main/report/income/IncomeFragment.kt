@@ -59,8 +59,6 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
                             for (j in i.incomes) {
                                 sum += j.amount
                             }
-                            /*incomeAdapter.myAdapter.models = listOf()
-                            incomeAdapter.myAdapter.models = i.incomes*/
                             iList.add(ValueDataEntry(category, sum))
                             incomes.add(
                                 AllReports(
@@ -72,6 +70,7 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
                             )
                             allIncome += sum
                         }
+
                         incomeAdapter.models = incomes
                         pie.data(iList)
                         pie.title(view?.context!!.getString(R.string.s_incomes))
