@@ -1,9 +1,11 @@
 package uz.texnopos.texnoposedufinance.core
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.*
 
 abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
-
     var models: List<T> = listOf()
         set(value) {
             field = value
@@ -35,5 +37,10 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapt
             .chunked(3)
             .joinToString(" ")
         return text.reversed()
+    }
+    @SuppressLint("SimpleDateFormat")
+    fun convertLongString(l: Long): String{
+        val formatter = SimpleDateFormat("dd/MM/yyyy")
+        return formatter.format(Date(l))
     }
 }

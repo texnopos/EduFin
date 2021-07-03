@@ -18,7 +18,6 @@ import java.util.*
 
 class ReportFragment : BaseFragment(R.layout.fragment_reports) {
     private lateinit var binding: FragmentReportsBinding
-    //private lateinit var actBinding: ActionBarReportBinding
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var title: TextView
     private lateinit var allAmount: TextView
@@ -39,12 +38,7 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
         }
         adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle)
         binding = FragmentReportsBinding.bind(view)
-        //actBinding = ActionBarReportBinding.bind(view.fi)
         setUpObservers()
-
-//        actBinding.apply {
-//            tvTitle.text = context?.getString(R.string.reports)
-//        }
         title = view.findViewById(R.id.tvTitle)
         allAmount = view.findViewById(R.id.tvAmount)
         title.text = context?.getString(R.string.reports)
@@ -176,7 +170,6 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                                 sum += j.amount
                             }
                             allIncome += sum
-                            //transAdapter.models = i.incomes
                         }
                         val allIncomeString = textFormat(allIncome.toString())
                         tvIncomeAmount.text = context?.getString(R.string.amountIncomes, allIncomeString)
@@ -195,12 +188,10 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                         val allExpenseString = textFormat(allExpense.toString())
                         tvExpenseAmount.text = context?.getString(R.string.amountExpenses, allExpenseString)
                         val amount = textFormat((allIncome - allExpense).toString())
-                        //actBinding.tvAmount.text = context?.getString(R.string.amount, amount)
                         allAmount.text = context?.getString(R.string.amount, amount)
                     }
                 }
             })
-
         }
     }
 }

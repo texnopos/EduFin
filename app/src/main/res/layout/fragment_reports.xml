@@ -200,7 +200,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_middle"
                 app:layout_constraintTop_toBottomOf="@id/llReports"
-                android:minHeight="420dp"/>
+                android:minHeight="480dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/margin_standard"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
