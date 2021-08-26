@@ -38,18 +38,4 @@ class ReportViewModel(private val helper: ReportHelper, private val nHelper: Net
                 _expense.value = Resource.error(it)
             })
     }
-
-//    private val _report: MutableLiveData<Resource<ReportResponse>> = MutableLiveData()
-//    val report: LiveData<Resource<ReportResponse>>
-//        get() = _report
-//
-//    fun getReports(fromDate: Long,
-//                   toDate: Long) {
-//        _report.value = Resource.loading()
-//        nHelper.getReports(fromDate, toDate, {
-//            _report.value = Resource.success(it)
-//        }, {
-//            _report.value = Resource.error(it)
-//        })
-//    }
 }

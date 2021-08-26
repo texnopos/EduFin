@@ -37,7 +37,9 @@ import uz.texnopos.texnoposedufinance.ui.main.student.select.SelectStudentsAdapt
 import uz.texnopos.texnoposedufinance.ui.main.teacher.TeacherAdapter
 import java.util.concurrent.TimeUnit
 
-private const val baseUrl: String = "https://us-central1-texnopos-finance.cloudfunctions.net/api/"
+private const val productionUrl = "https://us-central1-texnopos-finance.cloudfunctions.net/api/"
+private const val localUrl = "192.168.1.116:5001/texnopos-finance/us-central1/api/"
+private const val baseUrl: String = productionUrl
 val firebaseModule = module {
     single { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }
@@ -47,7 +49,6 @@ val firebaseModule = module {
             .requestIdToken(androidApplication().applicationContext.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
     }
     single { GoogleSignIn.getClient(androidApplication().applicationContext, get()) }
 }

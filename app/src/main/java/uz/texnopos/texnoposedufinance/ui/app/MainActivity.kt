@@ -1,6 +1,5 @@
 package uz.texnopos.texnoposedufinance.ui.app
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -13,8 +12,6 @@ import uz.texnopos.texnoposedufinance.data.model.Course
 import uz.texnopos.texnoposedufinance.data.model.response.ReportResponse
 import uz.texnopos.texnoposedufinance.data.model.response.SalaryResponse
 import uz.texnopos.texnoposedufinance.databinding.ActivityMainBinding
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,19 +1,23 @@
 package uz.texnopos.texnoposedufinance.ui.main.report
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
+import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.CalendarHelper
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
 import uz.texnopos.texnoposedufinance.databinding.FragmentReportsBinding
+import uz.texnopos.texnoposedufinance.ui.app.AppViewModel
 import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
-import java.text.SimpleDateFormat
 import java.util.*
 
 class ReportFragment : BaseFragment(R.layout.fragment_reports) {
@@ -21,19 +25,19 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var title: TextView
     private lateinit var allAmount: TextView
+    private val viewModel: AppViewModel by viewModel()
+    private val calendar = CalendarHelper()
+    private var fromLong = calendar.beginningOfMothInMillis
+    private var toLong = calendar.currentDateInMillis
+    private var fromString = calendar.beginningOfMonth
+    private var toString = calendar.currentDate
 
-    @SuppressLint("SimpleDateFormat", "ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sdf = SimpleDateFormat("dd.MM.yyyy")
-        val sdf2 = SimpleDateFormat("MM.yyyy")
-        val calendar = Calendar.getInstance()
-        var toString = sdf.format(calendar.time).toString()
-        var fromString = "01.${sdf2.format(calendar.time)}"
-        val day = toString.substring(0, 2)
-        var toLong = calendar.timeInMillis
-        var fromLong = toLong - day.toInt() * 3600 * 1000 * 24
+
         if ((requireActivity() as MainActivity).report.value == null) {
+            Log.d("fromLong", fromLong.toString())
+            Log.d("toLong", toLong.toString())
             (requireActivity() as MainActivity).getReport(fromLong, toLong)
         }
         adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle)
@@ -43,10 +47,9 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
         allAmount = view.findViewById(R.id.tvAmount)
         title.text = context?.getString(R.string.reports)
         binding.apply {
-            to.text = context?.getString(R.string.toText, toString)
-            from.text = context?.getString(R.string.fromText, fromString)
+            to.text = context?.getString(R.string.toText, calendar.currentDate)
+            from.text = context?.getString(R.string.fromText, calendar.beginningOfMonth)
             val cal = Calendar.getInstance()
-            var currentDate = Calendar.getInstance().timeInMillis
             if ((requireParentFragment().requireParentFragment() as MainFragment).temp == 0) {
                 onExpense()
             }
@@ -107,6 +110,9 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                     }
                 }
             }
+            refreshBtn.setOnClickListener {
+                viewModel.getReports(fromLong, toLong)
+            }
             vpReports.adapter = adapter
             vpReports.setPageTransformer { _, _ ->
                 when (vpReports.currentItem) {
@@ -153,15 +159,16 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
 
     private fun setUpObservers() {
         binding.apply {
-            (requireActivity() as MainActivity).report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            (requireActivity() as MainActivity).report.observe(viewLifecycleOwner, {
                 adapter.setReport(it)
                 when (it.status) {
                     ResourceState.SUCCESS -> {
+                        Log.d("magliwmat", it.data!!.toString())
                         var allIncome = 0
                         var allExpense = 0
                         val incomeList = mutableListOf<MyResponse>()
                         val expenseList = mutableListOf<MyResponse>()
-                        it.data!!.incomeCategories.forEach { i ->
+                        it.data.incomeCategories.forEach { i ->
                             incomeList.add(i)
                         }
                         incomeList.forEach { i ->
@@ -173,7 +180,6 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                         }
                         val allIncomeString = textFormat(allIncome.toString())
                         tvIncomeAmount.text = context?.getString(R.string.amountIncomes, allIncomeString)
-
 
                         it.data.expenseCategories.forEach { e ->
                             expenseList.add(e)
@@ -190,6 +196,7 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                         val amount = textFormat((allIncome - allExpense).toString())
                         allAmount.text = context?.getString(R.string.amount, amount)
                     }
+
                 }
             })
         }
