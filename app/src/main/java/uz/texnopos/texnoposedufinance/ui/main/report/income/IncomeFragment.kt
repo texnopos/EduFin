@@ -43,13 +43,11 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
             report.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 when (it.status) {
                     ResourceState.LOADING -> {
-                        incomeLoading.visibility(true)
                     }
                     ResourceState.SUCCESS -> {
                         val incomeList = mutableListOf<MyResponse>()
                         val iList: MutableList<DataEntry> = ArrayList()
                         val incomes = mutableListOf<AllReports>()
-                        incomeLoading.visibility(false)
                         it.data!!.incomeCategories.forEach { i ->
                             incomeList.add(i)
                         }
@@ -77,7 +75,6 @@ class IncomeFragment : BaseFragment(R.layout.item_income) {
                         incomeAnyChartView.setChart(pie)
                     }
                     ResourceState.ERROR -> {
-                        incomeLoading.visibility(false)
                         toastLN(it.message)
                     }
                 }

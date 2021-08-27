@@ -41,13 +41,11 @@ class ExpenseFragment: BaseFragment(R.layout.item_expense){
             report.observe(viewLifecycleOwner, Observer{
                 when (it.status) {
                     ResourceState.LOADING -> {
-                        loading.isVisible = true
                     }
                     ResourceState.SUCCESS -> {
                         val expenseList = mutableListOf<MyResponse>()
                         val expenses = mutableListOf<AllReports>()
                         val eList: MutableList<DataEntry> = ArrayList()
-                        loading.visibility(false)
                         it.data!!.expenseCategories.forEach { e ->
                             expenseList.add(e)
                         }
@@ -74,7 +72,6 @@ class ExpenseFragment: BaseFragment(R.layout.item_expense){
                         expenseAnyChartView.setChart(pie)
                     }
                     ResourceState.ERROR -> {
-                        loading.visibility(false)
                         toastLN(it.message)
                     }
                 }

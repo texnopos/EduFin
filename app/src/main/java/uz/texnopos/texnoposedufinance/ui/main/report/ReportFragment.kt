@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.bind
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
 import uz.texnopos.texnoposedufinance.core.CalendarHelper
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
+import uz.texnopos.texnoposedufinance.core.extentions.showMessage
 import uz.texnopos.texnoposedufinance.data.model.response.MyResponse
 import uz.texnopos.texnoposedufinance.databinding.FragmentReportsBinding
-import uz.texnopos.texnoposedufinance.ui.app.AppViewModel
 import uz.texnopos.texnoposedufinance.ui.app.MainActivity
 import uz.texnopos.texnoposedufinance.ui.main.MainFragment
 import uz.texnopos.texnoposedufinance.ui.main.group.add.CalendarDialog
@@ -25,7 +24,6 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var title: TextView
     private lateinit var allAmount: TextView
-    private val viewModel: AppViewModel by viewModel()
     private val calendar = CalendarHelper()
     private var fromLong = calendar.beginningOfMothInMillis
     private var toLong = calendar.currentDateInMillis
@@ -36,8 +34,6 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
         super.onViewCreated(view, savedInstanceState)
 
         if ((requireActivity() as MainActivity).report.value == null) {
-            Log.d("fromLong", fromLong.toString())
-            Log.d("toLong", toLong.toString())
             (requireActivity() as MainActivity).getReport(fromLong, toLong)
         }
         adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle)
@@ -110,8 +106,8 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                     }
                 }
             }
-            refreshBtn.setOnClickListener {
-                viewModel.getReports(fromLong, toLong)
+            refreshBtn.onClick {
+                (requireActivity() as MainActivity).getReport(fromLong, toLong)
             }
             vpReports.adapter = adapter
             vpReports.setPageTransformer { _, _ ->
@@ -157,18 +153,29 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
         }
     }
 
+    private fun isLoading(load: Boolean) {
+        binding.apply {
+            pbReport.isVisible = load
+            ablReport.isVisible = !load
+            nsvReport.isVisible = !load
+        }
+    }
+
     private fun setUpObservers() {
         binding.apply {
             (requireActivity() as MainActivity).report.observe(viewLifecycleOwner, {
                 adapter.setReport(it)
                 when (it.status) {
+                    ResourceState.LOADING -> {
+                        isLoading(true)
+                    }
                     ResourceState.SUCCESS -> {
-                        Log.d("magliwmat", it.data!!.toString())
+                        isLoading(false)
                         var allIncome = 0
                         var allExpense = 0
                         val incomeList = mutableListOf<MyResponse>()
                         val expenseList = mutableListOf<MyResponse>()
-                        it.data.incomeCategories.forEach { i ->
+                        it.data?.incomeCategories!!.forEach { i ->
                             incomeList.add(i)
                         }
                         incomeList.forEach { i ->
@@ -179,7 +186,8 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                             allIncome += sum
                         }
                         val allIncomeString = textFormat(allIncome.toString())
-                        tvIncomeAmount.text = context?.getString(R.string.amountIncomes, allIncomeString)
+                        tvIncomeAmount.text =
+                            context?.getString(R.string.amountIncomes, allIncomeString)
 
                         it.data.expenseCategories.forEach { e ->
                             expenseList.add(e)
@@ -192,11 +200,15 @@ class ReportFragment : BaseFragment(R.layout.fragment_reports) {
                             allExpense += sum
                         }
                         val allExpenseString = textFormat(allExpense.toString())
-                        tvExpenseAmount.text = context?.getString(R.string.amountExpenses, allExpenseString)
+                        tvExpenseAmount.text =
+                            context?.getString(R.string.amountExpenses, allExpenseString)
                         val amount = textFormat((allIncome - allExpense).toString())
                         allAmount.text = context?.getString(R.string.amount, amount)
                     }
-
+                    ResourceState.ERROR -> {
+                        isLoading(false)
+                        showMessage(it.message.toString())
+                    }
                 }
             })
         }

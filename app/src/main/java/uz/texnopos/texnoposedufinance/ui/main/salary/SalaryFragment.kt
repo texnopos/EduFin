@@ -9,6 +9,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import uz.texnopos.texnoposedufinance.R
 import uz.texnopos.texnoposedufinance.core.BaseFragment
+import uz.texnopos.texnoposedufinance.core.CalendarHelper
 import uz.texnopos.texnoposedufinance.core.ResourceState
 import uz.texnopos.texnoposedufinance.core.extentions.enabled
 import uz.texnopos.texnoposedufinance.core.extentions.onClick
@@ -30,8 +31,13 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
     private lateinit var binding: FragmentSalaryBinding
     private lateinit var actBinding: ActionBarBinding
     private val viewModel: ReportViewModel by viewModel()
-    private var toLong = 0L
-    private var fromLong = 0L
+
+    private val calendar = CalendarHelper()
+    private var fromLong = calendar.beginningOfMothInMillis
+    private var toLong = calendar.currentDateInMillis
+    private var fromString = calendar.beginningOfMonth
+    private var toString = calendar.currentDate
+
     private val adapter = SalaryAdapter()
     private var date = 0L
     private var amount = 0
@@ -42,19 +48,11 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val myCalendar = Calendar.getInstance()
 
-        val sdf = SimpleDateFormat("dd.MM.yyyy")
-        val sdf2 = SimpleDateFormat("MM.yyyy")
-
-        val calendar = Calendar.getInstance()
-
-        var toString = sdf.format(calendar.time).toString()
-        var fromString = "01.${sdf2.format(calendar.time)}"
-        val day = toString.substring(0, 2)
         actBinding = ActionBarBinding.bind(view)
         binding = FragmentSalaryBinding.bind(view)
-        toLong = calendar.timeInMillis
-        fromLong = toLong - day.toInt() * 3600 * 1000 * 24
+
         if((requireActivity() as MainActivity).salary.value == null){
             (requireActivity() as MainActivity).getSalary(fromLong, toLong)
         }
@@ -66,7 +64,7 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
         binding.apply {
             to.text = context?.getString(R.string.toText, toString)
             from.text = context?.getString(R.string.fromText, fromString)
-            created = calendar.timeInMillis
+            created = myCalendar.timeInMillis
             rcvEmployees.adapter = adapter
             rcvEmployees.addItemDecoration(
                 DividerItemDecoration(root.context, DividerItemDecoration.VERTICAL)
@@ -85,10 +83,10 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
                         var dStr = d.toString()
                         if (dStr.length != 2) dStr = "0$dStr"
                         if (mStr.length != 2) mStr = "0$mStr"
-                        calendar.set(Calendar.DAY_OF_MONTH, d)
-                        calendar.set(Calendar.MONTH, m)
-                        calendar.set(Calendar.YEAR, y)
-                        fromLong = calendar.timeInMillis
+                        myCalendar.set(Calendar.DAY_OF_MONTH, d)
+                        myCalendar.set(Calendar.MONTH, m)
+                        myCalendar.set(Calendar.YEAR, y)
+                        fromLong = myCalendar.timeInMillis
                         fromString = "$dStr.$mStr.$yStr"
                         from.text = context?.getString(R.string.fromText, fromString)
                         dialog.dismiss()
@@ -112,11 +110,11 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
                         var dStr = d.toString()
                         if (dStr.length != 2) dStr = "0$dStr"
                         if (mStr.length != 2) mStr = "0$mStr"
-                        calendar.set(Calendar.DAY_OF_MONTH, d)
-                        calendar.set(Calendar.MONTH, m)
-                        calendar.set(Calendar.YEAR, y)
+                        myCalendar.set(Calendar.DAY_OF_MONTH, d)
+                        myCalendar.set(Calendar.MONTH, m)
+                        myCalendar.set(Calendar.YEAR, y)
 
-                        toLong = calendar.timeInMillis
+                        toLong = myCalendar.timeInMillis
                         toString = "$dStr.$mStr.$yStr"
 
                         to.text = context?.getString(R.string.toText, toString)
@@ -142,10 +140,10 @@ class SalaryFragment: BaseFragment(R.layout.fragment_salary) {
                         val d = dpDate.dayOfMonth
                         val m = dpDate.month
                         val y = dpDate.year
-                        calendar.set(Calendar.DAY_OF_MONTH, d)
-                        calendar.set(Calendar.MONTH, m)
-                        calendar.set(Calendar.YEAR, y)
-                        date = calendar.timeInMillis
+                        myCalendar.set(Calendar.DAY_OF_MONTH, d)
+                        myCalendar.set(Calendar.MONTH, m)
+                        myCalendar.set(Calendar.YEAR, y)
+                        date = myCalendar.timeInMillis
                         if (etPayment.text.toString().isNotEmpty()) {
                             amount = etPayment.text.toString().toInt()
                             val note = etNote.text.toString()
